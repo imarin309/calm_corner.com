@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+/* prose クラス用のタイポグラフィプラグイン（記事本文のスタイリング） */
+@plugin "@tailwindcss/typography";
+
+/* サイト全体のCSS変数 */
+:root {
+  --background: #fafaf9; /* ウォームグレー */
+  --foreground: #44403c; /* ストーングレー */
+  --primary: #78716c; /* ウォームグレー（メイン） */
+  --secondary: #a8a29e; /* ライトストーン */
+  --accent: #d6ccc2; /* ベージュ */
+}
+
+/* Tailwind v4のテーマ設定 - CSS変数をTailwindのカラー・フォントとして登録 */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --font-sans: var(--font-noto-sans-jp), system-ui, sans-serif;
+}
+
+/* 全体の基本スタイル */
+body {
+  background: var(--background);
+  color: var(--foreground);
+}

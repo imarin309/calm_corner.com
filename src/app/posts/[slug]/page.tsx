@@ -1,0 +1,83 @@
+import { notFound } from "next/navigation";
+import { posts } from "#site/content";
+import { MDXContent } from "@/components/mdx/MDXContent";
+import type { Metadata } from "next";
+
+interface PostPageProps {
+  params: Promise<{ slug: string }>;
+}
+
+function getPostBySlug(slug: string) {
+  return posts.find((post) => post.slug === slug);
+}
+
+export async function generateMetadata({
+  params,
+}: PostPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const post = getPostBySlug(slug);
+
+  if (!post) {
+    return {};
+  }
+
+  return {
+    title: post.title,
+    description: post.description,
+  };
+}
+
+export async function generateStaticParams() {
+  return posts.map((post) => ({
+    slug: post.slug,
+  }));
+}
+
+export default async function PostPage({ params }: PostPageProps) {
+  const { slug } = await params;
+  const post = getPostBySlug(slug);
+
+  if (!post) {
+    notFound();
+  }
+
+  const formattedDate = new Date(post.date).toLocaleDateString("ja-JP", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
+  return (
+    <article className="mx-auto max-w-3xl">
+      <header className="mb-8 border-b border-stone-200 pb-6">
+        <time className="text-xs text-stone-400">
+          {formattedDate}
+        </time>
+        <h1 className="mt-2 text-2xl font-bold tracking-tight text-stone-800 sm:text-3xl">
+          {post.title}
+        </h1>
+        {post.description && (
+          <p className="mt-4 text-stone-500">
+            {post.description}
+          </p>
+        )}
+        {post.tags && post.tags.length > 0 && (
+          <div className="mt-4 flex flex-wrap gap-2">
+            {post.tags.map((tag) => (
+              <span
+                key={tag}
+                className="bg-stone-800 px-3 py-1 text-xs text-white"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
+      </header>
+
+      <div className="prose prose-stone max-w-none prose-headings:font-semibold prose-a:text-stone-600 prose-a:underline-offset-2 hover:prose-a:text-stone-900">
+        <MDXContent code={post.content} />
+      </div>
+    </article>
+  );
+}
