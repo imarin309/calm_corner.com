@@ -41,3 +41,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+*.webp
+
+# scripts
+scripts/convertImage/data/
+scripts/convertImage/data_c/
+scripts/convertImage/dataEdited/
+
+# drafts
+content/drafts/

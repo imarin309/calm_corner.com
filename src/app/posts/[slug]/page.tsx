@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { posts } from "#site/content";
 import { MDXContent } from "@/components/mdx/MDXContent";
+import { getCategoryName } from "@/constants/category";
 import type { Metadata } from "next";
 
 interface PostPageProps {
@@ -24,6 +25,15 @@ export async function generateMetadata({
   return {
     title: post.title,
     description: post.description,
+    robots: post.noindex ? { index: false, follow: false } : undefined,
+    openGraph: {
+      type: "article",
+      title: post.title,
+      description: post.description,
+      ...(post.coverImage && {
+        images: [{ url: post.coverImage }],
+      }),
+    },
   };
 }
 
@@ -61,18 +71,11 @@ export default async function PostPage({ params }: PostPageProps) {
             {post.description}
           </p>
         )}
-        {post.tags && post.tags.length > 0 && (
-          <div className="mt-4 flex flex-wrap gap-2">
-            {post.tags.map((tag) => (
-              <span
-                key={tag}
-                className="bg-stone-800 px-3 py-1 text-xs text-white"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        )}
+        <div className="mt-4">
+          <span className="bg-stone-800 px-3 py-1 text-xs text-white">
+            {getCategoryName(post.category)}
+          </span>
+        </div>
       </header>
 
       <div className="prose prose-stone max-w-none prose-headings:font-semibold prose-a:text-stone-600 prose-a:underline-offset-2 hover:prose-a:text-stone-900">
