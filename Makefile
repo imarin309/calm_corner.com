@@ -1,4 +1,4 @@
-.PHONY: lint lint-eslint lint-markdown format format-eslint format-markdown
+.PHONY: lint format
 
 lint:
 	npx eslint & npx markdownlint-cli2 "content/**/*.mdx" & wait
