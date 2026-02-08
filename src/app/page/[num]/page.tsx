@@ -15,7 +15,9 @@ const sortedPosts = posts.sort(
 const totalPages = Math.ceil(sortedPosts.length / POSTS_PER_PAGE);
 
 export function generateStaticParams() {
-  // ページ2以降のみ生成（ページ1は / で表示）
+  if (totalPages <= 1) {
+    return [{ num: "2" }];
+  }
   return Array.from({ length: totalPages - 1 }, (_, i) => ({
     num: String(i + 2),
   }));
@@ -29,7 +31,7 @@ export default async function PaginatedPage({
   const { num } = await params;
   const pageNum = Number(num);
 
-  if (pageNum === 1) {
+  if (pageNum === 1 || pageNum > totalPages) {
     redirect("/");
   }
 
