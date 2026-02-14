@@ -72,7 +72,7 @@ export default function ImageGallery({
             onClick={(e) => {
               e.stopPropagation();
               setSelectedIndex((prev) =>
-                prev !== null && prev > 0 ? prev - 1 : prev
+                prev !== null && prev > 0 ? prev - 1 : prev,
               );
             }}
             disabled={selectedIndex === 0}
@@ -114,7 +114,7 @@ export default function ImageGallery({
             onClick={(e) => {
               e.stopPropagation();
               setSelectedIndex((prev) =>
-                prev !== null && prev < images.length - 1 ? prev + 1 : prev
+                prev !== null && prev < images.length - 1 ? prev + 1 : prev,
               );
             }}
             disabled={selectedIndex === images.length - 1}
