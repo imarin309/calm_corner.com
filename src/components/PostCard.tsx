@@ -45,9 +45,7 @@ export default function PostCard({
           </div>
         )}
         <div className="p-4 sm:flex sm:flex-col sm:justify-center">
-          <time className="text-xs text-stone-400">
-            {formattedDate}
-          </time>
+          <time className="text-xs text-stone-400">{formattedDate}</time>
           <h2 className="mt-2 text-lg font-semibold leading-snug text-stone-700 group-hover:text-stone-900">
             {title}
           </h2>

@@ -7,38 +7,53 @@ interface ImageGalleryProps {
   images: {
     src: string;
     alt: string;
+    caption?: string;
   }[];
-  columns?: 2 | 3 | 4;
 }
 
-export default function ImageGallery({
-  images,
-  columns = 3,
-}: ImageGalleryProps) {
+export default function ImageGallery({ images }: ImageGalleryProps) {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
+  const columns = Math.min(images.length, 4) as 1 | 2 | 3 | 4;
+
   const gridCols = {
-    2: "grid-cols-2",
-    3: "grid-cols-2 md:grid-cols-3",
-    4: "grid-cols-2 md:grid-cols-4",
+    1: "grid-cols-1",
+    2: "grid-cols-1 sm:grid-cols-2",
+    3: "grid-cols-1 sm:grid-cols-2 md:grid-cols-3",
+    4: "grid-cols-1 sm:grid-cols-2 md:grid-cols-4",
+  };
+
+  const imageSizes = {
+    1: "100vw",
+    2: "(min-width: 640px) 50vw, 100vw",
+    3: "(min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw",
+    4: "(min-width: 768px) 25vw, (min-width: 640px) 50vw, 100vw",
   };
 
   return (
     <>
-      <div className={`my-6 grid gap-4 ${gridCols[columns]}`}>
+      <div className={`not-prose my-6 grid gap-4 ${gridCols[columns]}`}>
         {images.map((image, index) => (
-          <button
-            key={index}
-            onClick={() => setSelectedIndex(index)}
-            className="relative aspect-square overflow-hidden rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            <Image
-              src={image.src}
-              alt={image.alt}
-              fill
-              className="object-cover transition-transform hover:scale-105"
-            />
-          </button>
+          <figure key={index} className="m-0">
+            <button
+              type="button"
+              onClick={() => setSelectedIndex(index)}
+              className="relative aspect-square w-full overflow-hidden rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <Image
+                src={image.src}
+                alt={image.alt}
+                fill
+                sizes={imageSizes[columns]}
+                className="m-0 object-cover transition-transform hover:scale-105"
+              />
+            </button>
+            {image.caption && (
+              <figcaption className="mt-1 text-center text-sm italic text-stone-500">
+                {image.caption}
+              </figcaption>
+            )}
+          </figure>
         ))}
       </div>
 
@@ -72,7 +87,7 @@ export default function ImageGallery({
             onClick={(e) => {
               e.stopPropagation();
               setSelectedIndex((prev) =>
-                prev !== null && prev > 0 ? prev - 1 : prev
+                prev !== null && prev > 0 ? prev - 1 : prev,
               );
             }}
             disabled={selectedIndex === 0}
@@ -104,9 +119,11 @@ export default function ImageGallery({
               height={800}
               className="max-h-[90vh] w-auto object-contain"
             />
-            <p className="mt-2 text-center text-white">
-              {images[selectedIndex].alt}
-            </p>
+            {(images[selectedIndex].caption || images[selectedIndex].alt) && (
+              <p className="mt-2 text-center italic text-white/80">
+                {images[selectedIndex].caption || images[selectedIndex].alt}
+              </p>
+            )}
           </div>
 
           <button
@@ -114,7 +131,7 @@ export default function ImageGallery({
             onClick={(e) => {
               e.stopPropagation();
               setSelectedIndex((prev) =>
-                prev !== null && prev < images.length - 1 ? prev + 1 : prev
+                prev !== null && prev < images.length - 1 ? prev + 1 : prev,
               );
             }}
             disabled={selectedIndex === images.length - 1}
