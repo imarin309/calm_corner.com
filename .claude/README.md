@@ -13,6 +13,7 @@ Claude Codeで使用できるカスタムスラッシュコマンドの一覧で
 ```
 
 チェック対象:
+
 - タイトル・メタデータ（文字数、キーワード配置）
 - 本文・ライティング（構造、装飾、可読性）
 - 画像関連（alt属性、ファイル名、形式）
@@ -44,10 +45,10 @@ Claude Codeで使用できるカスタムスラッシュコマンドの一覧で
 
 ## 関連ファイル
 
-| ファイル | 説明 |
-|---|---|
-| `commands/review-content.md` | 記事レビュースキル定義 |
-| `commands/collab-writing.md` | 壁打ち執筆サポートスキル定義 |
-| `commands/gen-description.md` | description生成スキル定義 |
-| `content_review.md` | レビューチェックリスト（スキルから参照） |
-| `CLAUDE.md` | プロジェクト全体のガイダンス |
+| ファイル                      | 説明                                     |
+| ----------------------------- | ---------------------------------------- |
+| `commands/review-content.md`  | 記事レビュースキル定義                   |
+| `commands/collab-writing.md`  | 壁打ち執筆サポートスキル定義             |
+| `commands/gen-description.md` | description生成スキル定義                |
+| `content_review.md`           | レビューチェックリスト（スキルから参照） |
+| `CLAUDE.md`                   | プロジェクト全体のガイダンス             |

@@ -12,7 +12,9 @@ export function generateStaticParams() {
   const allParams: { category_name: string; num: string }[] = [];
 
   for (const category of getAllCategories()) {
-    const count = posts.filter((post) => post.category === category.slug).length;
+    const count = posts.filter(
+      (post) => post.category === category.slug,
+    ).length;
     const totalPages = Math.ceil(count / POSTS_PER_PAGE);
 
     if (totalPages <= 1) {

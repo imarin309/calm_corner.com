@@ -8,7 +8,7 @@ import { posts } from "#site/content";
 import { POSTS_PER_PAGE } from "@/constants/config";
 
 const sortedPosts = posts.sort(
-  (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+  (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
 );
 
 const totalPages = Math.ceil(sortedPosts.length / POSTS_PER_PAGE);

@@ -75,7 +75,9 @@ async function processImage(inputPath, currentIndex, totalCount) {
   const imageWidth = metadata.width;
   const imageHeight = metadata.height;
 
-  console.log(`\n[${currentIndex + 1}/${totalCount}] 処理中: ${inputParsed.base}`);
+  console.log(
+    `\n[${currentIndex + 1}/${totalCount}] 処理中: ${inputParsed.base}`,
+  );
   console.log(`  元サイズ: ${imageWidth} x ${imageHeight}`);
 
   return new Promise((resolve) => {
@@ -369,7 +371,8 @@ async function processImage(inputPath, currentIndex, totalCount) {
         req.on("data", (chunk) => (body += chunk));
         req.on("end", async () => {
           try {
-            const { top, left, width, height, targetW, targetH } = JSON.parse(body);
+            const { top, left, width, height, targetW, targetH } =
+              JSON.parse(body);
 
             await sharp(inputPath)
               .extract({

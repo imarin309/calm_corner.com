@@ -63,9 +63,7 @@ export default async function PostPage({ params }: PostPageProps) {
   return (
     <article className="mx-auto max-w-3xl">
       <header className="mb-8 border-b border-stone-200 pb-6">
-        <time className="text-xs text-stone-400">
-          {formattedDate}
-        </time>
+        <time className="text-xs text-stone-400">{formattedDate}</time>
         <h1 className="mt-2 text-2xl font-bold tracking-tight text-stone-800 sm:text-3xl">
           {post.title}
         </h1>

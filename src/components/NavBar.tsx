@@ -33,7 +33,7 @@ export default function NavBar() {
               </ul>
             </div>
           </div>
-                    <Link
+          <Link
             href="/about"
             className="text-stone-600 transition-colors hover:text-stone-900"
           >

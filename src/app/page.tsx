@@ -8,7 +8,7 @@ import { POSTS_PER_PAGE } from "@/constants/config";
 
 export default function Home() {
   const sortedPosts = posts.sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
   );
 
   const totalPages = Math.ceil(sortedPosts.length / POSTS_PER_PAGE);
@@ -35,9 +35,7 @@ export default function Home() {
             ))}
           </div>
         ) : (
-          <p className="text-stone-400">
-            まだ記事がありません。
-          </p>
+          <p className="text-stone-400">まだ記事がありません。</p>
         )}
       </section>
 

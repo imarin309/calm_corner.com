@@ -68,7 +68,9 @@ export default async function CategoryPage({
             ))}
           </div>
         ) : (
-          <p className="text-stone-400">このカテゴリーにはまだ記事がありません。</p>
+          <p className="text-stone-400">
+            このカテゴリーにはまだ記事がありません。
+          </p>
         )}
       </section>
 

@@ -6,7 +6,11 @@ interface PaginationProps {
   basePath?: string;
 }
 
-export default function Pagination({ currentPage, totalPages, basePath }: PaginationProps) {
+export default function Pagination({
+  currentPage,
+  totalPages,
+  basePath,
+}: PaginationProps) {
   if (totalPages <= 1) return null;
 
   const pageHref = (page: number) => {
@@ -20,7 +24,10 @@ export default function Pagination({ currentPage, totalPages, basePath }: Pagina
   const nextHref = pageHref(currentPage + 1);
 
   return (
-    <nav aria-label="ページネーション" className="mt-10 flex items-center justify-center gap-4">
+    <nav
+      aria-label="ページネーション"
+      className="mt-10 flex items-center justify-center gap-4"
+    >
       {currentPage > 1 ? (
         <Link
           href={prevHref}
