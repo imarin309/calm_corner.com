@@ -36,6 +36,7 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
         {images.map((image, index) => (
           <figure key={index} className="m-0">
             <button
+              type="button"
               onClick={() => setSelectedIndex(index)}
               className="relative aspect-square w-full overflow-hidden rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
