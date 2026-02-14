@@ -104,9 +104,7 @@ export default function NavBar() {
             </button>
             <div
               className={`absolute left-0 top-full z-50 pt-2 transition-all ${
-                isOpen
-                  ? "visible opacity-100"
-                  : "invisible opacity-0"
+                isOpen ? "visible opacity-100" : "invisible opacity-0"
               }`}
             >
               <ul
