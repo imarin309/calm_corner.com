@@ -7,6 +7,7 @@ interface ImageGalleryProps {
   images: {
     src: string;
     alt: string;
+    caption?: string;
   }[];
   columns?: 2 | 3 | 4;
 }
@@ -18,27 +19,33 @@ export default function ImageGallery({
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   const gridCols = {
-    2: "grid-cols-2",
-    3: "grid-cols-2 md:grid-cols-3",
-    4: "grid-cols-2 md:grid-cols-4",
+    2: "grid-cols-1 sm:grid-cols-2",
+    3: "grid-cols-1 sm:grid-cols-2 md:grid-cols-3",
+    4: "grid-cols-1 sm:grid-cols-2 md:grid-cols-4",
   };
 
   return (
     <>
-      <div className={`my-6 grid gap-4 ${gridCols[columns]}`}>
+      <div className={`not-prose my-6 grid gap-4 ${gridCols[columns]}`}>
         {images.map((image, index) => (
-          <button
-            key={index}
-            onClick={() => setSelectedIndex(index)}
-            className="relative aspect-square overflow-hidden rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            <Image
-              src={image.src}
-              alt={image.alt}
-              fill
-              className="object-cover transition-transform hover:scale-105"
-            />
-          </button>
+          <figure key={index} className="m-0">
+            <button
+              onClick={() => setSelectedIndex(index)}
+              className="relative aspect-square w-full overflow-hidden rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <Image
+                src={image.src}
+                alt={image.alt}
+                fill
+                className="m-0 object-cover transition-transform hover:scale-105"
+              />
+            </button>
+            {image.caption && (
+              <figcaption className="mt-1 text-center text-sm italic text-muted-foreground">
+                {image.caption}
+              </figcaption>
+            )}
+          </figure>
         ))}
       </div>
 
@@ -104,9 +111,11 @@ export default function ImageGallery({
               height={800}
               className="max-h-[90vh] w-auto object-contain"
             />
-            <p className="mt-2 text-center text-white">
-              {images[selectedIndex].alt}
-            </p>
+            {(images[selectedIndex].caption || images[selectedIndex].alt) && (
+              <p className="mt-2 text-center italic text-white/80">
+                {images[selectedIndex].caption || images[selectedIndex].alt}
+              </p>
+            )}
           </div>
 
           <button

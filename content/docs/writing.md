@@ -46,8 +46,8 @@ MDXファイル内でHTMLタグと Tailwind CSS のクラスを使って文字�
 ```mdx
 <ImageGallery
   images={[
-    { src: "https://r2.calm-corner.com/posts/slug/image1.jpg", alt: "画像の説明1" },
-    { src: "https://r2.calm-corner.com/posts/slug/image2.jpg", alt: "画像の説明2" },
+    { src: "https://r2.calm-corner.com/posts/slug/image1.jpg", alt: "画像の説明1", caption: "サーフェイサー塗布後" },
+    { src: "https://r2.calm-corner.com/posts/slug/image2.jpg", alt: "画像の説明2", caption: "スミ入れ完了" },
     { src: "https://r2.calm-corner.com/posts/slug/image3.jpg", alt: "画像の説明3" },
   ]}
 />
@@ -62,8 +62,8 @@ MDXファイル内でHTMLタグと Tailwind CSS のクラスを使って文字�
 <ImageGallery
   columns={2}
   images={[
-    { src: "https://r2.calm-corner.com/posts/slug/image1.jpg", alt: "画像1" },
-    { src: "https://r2.calm-corner.com/posts/slug/image2.jpg", alt: "画像2" },
+    { src: "https://r2.calm-corner.com/posts/slug/image1.jpg", alt: "画像1", caption: "仮組み状態" },
+    { src: "https://r2.calm-corner.com/posts/slug/image2.jpg", alt: "画像2", caption: "塗装後" },
   ]}
 />
 ```
@@ -78,5 +78,5 @@ MDXファイル内でHTMLタグと Tailwind CSS のクラスを使って文字�
 
 | プロパティ | 型 | 必須 | デフォルト | 説明 |
 |-----------|-----|------|-----------|------|
-| `images` | `{ src: string; alt: string }[]` | はい | - | 表示する画像の配列 |
+| `images` | `{ src: string; alt: string; caption?: string }[]` | はい | - | 表示する画像の配列。`caption` で写真下にイタリックの説明文を表示 |
 | `columns` | `2 \| 3 \| 4` | いいえ | `3` | グリッドの列数 |
