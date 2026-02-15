@@ -122,7 +122,7 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
           </button>
 
           <div
-            className="relative max-h-[90vh] max-w-[90vw]"
+            className="flex max-h-[90vh] max-w-[90vw] flex-col items-center overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             <Image
@@ -130,11 +130,11 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
               alt={images[selectedIndex].alt}
               width={1200}
               height={800}
-              className="max-h-[90vh] w-auto object-contain"
+              className="min-h-0 max-w-full w-auto shrink object-contain"
             />
-            {(images[selectedIndex].caption || images[selectedIndex].alt) && (
-              <p className="mt-2 text-center italic text-white/80">
-                {images[selectedIndex].caption || images[selectedIndex].alt}
+            {images[selectedIndex].caption && (
+              <p className="mt-2 shrink-0 text-center italic text-white/80">
+                {images[selectedIndex].caption}
               </p>
             )}
           </div>
