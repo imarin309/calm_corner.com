@@ -52,7 +52,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  console.log("CF_PAGES_BRANCH", process.env.CF_PAGES_BRANCH)
   return (
     <html lang="ja">
       <body
