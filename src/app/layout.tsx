@@ -64,7 +64,8 @@ export default function RootLayout({
         </main>
         <RecommendedPosts />
         <Footer />
-        <GoogleAnalytics />
+        {process.env.NODE_ENV === "production" &&
+          process.env.CF_PAGES_BRANCH === "main" && <GoogleAnalytics />}
         <GoogleAdSense />
       </body>
     </html>
