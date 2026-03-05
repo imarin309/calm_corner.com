@@ -16,6 +16,7 @@ export default function Footer() {
           target="_blank"
           rel="noopener noreferrer"
           className="text-stone-500 transition-colors hover:text-stone-300"
+          aria-label={`${siteName} の X アカウントを新しいタブで開く`}
         >
           <span className="text-sm font-bold">X</span>
         </a>
