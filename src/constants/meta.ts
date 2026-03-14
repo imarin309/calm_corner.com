@@ -5,3 +5,4 @@ export const siteDescription =
 export const siteUrl = "https://calm-corner.com";
 export const siteAuthor = "imarin";
 export const siteXUrl = "https://x.com/imarin309";
+export const dmmAfId = "imarin-003";
