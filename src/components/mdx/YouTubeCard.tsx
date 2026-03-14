@@ -1,5 +1,3 @@
-"use client";
-
 interface YouTubeCardProps {
   url: string;
 }
