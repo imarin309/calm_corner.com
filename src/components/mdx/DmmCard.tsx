@@ -36,7 +36,6 @@ export function DmmCard({ href, imgSrc, title, price }: DmmCardProps) {
           width={112}
           height={112}
           className="w-28 h-28 object-contain flex-shrink-0"
-          unoptimized
         />
         <div className="flex flex-col justify-between min-w-0">
           <p className="text-sm font-medium text-foreground leading-relaxed line-clamp-3">
@@ -72,7 +71,6 @@ export function DmmCardImage({ href, imgSrc, title }: DmmCardImageProps) {
             width={400}
             height={400}
             className="object-contain"
-            unoptimized
           />
         </a>
       </div>
