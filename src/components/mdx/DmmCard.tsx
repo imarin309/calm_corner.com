@@ -61,7 +61,11 @@ export function DmmCardImage({ href, imgSrc, title }: DmmCardImageProps) {
         <span className="absolute top-1.5 left-2 text-[10px] font-medium text-gray-400 leading-none z-10">
           ads
         </span>
-        <a href={fixAfId(href)} target="_blank" rel="nofollow sponsored noopener">
+        <a
+          href={fixAfId(href)}
+          target="_blank"
+          rel="nofollow sponsored noopener"
+        >
           <Image
             src={imgSrc}
             alt={title}
