@@ -1,5 +1,5 @@
 ---
-title: " title | catch copy"
+title: "title | catch copy"
 description: ""
 date: 2026-03-03
 category: gunpla / girls-plamo / other
