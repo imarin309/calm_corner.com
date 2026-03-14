@@ -68,3 +68,29 @@
 | プロパティ | 型 | 必須 | 説明 |
 |-----------|-----|------|------|
 | `images` | `{ src: string; alt: string; caption?: string }[]` | はい | 表示する画像の配列。`caption` で写真下にイタリックの説明文を表示 |
+
+---
+
+# YouTubeCard の使い方
+
+YouTube動画をページ内に埋め込むコンポーネントです。URLを渡すだけでプレーヤーが表示されます。
+
+## 基本の書き方
+
+```mdx
+<YouTubeCard url="https://www.youtube.com/watch?v=xxxxx" />
+```
+
+## 対応しているURLの形式
+
+| 形式 | 例 |
+|------|----|
+| 通常動画 | `https://www.youtube.com/watch?v=xxxxx` |
+| 短縮URL | `https://youtu.be/xxxxx` |
+| Shorts | `https://www.youtube.com/shorts/xxxxx` |
+
+## プロパティ一覧
+
+| プロパティ | 型 | 必須 | 説明 |
+|-----------|-----|------|------|
+| `url` | `string` | はい | YouTube動画のURL |
