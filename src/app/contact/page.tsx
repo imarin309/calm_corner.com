@@ -4,6 +4,10 @@ import { siteXUrl, siteXId, siteEmail } from "@/constants/meta";
 export const metadata: Metadata = {
   title: "お問い合わせ",
   description: "Calm Cornerへのお問い合わせはこちらから。",
+  openGraph: {
+    title: "お問い合わせ",
+    description: "Calm Cornerへのお問い合わせはこちらから。",
+  },
 };
 
 export default function ContactPage() {
@@ -11,7 +15,7 @@ export default function ContactPage() {
     <article className="mx-auto max-w-3xl py-12">
       <div className="mb-16">
         <h1 className="mb-6 text-3xl font-bold tracking-tight text-stone-800 sm:text-4xl">
-          Contact
+          お問い合わせ
         </h1>
         <p className="max-w-2xl text-stone-500">
           ご質問・ご感想はメールまたは X の DM からお気軽にどうぞ。
