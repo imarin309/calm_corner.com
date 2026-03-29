@@ -67,7 +67,9 @@ export default function NavBar() {
           {/* ハンバーガーボタン（スマホのみ） */}
           <button
             className="sm:hidden p-1 text-stone-600 hover:text-stone-900"
-            aria-label="メニューを開く"
+            aria-label={
+              isMobileMenuOpen ? "メニューを閉じる" : "メニューを開く"
+            }
             aria-expanded={isMobileMenuOpen}
             onClick={() => setIsMobileMenuOpen((prev) => !prev)}
           >
