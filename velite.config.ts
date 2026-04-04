@@ -3,6 +3,7 @@ import remarkBreaks from "remark-breaks";
 import remarkDirective from "remark-directive";
 import { remarkTextSize } from "./src/lib/remark-text-size";
 import { remarkLinkCard } from "./src/lib/remark-link-card";
+import { extractExcerpt } from "./src/lib/extract-excerpt";
 
 const posts = defineCollection({
   name: "Post",
@@ -17,11 +18,12 @@ const posts = defineCollection({
       noindex: s.boolean().optional().default(false),
       slug: s.path(),
       content: s.mdx(),
-      excerpt: s.excerpt(),
+      raw: s.raw(),
     })
-    .transform((data) => ({
+    .transform(({ raw, ...data }) => ({
       ...data,
       slug: data.slug.replace(/^posts\//, ""),
+      excerpt: extractExcerpt(raw),
     })),
 });
 
