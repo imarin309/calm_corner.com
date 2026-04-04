@@ -38,11 +38,22 @@ async function fetchOGP(url: string): Promise<OGPData> {
 
     const titleMatch = html.match(/<title[^>]*>([^<]*)<\/title>/i);
 
+    const rawImage = getMetaContent("og:image");
+    const image = rawImage
+      ? (() => {
+          try {
+            return new URL(rawImage, url).href;
+          } catch {
+            return "";
+          }
+        })()
+      : "";
+
     return {
       title: getMetaContent("og:title") || titleMatch?.[1] || url,
       description:
         getMetaContent("og:description") || getMetaContent("description") || "",
-      image: getMetaContent("og:image") || "",
+      image,
       favicon,
     };
   } catch {
@@ -66,7 +77,7 @@ export const remarkLinkCard: Plugin<[], Root> = () => {
     const tasks: Array<{ parent: Parent; index: number; url: string }> = [];
 
     visit(tree, "paragraph", (node: Paragraph, index, parent) => {
-      if (index === undefined || !parent) return;
+      if (index == null || !parent) return;
       if (node.children.length !== 1) return;
 
       const child = node.children[0];
@@ -103,9 +114,7 @@ export const remarkLinkCard: Plugin<[], Root> = () => {
           parent.children[index] = {
             type: "mdxJsxFlowElement",
             name: "YouTubeCard",
-            attributes: [
-              { type: "mdxJsxAttribute", name: "url", value: url },
-            ],
+            attributes: [{ type: "mdxJsxAttribute", name: "url", value: url }],
             children: [],
           };
           return;
