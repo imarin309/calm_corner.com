@@ -16,6 +16,7 @@ function extractYouTubeId(url: string): string | null {
   if (!ALLOWED_HOSTS.includes(parsed.hostname)) return null;
 
   let id: string | null = null;
+
   if (parsed.hostname === "youtu.be") {
     id = parsed.pathname.slice(1);
   } else if (

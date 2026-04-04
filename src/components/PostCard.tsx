@@ -4,7 +4,7 @@ import { getCategoryName } from "@/constants/category";
 
 interface PostCardProps {
   title: string;
-  description?: string;
+  excerpt?: string;
   date: string;
   slug: string;
   coverImage?: string;
@@ -13,7 +13,7 @@ interface PostCardProps {
 
 export default function PostCard({
   title,
-  description,
+  excerpt,
   date,
   slug,
   coverImage,
@@ -49,9 +49,9 @@ export default function PostCard({
           <h2 className="mt-2 text-lg font-semibold leading-snug text-stone-700 group-hover:text-stone-900">
             {title}
           </h2>
-          {description && (
+          {excerpt && (
             <p className="mt-2 line-clamp-2 text-sm text-stone-500">
-              {description}
+              {excerpt}
             </p>
           )}
         </div>

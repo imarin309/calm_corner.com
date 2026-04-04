@@ -17,6 +17,7 @@ const posts = defineCollection({
       noindex: s.boolean().optional().default(false),
       slug: s.path(),
       content: s.mdx(),
+      excerpt: s.excerpt(),
     })
     .transform((data) => ({
       ...data,

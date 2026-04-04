@@ -51,6 +51,15 @@ async function fetchOGP(url: string): Promise<OGPData> {
 }
 
 const URL_REGEX = /^https?:\/\/\S+$/;
+const YOUTUBE_HOSTS = ["www.youtube.com", "youtube.com", "youtu.be"];
+
+function isYouTubeUrl(url: string): boolean {
+  try {
+    return YOUTUBE_HOSTS.includes(new URL(url).hostname);
+  } catch {
+    return false;
+  }
+}
 
 export const remarkLinkCard: Plugin<[], Root> = () => {
   return async (tree) => {
@@ -78,7 +87,8 @@ export const remarkLinkCard: Plugin<[], Root> = () => {
       }
     });
 
-    const uniqueUrls = [...new Set(tasks.map((t) => t.url))];
+    const nonYouTubeTasks = tasks.filter((t) => !isYouTubeUrl(t.url));
+    const uniqueUrls = [...new Set(nonYouTubeTasks.map((t) => t.url))];
     const CONCURRENCY = 5;
     const ogpCache = new Map<string, OGPData>();
     for (let i = 0; i < uniqueUrls.length; i += CONCURRENCY) {
@@ -89,6 +99,18 @@ export const remarkLinkCard: Plugin<[], Root> = () => {
 
     await Promise.all(
       tasks.map(async ({ parent, index, url }) => {
+        if (isYouTubeUrl(url)) {
+          parent.children[index] = {
+            type: "mdxJsxFlowElement",
+            name: "YouTubeCard",
+            attributes: [
+              { type: "mdxJsxAttribute", name: "url", value: url },
+            ],
+            children: [],
+          };
+          return;
+        }
+
         const ogp = ogpCache.get(url)!;
         parent.children[index] = {
           type: "mdxJsxFlowElement",
