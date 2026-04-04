@@ -87,8 +87,11 @@ async function processImage(
   const outputPath = path.join(OUTPUT_DIR, outputFileName);
 
   const metadata = await sharp(inputPath).metadata();
-  const imageWidth = metadata.width!;
-  const imageHeight = metadata.height!;
+  // EXIF orientation 5-8 は90/270度回転のため、表示上の縦横が生データと逆になる
+  const needsSwap =
+    metadata.orientation !== undefined && metadata.orientation >= 5;
+  const imageWidth = needsSwap ? metadata.height! : metadata.width!;
+  const imageHeight = needsSwap ? metadata.width! : metadata.height!;
 
   console.log(
     `\n[${currentIndex + 1}/${totalCount}] 処理中: ${inputParsed.base}`,
@@ -482,6 +485,7 @@ async function processImage(
             ) as ConvertRequest;
 
             await sharp(inputPath)
+              .rotate() // EXIFの方向情報を適用してから処理
               .extract({
                 left: Math.max(0, left),
                 top: Math.max(0, top),

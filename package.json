@@ -8,14 +8,15 @@
     "start": "next start",
     "lint": "prettier --check . && eslint && markdownlint-cli2 \"content/**/*.mdx\"",
     "format": "prettier --write . && eslint --fix && markdownlint-cli2 --fix \"content/**/*.mdx\"",
-    "velite": "velite"
+    "velite": "velite",
+    "update": "npx npm-check-updates -u --reject eslint-plugin-mdx,markdownlint-cli2,typescript && npm install --legacy-peer-deps && npm audit fix --legacy-peer-deps"
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.19",
     "markdownlint-cli2": "^0.21.0",
-    "next": "16.1.6",
-    "react": "19.2.3",
-    "react-dom": "19.2.3",
+    "next": "16.2.2",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
     "remark-breaks": "^4.0.0",
     "remark-directive": "^4.0.0",
     "unist-util-visit": "^5.1.0",
@@ -23,12 +24,12 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
-    "@types/mdast": "^4.0.0",
-    "@types/node": "^20",
+    "@types/mdast": "^4.0.4",
+    "@types/node": "^25",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "16.1.6",
+    "eslint": "^10",
+    "eslint-config-next": "16.2.2",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-mdx": "^3.6.2",
     "mdast-util-directive": "^3.1.0",
@@ -36,7 +37,7 @@
     "sharp": "^0.34.5",
     "tailwindcss": "^4",
     "tsx": "^4.21.0",
-    "turndown": "^7.2.2",
+    "turndown": "^7.2.4",
     "typescript": "^5",
     "xml2js": "^0.6.2"
   }

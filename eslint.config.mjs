@@ -13,6 +13,11 @@ const eslintConfig = defineConfig([
   mdxFlat,
   mdxFlatCodeBlocks,
   prettier,
+  {
+    settings: {
+      react: { version: "19" },
+    },
+  },
   // Override default ignores of eslint-config-next.
   globalIgnores([
     // Default ignores of eslint-config-next:

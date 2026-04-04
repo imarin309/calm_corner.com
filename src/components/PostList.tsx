@@ -4,6 +4,7 @@ import Pagination from "@/components/Pagination";
 interface Post {
   title: string;
   description?: string;
+  excerpt?: string;
   date: string;
   slug: string;
   coverImage?: string;
@@ -37,7 +38,7 @@ export default function PostList({
               <PostCard
                 key={post.slug}
                 title={post.title}
-                description={post.description}
+                excerpt={post.excerpt ?? post.description}
                 date={post.date}
                 slug={post.slug}
                 coverImage={post.coverImage}
