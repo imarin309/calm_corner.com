@@ -3,6 +3,7 @@ import BeforeAfter from "./BeforeAfter";
 import { DmmCard, DmmCardImage } from "./DmmCard";
 import YouTubeCard from "./YouTubeCard";
 import LinkCard from "./LinkCard";
+import { RakutenCard } from "./RakutenCard";
 
 export const mdxComponents = {
   ImageGallery,
@@ -11,6 +12,7 @@ export const mdxComponents = {
   DmmCardImage,
   YouTubeCard,
   LinkCard,
+  RakutenCard,
 };
 
 export {
@@ -20,4 +22,5 @@ export {
   DmmCardImage,
   YouTubeCard,
   LinkCard,
+  RakutenCard,
 };

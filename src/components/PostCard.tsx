@@ -28,22 +28,20 @@ export default function PostCard({
   return (
     <article className="group overflow-hidden border border-stone-200 bg-white transition-all hover:border-stone-300 hover:shadow-lg">
       <Link href={`/posts/${slug}`} className="sm:flex">
-        {coverImage && (
-          <div className="relative aspect-[1200/675] overflow-hidden sm:w-72 sm:shrink-0">
-            <Image
-              src={coverImage}
-              alt={title}
-              fill
-              sizes="(min-width: 640px) 288px, 100vw"
-              className="object-cover transition-transform group-hover:scale-105"
-            />
-            <div className="absolute left-0 top-3">
-              <span className="bg-stone-800 px-3 py-1 text-xs font-medium text-white">
-                {getCategoryName(category)}
-              </span>
-            </div>
+        <div className="relative aspect-[1200/675] overflow-hidden sm:w-72 sm:shrink-0">
+          <Image
+            src={coverImage ?? "/icon.png"}
+            alt={title}
+            fill
+            sizes="(min-width: 640px) 288px, 100vw"
+            className="object-cover transition-transform group-hover:scale-105"
+          />
+          <div className="absolute left-0 top-3">
+            <span className="bg-stone-800 px-3 py-1 text-xs font-medium text-white">
+              {getCategoryName(category)}
+            </span>
           </div>
-        )}
+        </div>
         <div className="p-4 sm:flex sm:flex-col sm:justify-center">
           <time className="text-xs text-stone-400">{formattedDate}</time>
           <h2 className="mt-2 text-lg font-semibold leading-snug text-stone-700 group-hover:text-stone-900">

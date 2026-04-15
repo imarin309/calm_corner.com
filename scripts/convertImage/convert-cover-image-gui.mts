@@ -197,6 +197,10 @@ async function processImage(
       background: #FF9800;
       color: white;
     }
+    .btn-original {
+      background: #9C27B0;
+      color: white;
+    }
     .btn-cancel {
       background: #666;
       color: white;
@@ -238,6 +242,7 @@ async function processImage(
 
   <div class="controls">
     <button class="btn-confirm" onclick="confirmCrop()">この範囲で切り取る</button>
+    <button class="btn-original" onclick="convertOriginal()">サイズそのまま変換</button>
     <button class="btn-skip" onclick="skip()">スキップ</button>
     <button class="btn-cancel" onclick="cancel()">全てキャンセル</button>
   </div>
@@ -439,6 +444,33 @@ async function processImage(
             height: Math.round(cropHeight * scaleY),
             targetW: currentMode().w,
             targetH: currentMode().h
+          })
+        });
+        const result = await response.json();
+        if (result.success) {
+          status.textContent = '完了！次の画像を読み込み中...';
+          waitAndReload();
+        } else {
+          status.textContent = 'エラー: ' + result.error;
+        }
+      } catch (err) {
+        status.textContent = 'エラー: ' + err.message;
+      }
+    }
+
+    async function convertOriginal() {
+      status.textContent = '処理中...';
+      try {
+        const response = await fetch('/convert', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            top: 0,
+            left: 0,
+            width: originalWidth,
+            height: originalHeight,
+            targetW: originalWidth,
+            targetH: originalHeight
           })
         });
         const result = await response.json();
