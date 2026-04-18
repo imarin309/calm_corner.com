@@ -57,7 +57,7 @@ export default async function CategoryPaginatedPage({
   return (
     <PostList
       posts={pagePosts}
-      title={`${category.name}の記事一覧 - ページ ${pageNum}`}
+      title={`${category.name} ページ ${pageNum}`}
       currentPage={pageNum}
       totalPages={totalPages}
       basePath={`/category/${category_name}`}

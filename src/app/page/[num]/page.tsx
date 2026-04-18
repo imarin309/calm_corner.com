@@ -40,7 +40,7 @@ export default async function PaginatedPage({
     <>
       <PostList
         posts={pagePosts}
-        title={`記事一覧 - ページ ${pageNum}`}
+        title={`ページ ${pageNum}`}
         currentPage={pageNum}
         totalPages={totalPages}
       />
