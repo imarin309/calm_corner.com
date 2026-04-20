@@ -11,11 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
-      - run: npm ci
-      - run: npx prettier --check .
-      - run: npx eslint
-      - run: npx markdownlint-cli2 "content/pages/**/*.mdx" "content/posts/**/*.mdx"
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run lint
