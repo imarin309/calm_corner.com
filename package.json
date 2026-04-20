@@ -10,7 +10,7 @@
     "lint": "prettier --check . && eslint && markdownlint-cli2 \"content/**/*.mdx\"",
     "format": "prettier --write . && eslint --fix && markdownlint-cli2 --fix \"content/**/*.mdx\"",
     "velite": "velite",
-    "update": "pnpm dlx npm-check-updates -u --reject eslint-plugin-mdx,markdownlint-cli2,typescript && pnpm install"
+    "update": "pnpm dlx npm-check-updates -u --reject eslint-plugin-mdx,markdownlint-cli2,typescript && pnpm install && pnpm audit --fix"
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.19",
