@@ -17,6 +17,4 @@ jobs:
           node-version: 22
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - run: npx prettier --check .
-      - run: npx eslint
-      - run: npx markdownlint-cli2 "content/pages/**/*.mdx" "content/posts/**/*.mdx"
+      - run: pnpm run lint
