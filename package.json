@@ -20,6 +20,7 @@
     "react-dom": "19.2.4",
     "remark-breaks": "^4.0.0",
     "remark-directive": "^4.0.0",
+    "unified": "^11.0.5",
     "unist-util-visit": "^5.1.0",
     "velite": "^0.3.1"
   },
