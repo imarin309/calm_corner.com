@@ -1,12 +1,9 @@
-/**
- * トップページ - 最新記事一覧を表示（1ページ目）
- */
 import PostList from "@/components/PostList";
-import { posts } from "#site/content";
+import { getAllPosts } from "@/lib/posts";
 import { POSTS_PER_PAGE } from "@/constants/config";
 
 export default function Home() {
-  const sortedPosts = posts.sort(
+  const sortedPosts = getAllPosts().sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
   );
 

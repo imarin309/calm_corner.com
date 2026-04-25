@@ -16,9 +16,6 @@
 /.next/
 /out/
 
-# velite
-/.velite/
-
 # production
 /build
 
@@ -51,3 +48,5 @@ scripts/convertImage/dataEdited/
 
 # drafts
 content/drafts/
+
+.claude/plan.md

@@ -1,12 +1,9 @@
-/**
- * ページネーション - 2ページ目以降の記事一覧
- */
 import { redirect } from "next/navigation";
 import PostList from "@/components/PostList";
-import { posts } from "#site/content";
+import { getAllPosts } from "@/lib/posts";
 import { POSTS_PER_PAGE } from "@/constants/config";
 
-const sortedPosts = posts.sort(
+const sortedPosts = getAllPosts().sort(
   (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
 );
 

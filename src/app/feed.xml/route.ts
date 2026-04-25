@@ -1,4 +1,4 @@
-import { posts } from "#site/content";
+import { getAllPosts } from "@/lib/posts";
 import { siteName, siteDescription, siteUrl } from "@/constants/meta";
 
 export const dynamic = "force-static";
@@ -13,7 +13,7 @@ function escapeXml(str: string): string {
 }
 
 export function GET() {
-  const sortedPosts = posts
+  const sortedPosts = getAllPosts()
     .filter((post) => !post.noindex)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 

@@ -1,19 +1,18 @@
 import type { MetadataRoute } from "next";
-import { posts } from "#site/content";
+import { getAllPosts } from "@/lib/posts";
 import { siteUrl } from "@/constants/meta";
 
 export const dynamic = "force-static";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const postEntries = posts
-    .filter((post) => !post.noindex)
-    .map((post) => ({
-      url: `${siteUrl}/posts/${post.slug}`,
-      lastModified: new Date(post.date),
-    }));
+  const allPosts = getAllPosts().filter((post) => !post.noindex);
 
-  const latestPost = posts
-    .filter((post) => !post.noindex)
+  const postEntries = allPosts.map((post) => ({
+    url: `${siteUrl}/posts/${post.slug}`,
+    lastModified: new Date(post.date),
+  }));
+
+  const latestPost = allPosts
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     .at(0);
 
