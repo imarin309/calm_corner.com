@@ -73,12 +73,12 @@ export function getAllPosts(): Post[] {
     .map((f) => parsePost(f));
 }
 
+const SAFE_SLUG = /^[a-zA-Z0-9_-]+$/;
+
 export function getPostBySlug(slug: string): Post | undefined {
-  // ディレクトリトラバーサル防御
-  const normalized = path.normalize(slug);
-  if (normalized.includes("..") || normalized.includes("/")) return undefined;
+  if (!SAFE_SLUG.test(slug)) return undefined;
   try {
-    return parsePost(`${normalized}.mdx`);
+    return parsePost(`${slug}.mdx`);
   } catch {
     return undefined;
   }
@@ -92,10 +92,9 @@ export function getAllPages(): Page[] {
 }
 
 export function getPageBySlug(slug: string): Page | undefined {
-  const normalized = path.normalize(slug);
-  if (normalized.includes("..") || normalized.includes("/")) return undefined;
+  if (!SAFE_SLUG.test(slug)) return undefined;
   try {
-    return parsePage(`${normalized}.mdx`);
+    return parsePage(`${slug}.mdx`);
   } catch {
     return undefined;
   }
