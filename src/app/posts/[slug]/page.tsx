@@ -1,16 +1,11 @@
 import { notFound } from "next/navigation";
-import { posts } from "#site/content";
-import { MDXContent } from "@/components/mdx/MDXContent";
+import { getAllPosts, getPostBySlug } from "@/lib/posts";
 import { getCategoryName } from "@/constants/category";
 import { siteName, siteUrl, siteAuthor } from "@/constants/meta";
 import type { Metadata } from "next";
 
 interface PostPageProps {
   params: Promise<{ slug: string }>;
-}
-
-function getPostBySlug(slug: string) {
-  return posts.find((post) => post.slug === slug);
 }
 
 export async function generateMetadata({
@@ -48,7 +43,7 @@ export async function generateMetadata({
 }
 
 export async function generateStaticParams() {
-  return posts.map((post) => ({
+  return getAllPosts().map((post) => ({
     slug: post.slug,
   }));
 }
@@ -60,6 +55,10 @@ export default async function PostPage({ params }: PostPageProps) {
   if (!post) {
     notFound();
   }
+
+  const { default: MDXContent } = await import(
+    `../../../../content/posts/${slug}.mdx`
+  );
 
   const formattedDate = new Date(post.date).toLocaleDateString("ja-JP", {
     year: "numeric",
@@ -107,7 +106,7 @@ export default async function PostPage({ params }: PostPageProps) {
         </header>
 
         <div className="prose prose-stone max-w-none prose-headings:font-semibold prose-a:text-stone-600 prose-a:underline-offset-2 hover:prose-a:text-stone-900">
-          <MDXContent code={post.content} />
+          <MDXContent />
         </div>
       </article>
     </>

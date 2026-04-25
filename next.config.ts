@@ -1,6 +1,25 @@
-import type { NextConfig } from "next";
+import createMDX from "@next/mdx";
+import remarkBreaks from "remark-breaks";
+import remarkDirective from "remark-directive";
+import remarkFrontmatter from "remark-frontmatter";
+import remarkGfm from "remark-gfm";
+import { remarkTextSize } from "./src/lib/remark-text-size";
+import { remarkLinkCard } from "./src/lib/remark-link-card";
 
-const nextConfig: NextConfig = {
+const withMDX = createMDX({
+  options: {
+    remarkPlugins: [
+      remarkFrontmatter,
+      remarkGfm,
+      remarkBreaks,
+      remarkDirective,
+      remarkTextSize,
+      remarkLinkCard,
+    ],
+  },
+});
+
+export default withMDX({
   output: "export",
   serverExternalPackages: ["lightningcss"],
   images: {
@@ -20,6 +39,5 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-};
-
-export default nextConfig;
+  pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
+});

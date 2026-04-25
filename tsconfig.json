@@ -20,7 +20,7 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
-      "#site/content": ["./.velite"]
+      "mdx/types": ["./node_modules/@types/mdx/types.d.ts"]
     }
   },
   "include": [
@@ -30,7 +30,7 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts",
-    ".velite/**/*.ts"
+    "content/**/*.mdx"
   ],
   "exclude": ["node_modules", "functions"]
 }

@@ -3,7 +3,7 @@
  */
 import { redirect, notFound } from "next/navigation";
 import PostList from "@/components/PostList";
-import { posts } from "#site/content";
+import { getAllPosts } from "@/lib/posts";
 import { getAllCategories, getCategoryBySlug } from "@/constants/category";
 import { POSTS_PER_PAGE } from "@/constants/config";
 
@@ -11,7 +11,7 @@ export function generateStaticParams() {
   const allParams: { category_name: string; num: string }[] = [];
 
   for (const category of getAllCategories()) {
-    const count = posts.filter(
+    const count = getAllPosts().filter(
       (post) => post.category === category.slug,
     ).length;
     const totalPages = Math.ceil(count / POSTS_PER_PAGE);
@@ -40,7 +40,7 @@ export default async function CategoryPaginatedPage({
     notFound();
   }
 
-  const filteredPosts = posts
+  const filteredPosts = getAllPosts()
     .filter((post) => post.category === category_name)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 

@@ -1,11 +1,7 @@
 import { notFound } from "next/navigation";
-import { pages } from "#site/content";
-import { MDXContent } from "@/components/mdx/MDXContent";
+import { getPageBySlug } from "@/lib/posts";
+import MDXContent from "../../../content/pages/privacy-policy.mdx";
 import type { Metadata } from "next";
-
-function getPageBySlug(slug: string) {
-  return pages.find((page) => page.slug === slug);
-}
 
 export async function generateMetadata(): Promise<Metadata> {
   const page = getPageBySlug("privacy-policy");
@@ -40,7 +36,7 @@ export default function PrivacyPage() {
       </header>
 
       <div className="prose prose-stone max-w-none prose-headings:font-semibold prose-a:text-stone-600 prose-a:underline-offset-2 hover:prose-a:text-stone-900">
-        <MDXContent code={page.content} />
+        <MDXContent />
       </div>
     </article>
   );
