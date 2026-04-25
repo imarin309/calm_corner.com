@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import dynamic from "next/dynamic";
 import { getAllPosts, getPostBySlug } from "@/lib/posts";
 import { getCategoryName } from "@/constants/category";
 import { siteName, siteUrl, siteAuthor } from "@/constants/meta";
@@ -57,8 +56,8 @@ export default async function PostPage({ params }: PostPageProps) {
     notFound();
   }
 
-  const MDXContent = dynamic(
-    () => import(`../../../../content/posts/${slug}.mdx`),
+  const { default: MDXContent } = await import(
+    `../../../../content/posts/${slug}.mdx`
   );
 
   const formattedDate = new Date(post.date).toLocaleDateString("ja-JP", {
