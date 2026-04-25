@@ -19,7 +19,8 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "mdx/types": ["./node_modules/@types/mdx/types.d.ts"]
     }
   },
   "include": [
