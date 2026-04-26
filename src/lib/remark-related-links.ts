@@ -2,18 +2,8 @@ import { visit } from "unist-util-visit";
 import { parse as acornParse } from "acorn";
 import type { Root } from "mdast";
 import type { Plugin } from "unified";
-
-interface MdxJsxAttribute {
-  type: "mdxJsxAttribute";
-  name: string;
-  value: { value: string; data?: unknown } | string | null;
-}
-
-interface MdxJsxFlowElement {
-  type: "mdxJsxFlowElement";
-  name: string;
-  attributes: MdxJsxAttribute[];
-}
+import type { Program } from "estree";
+import type { MdxJsxFlowElement, MdxJsxAttribute } from "mdast-util-mdx-jsx";
 
 interface RelatedLinkItem {
   label: string;
@@ -88,10 +78,12 @@ export const remarkRelatedLinks: Plugin<[], Root> = () => {
     });
 
     for (const node of nodes) {
-      const itemsAttr = node.attributes?.find((a) => a.name === "items");
+      const itemsAttr = node.attributes?.find(
+        (a): a is MdxJsxAttribute =>
+          a.type === "mdxJsxAttribute" && a.name === "items",
+      );
       const attrValue = itemsAttr?.value;
-      if (!attrValue || typeof attrValue !== "object" || !attrValue.value)
-        continue;
+      if (!attrValue || typeof attrValue !== "object") continue;
 
       let items: RelatedLinkItem[];
       try {
@@ -121,7 +113,9 @@ export const remarkRelatedLinks: Plugin<[], Root> = () => {
       // MDXコンパイラはdata.estreeを優先するため、acornで再パースして更新する
       attrValue.value = newValue;
       attrValue.data = {
-        estree: acornParse(newValue, { ecmaVersion: 2020 }),
+        estree: acornParse(newValue, {
+          ecmaVersion: 2020,
+        }) as unknown as Program,
       };
     }
   };

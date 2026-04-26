@@ -25,6 +25,7 @@
     "remark-directive": "^4.0.0",
     "remark-frontmatter": "^5.0.0",
     "remark-gfm": "^4.0.1",
+    "acorn": "^8.16.0",
     "unist-util-visit": "^5.1.0"
   },
   "pnpm": {
