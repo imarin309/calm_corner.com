@@ -5,6 +5,7 @@ import remarkFrontmatter from "remark-frontmatter";
 import remarkGfm from "remark-gfm";
 import { remarkTextSize } from "./src/lib/remark-text-size";
 import { remarkLinkCard } from "./src/lib/remark-link-card";
+import { remarkRelatedLinks } from "./src/lib/remark-related-links";
 
 const withMDX = createMDX({
   options: {
@@ -15,6 +16,7 @@ const withMDX = createMDX({
       remarkDirective,
       remarkTextSize,
       remarkLinkCard,
+      remarkRelatedLinks,
     ],
   },
 });
