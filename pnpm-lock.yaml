@@ -19,6 +19,9 @@ importers:
       "@tailwindcss/typography":
         specifier: ^0.5.19
         version: 0.5.19(tailwindcss@4.2.1)
+      acorn:
+        specifier: ^8.16.0
+        version: 8.16.0
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
@@ -53,6 +56,9 @@ importers:
       "@tailwindcss/postcss":
         specifier: ^4
         version: 4.2.1
+      "@types/estree":
+        specifier: ^1.0.8
+        version: 1.0.8
       "@types/mdast":
         specifier: ^4.0.4
         version: 4.0.4
@@ -83,6 +89,9 @@ importers:
       mdast-util-directive:
         specifier: ^3.1.0
         version: 3.1.0
+      mdast-util-mdx-jsx:
+        specifier: ^3.2.0
+        version: 3.2.0
       prettier:
         specifier: ^3.8.1
         version: 3.8.1

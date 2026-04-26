@@ -4,6 +4,7 @@ import { DmmCard, DmmCardImage } from "./DmmCard";
 import YouTubeCard from "./YouTubeCard";
 import LinkCard from "./LinkCard";
 import { RakutenCard } from "./RakutenCard";
+import RelatedLinks from "./RelatedLinks";
 
 export const mdxComponents = {
   ImageGallery,
@@ -13,6 +14,7 @@ export const mdxComponents = {
   YouTubeCard,
   LinkCard,
   RakutenCard,
+  RelatedLinks,
 };
 
 export {
@@ -23,4 +25,5 @@ export {
   YouTubeCard,
   LinkCard,
   RakutenCard,
+  RelatedLinks,
 };

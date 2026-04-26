@@ -1,6 +1,7 @@
 {
   "ignores": ["content/drafts"],
   "config": {
+    "MD012": true,
     "MD013": false,
     "MD034": false,
     "MD033": {
@@ -12,6 +13,7 @@
         "DmmCard",
         "DmmCardImage",
         "RakutenCard",
+        "RelatedLinks",
       ],
     },
   },
