@@ -13,7 +13,11 @@ interface RelatedLinksProps {
 
 function YouTubeIcon() {
   return (
-    <svg viewBox="0 0 24 24" className="w-4 h-4 fill-red-500 flex-shrink-0">
+    <svg
+      viewBox="0 0 24 24"
+      className="w-4 h-4 fill-red-500 flex-shrink-0"
+      aria-hidden="true"
+    >
       <path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.54 3.5 12 3.5 12 3.5s-7.54 0-9.38.55A3.02 3.02 0 0 0 .5 6.19C0 8.04 0 12 0 12s0 3.96.5 5.81a3.02 3.02 0 0 0 2.12 2.14C4.46 20.5 12 20.5 12 20.5s7.54 0 9.38-.55a3.02 3.02 0 0 0 2.12-2.14C24 15.96 24 12 24 12s0-3.96-.5-5.81zM9.75 15.5v-7l6.5 3.5-6.5 3.5z" />
     </svg>
   );
@@ -24,6 +28,7 @@ function ExternalIcon() {
     <svg
       viewBox="0 0 24 24"
       className="w-4 h-4 text-stone-400 flex-shrink-0"
+      aria-hidden="true"
       fill="none"
       stroke="currentColor"
       strokeWidth={2}
@@ -117,6 +122,7 @@ export default function RelatedLinks({ items }: RelatedLinksProps) {
               <svg
                 viewBox="0 0 24 24"
                 className="w-4 h-4 text-stone-300 group-hover:text-stone-400 flex-shrink-0 mr-3 transition-colors"
+                aria-hidden="true"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth={2}
