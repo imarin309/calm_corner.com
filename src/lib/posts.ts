@@ -8,6 +8,7 @@ export type Post = {
   title: string;
   date: string;
   category: string;
+  tags: string[];
   description?: string;
   coverImage?: string;
   noindex: boolean;
@@ -44,6 +45,7 @@ function parsePost(filename: string): Post {
     title: String(data.title),
     date: normalizeDate(data.date),
     category: String(data.category),
+    tags: Array.isArray(data.tags) ? data.tags.map(String) : [],
     description: data.description ? String(data.description) : undefined,
     coverImage: data.coverImage ? String(data.coverImage) : undefined,
     noindex: Boolean(data.noindex ?? false),
