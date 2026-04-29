@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { getAllPosts, getPostBySlug } from "@/lib/posts";
 import { getCategoryName } from "@/constants/category";
+import TagBadge from "@/components/TagBadge";
 import { siteName, siteUrl, siteAuthor } from "@/constants/meta";
 import type { Metadata } from "next";
 
@@ -98,10 +99,17 @@ export default async function PostPage({ params }: PostPageProps) {
           <h1 className="mt-2 text-2xl font-bold tracking-tight text-stone-800 sm:text-3xl">
             {post.title}
           </h1>
-          <div className="mt-4">
+          <div className="mt-4 flex flex-wrap items-center gap-3">
             <span className="bg-stone-800 px-3 py-1 text-xs text-white">
               {getCategoryName(post.category)}
             </span>
+            {post.tags.length > 0 && (
+              <div className="flex flex-wrap gap-2">
+                {post.tags.map((tag) => (
+                  <TagBadge key={tag} tag={tag} />
+                ))}
+              </div>
+            )}
           </div>
         </header>
 

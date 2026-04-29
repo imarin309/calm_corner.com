@@ -9,6 +9,7 @@ interface Post {
   slug: string;
   coverImage?: string;
   category: string;
+  tags?: string[];
 }
 
 interface PostListProps {
@@ -47,6 +48,7 @@ export default function PostList({
                 slug={post.slug}
                 coverImage={post.coverImage}
                 category={post.category}
+                tags={post.tags}
               />
             ))}
           </div>

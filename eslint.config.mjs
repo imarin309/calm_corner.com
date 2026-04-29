@@ -25,6 +25,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Drafts are work-in-progress and should not be linted.
+    "content/drafts/**",
   ]),
 ]);
 
