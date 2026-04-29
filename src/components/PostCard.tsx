@@ -32,7 +32,7 @@ export default function PostCard({
     <article className="group overflow-hidden border border-stone-200 bg-white transition-all hover:border-stone-300 hover:shadow-lg sm:flex">
       <Link
         href={`/posts/${slug}`}
-        className="relative aspect-[1200/675] overflow-hidden sm:w-72 sm:shrink-0 sm:self-stretch"
+        className="block relative aspect-[1200/675] overflow-hidden sm:w-72 sm:shrink-0 sm:self-stretch"
       >
         <Image
           src={coverImage ?? "/icon.png"}
