@@ -8,10 +8,8 @@
       "allowed_elements": [
         "span",
         "ImageGallery",
-        "BeforeAfter",
         "YouTubeCard",
         "DmmCard",
-        "DmmCardImage",
         "RakutenCard",
         "RelatedLinks",
         "BuildStep",
