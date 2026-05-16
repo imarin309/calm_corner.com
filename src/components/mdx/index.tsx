@@ -6,8 +6,10 @@ import { RakutenCard } from "./RakutenCard";
 import RelatedLinks from "./RelatedLinks";
 import ThreeSixtyView from "./ThreeSixtyView";
 import BuildStep, { BuildStepGroup } from "./BuildStep";
+import Heading2 from "./Heading2";
 
 export const mdxComponents = {
+  h2: Heading2,
   ImageGallery,
   DmmCard,
   YouTubeCard,
