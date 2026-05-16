@@ -12,6 +12,7 @@ export const tags: Tag[] = [
   { slug: "frs", name: "figure-rise-standard" },
   { slug: "arcanadia", name: "アルカナディア" },
   { slug: "sousai-syoujo", name: "創彩少女庭園" },
+  { slug: "megaromaria", name: "メガロマリア" },
 ];
 
 export function getAllTags(): Tag[] {

@@ -1,29 +1,32 @@
 import ImageGallery from "./ImageGallery";
-import BeforeAfter from "./BeforeAfter";
-import { DmmCard, DmmCardImage } from "./DmmCard";
+import { DmmCard } from "./DmmCard";
 import YouTubeCard from "./YouTubeCard";
 import LinkCard from "./LinkCard";
 import { RakutenCard } from "./RakutenCard";
 import RelatedLinks from "./RelatedLinks";
+import ThreeSixtyView from "./ThreeSixtyView";
+import BuildStep, { BuildStepGroup } from "./BuildStep";
 
 export const mdxComponents = {
   ImageGallery,
-  BeforeAfter,
   DmmCard,
-  DmmCardImage,
   YouTubeCard,
   LinkCard,
   RakutenCard,
   RelatedLinks,
+  ThreeSixtyView,
+  BuildStep,
+  BuildStepGroup,
 };
 
 export {
   ImageGallery,
-  BeforeAfter,
   DmmCard,
-  DmmCardImage,
   YouTubeCard,
   LinkCard,
   RakutenCard,
   RelatedLinks,
+  ThreeSixtyView,
+  BuildStep,
+  BuildStepGroup,
 };

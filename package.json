@@ -2,7 +2,7 @@
   "name": "calm-corner",
   "version": "0.1.0",
   "private": true,
-  "packageManager": "pnpm@10.33.0",
+  "packageManager": "pnpm@10.33.3",
   "scripts": {
     "dev": "next dev --webpack",
     "build": "next build --webpack",
@@ -16,16 +16,17 @@
     "@mdx-js/react": "^3.1.1",
     "@next/mdx": "^16.2.4",
     "@tailwindcss/typography": "^0.5.19",
+    "acorn": "^8.16.0",
     "gray-matter": "^4.0.3",
+    "lucide-react": "^1.16.0",
     "markdownlint-cli2": "^0.21.0",
-    "next": "16.2.2",
-    "react": "19.2.4",
-    "react-dom": "19.2.4",
+    "next": "16.2.4",
+    "react": "19.2.5",
+    "react-dom": "19.2.5",
     "remark-breaks": "^4.0.0",
     "remark-directive": "^4.0.0",
     "remark-frontmatter": "^5.0.0",
     "remark-gfm": "^4.0.1",
-    "acorn": "^8.16.0",
     "unist-util-visit": "^5.1.0"
   },
   "pnpm": {
@@ -33,7 +34,10 @@
       "esbuild",
       "sharp",
       "unrs-resolver"
-    ]
+    ],
+    "overrides": {
+      "postcss@<8.5.10": ">=8.5.10"
+    }
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
@@ -44,12 +48,12 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^10",
-    "eslint-config-next": "16.2.2",
+    "eslint-config-next": "16.2.4",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-mdx": "^3.6.2",
     "mdast-util-directive": "^3.1.0",
     "mdast-util-mdx-jsx": "^3.2.0",
-    "prettier": "^3.8.1",
+    "prettier": "^3.8.3",
     "sharp": "^0.34.5",
     "tailwindcss": "^4",
     "tsx": "^4.21.0",
