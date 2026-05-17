@@ -43,12 +43,12 @@ coverImage:
     xxx
   </BuildStep>
   <BuildStep number={2.1} title="ボディの白い部分を塗る" images={[
-    { src: "", alt: "", caption: "まず赤を少し混ぜた白で塗る" },
+    { src: "", alt: "", caption: "" },
   ]}>
     xxx
   </BuildStep>
     <BuildStep number={3} title="ドライブラシでエッジの部分にハイライトをつける" images={[
-    { src: "", alt: "", caption: "髪を塗る" },
+    { src: "", alt: "", caption: "" },
   ]}>
     xxx
   </BuildStep>
