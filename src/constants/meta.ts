@@ -10,3 +10,4 @@ export const siteInstagramUrl = "https://www.instagram.com/imarin309";
 export const siteYouTubeUrl = "https://www.youtube.com/@anpan-ch";
 export const siteEmail = "contact@calm-corner.com";
 export const dmmAfId = "imarin-003";
+export const siteHeaderImage = "https://assets.calm-corner.com/meta/header.webp";
