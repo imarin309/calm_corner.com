@@ -6,6 +6,14 @@ category: gunpla / girls-plamo / other
 coverImage: 
 ---
 
+- [ ] 序文
+- [ ] 素組み
+- [ ] 塗装
+- [ ] 完成
+- [ ] 締め
+- [ ] 説明文など
+- [ ] 諸々確認
+
 こんにちは、imarinです！
 
 今回は{xxx}を制作しました、筆塗りで塗装してみました。
