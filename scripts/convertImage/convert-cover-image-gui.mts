@@ -516,23 +516,43 @@ async function processImage(
               body,
             ) as ConvertRequest;
 
-            await sharp(inputPath)
-              .rotate() // EXIFの方向情報を適用してから処理
+            let currentQuality = QUALITY;
+            let buffer: Buffer;
+            const MAX_SIZE = 200 * 1024; // 200KB in bytes
+
+            const pipeline = sharp(inputPath)
+              .rotate()
               .extract({
                 left: Math.max(0, left),
                 top: Math.max(0, top),
                 width: Math.min(width, imageWidth - Math.max(0, left)),
                 height: Math.min(height, imageHeight - Math.max(0, top)),
               })
-              .resize(targetW, targetH, { fit: "fill" })
-              .webp({ quality: QUALITY })
-              .toFile(outputPath);
+              .resize(targetW, targetH, { fit: "fill" });
 
-            const outputStats = fs.statSync(outputPath);
-            const sizeKB = (outputStats.size / 1024).toFixed(1);
+            while (true) {
+              buffer = await pipeline
+                .clone()
+                .webp({ quality: currentQuality })
+                .toBuffer();
+              if (buffer.length <= MAX_SIZE || currentQuality <= 30) {
+                break;
+              }
+              currentQuality -= 5;
+            }
+
+            fs.writeFileSync(outputPath, buffer);
+
+            const sizeKB = (buffer.length / 1024).toFixed(1);
 
             console.log(`  出力: ${outputFileName}`);
-            console.log(`  容量: ${sizeKB} KB`);
+            if (currentQuality !== QUALITY) {
+              console.log(
+                `  容量: ${sizeKB} KB (品質: ${currentQuality} に自動調整)`,
+              );
+            } else {
+              console.log(`  容量: ${sizeKB} KB`);
+            }
 
             res.writeHead(200, { "Content-Type": "application/json" });
             res.end(JSON.stringify({ success: true, output: outputPath }));
