@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useSyncExternalStore } from "react";
 import { usePathname } from "next/navigation";
 import PostCardCompact from "./PostCardCompact";
 
@@ -47,18 +47,19 @@ function Skeleton({ count }: { count: number }) {
   );
 }
 
+const emptySubscribe = () => () => {};
+
 export default function RecommendedPostsClient({
   posts,
   count = 3,
   selectPosts = randomSelect,
 }: RecommendedPostsClientProps) {
   const pathname = usePathname();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setMounted(true);
-  }, []);
+  const mounted = useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false,
+  );
 
   const selected = useMemo(
     () => (mounted ? selectPosts(posts, count) : []),
