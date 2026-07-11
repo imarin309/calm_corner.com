@@ -45,7 +45,7 @@
     "@types/estree": "^1.0.9",
     "@types/mdast": "^4.0.4",
     "@types/mdx": "^2.0.14",
-    "@types/node": "^26.1.1",
+    "@types/node": "^24.13.3",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "eslint": "^10.6.0",
@@ -59,7 +59,7 @@
     "tailwindcss": "^4.3.2",
     "tsx": "^4.23.0",
     "turndown": "^7.2.4",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.3",
     "unified": "^11.0.5",
     "xml2js": "^0.6.2"
   }
