@@ -25,18 +25,25 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
 
   const imageSizes = {
     1: "100vw",
-    2: "(min-width: 640px) 50vw, 100vw",
-    3: "(min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw",
-    4: "(min-width: 768px) 25vw, (min-width: 640px) 50vw, 100vw",
+    2: "(min-width: 640px) 50vw, 85vw",
+    3: "(min-width: 768px) 33vw, (min-width: 640px) 50vw, 85vw",
+    4: "(min-width: 768px) 25vw, (min-width: 640px) 50vw, 85vw",
   };
 
   return (
     <>
       <div
-        className={`not-prose my-6 grid gap-4 ${gridCols[columns]}${columns === 1 ? " mx-auto max-w-2xl" : ""}`}
+        className={
+          columns === 1
+            ? "not-prose my-6 mx-auto grid max-w-2xl grid-cols-1 gap-4"
+            : `not-prose my-6 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 sm:grid sm:snap-none sm:overflow-visible sm:pb-0 ${gridCols[columns]}`
+        }
       >
         {images.map((image, index) => (
-          <figure key={index} className="m-0">
+          <figure
+            key={index}
+            className={`m-0${columns === 1 ? "" : " w-[85%] shrink-0 snap-center sm:w-auto sm:shrink"}`}
+          >
             <button
               type="button"
               onClick={() => setSelectedIndex(index)}

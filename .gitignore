@@ -43,8 +43,9 @@ next-env.d.ts
 
 # scripts
 scripts/convertImage/data/
-scripts/convertImage/data_c/
 scripts/convertImage/dataEdited/
+scripts/extractFrames/data/
+scripts/extractFrames/dataEdited/
 
 # drafts
 content/drafts/
