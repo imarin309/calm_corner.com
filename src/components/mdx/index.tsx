@@ -7,10 +7,12 @@ import RelatedLinks from "./RelatedLinks";
 import ThreeSixtyView from "./ThreeSixtyView";
 import BuildStep, { BuildStepGroup } from "./BuildStep";
 import Heading2 from "./Heading2";
+import Heading3 from "./Heading3";
 import Table, { THead, TBody, Tr, Th, Td } from "./Table";
 
 export const mdxComponents = {
   h2: Heading2,
+  h3: Heading3,
   table: Table,
   thead: THead,
   tbody: TBody,

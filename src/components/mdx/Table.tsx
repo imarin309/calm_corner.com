@@ -10,7 +10,10 @@ export default function Table({
     <div className="not-prose my-6 overflow-hidden rounded-xl border border-stone-200">
       <div className="overflow-x-auto">
         <table
-          className={clsx("w-full border-collapse text-sm", className)}
+          className={clsx(
+            "w-full min-w-max border-collapse text-sm",
+            className,
+          )}
           {...props}
         >
           {children}
@@ -67,7 +70,7 @@ export function Td({ className, ...props }: ComponentPropsWithoutRef<"td">) {
   return (
     <td
       className={clsx(
-        "border-b border-stone-100 px-4 py-2.5 align-top text-stone-600",
+        "whitespace-nowrap border-b border-stone-100 px-4 py-2.5 align-top text-stone-600",
         className,
       )}
       {...props}

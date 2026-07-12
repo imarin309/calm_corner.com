@@ -47,9 +47,11 @@ export default function ThreeSixtyView({
   useEffect(() => {
     let mounted = true;
     let loaded = 0;
+    const pending: HTMLImageElement[] = [];
 
     images.forEach((src) => {
       const img = new window.Image();
+      pending.push(img);
       const onFinish = () => {
         if (!mounted) return;
         loaded++;
@@ -62,6 +64,13 @@ export default function ThreeSixtyView({
 
     return () => {
       mounted = false;
+      // StrictModeの二重実行で走った分の読み込みを中断し、接続を専有させない
+      pending.forEach((img) => {
+        img.onload = null;
+        img.onerror = null;
+        // 空文字だとブラウザによっては現在ページへリクエストが飛ぶため、ネットワークアクセスしない値にする
+        img.src = "data:,";
+      });
     };
   }, [images]);
 
@@ -152,7 +161,6 @@ export default function ThreeSixtyView({
     isDragging.current = false;
   };
 
-  const loadProgress = Math.round((loadedCount / count) * 100);
   const showHint = isLoaded && !hasInteracted;
 
   const dragProps = {
@@ -195,13 +203,9 @@ export default function ThreeSixtyView({
                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
               />
             </svg>
-            <div className="h-1.5 w-48 overflow-hidden rounded-full bg-stone-200">
-              <div
-                className="h-full rounded-full bg-stone-500 transition-all duration-200"
-                style={{ width: `${loadProgress}%` }}
-              />
-            </div>
-            <span className="text-sm text-stone-400">{loadProgress}%</span>
+            <span className="text-sm text-stone-400">
+              360度ビューアを読み込み中...
+            </span>
           </div>
         )}
 
