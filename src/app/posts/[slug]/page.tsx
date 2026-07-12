@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { getAllPosts, getPostBySlug } from "@/lib/posts";
 import { getCategoryName } from "@/constants/category";
 import TagBadge from "@/components/TagBadge";
+import TableOfContents from "@/components/TableOfContents";
 import { siteName, siteUrl, siteAuthor } from "@/constants/meta";
 import type { Metadata } from "next";
 
@@ -95,6 +96,7 @@ export default async function PostPage({ params }: PostPageProps) {
           __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
         }}
       />
+      <TableOfContents />
       <article className="mx-auto max-w-3xl">
         <header className="mb-8 border-b border-stone-200 pb-6">
           <time className="text-xs text-stone-400">{formattedDate}</time>

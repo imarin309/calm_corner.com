@@ -2,28 +2,8 @@
 
 import { useCallback, useState } from "react";
 import { Link } from "lucide-react";
-import type { ComponentPropsWithoutRef, ReactNode } from "react";
-
-function extractText(children: ReactNode): string {
-  if (typeof children === "string") return children;
-  if (typeof children === "number") return String(children);
-  if (Array.isArray(children)) return children.map(extractText).join("");
-  if (children != null && typeof children === "object" && "props" in children) {
-    return extractText(
-      (children as { props: { children?: ReactNode } }).props.children,
-    );
-  }
-  return "";
-}
-
-function toSlug(text: string): string {
-  return text
-    .trim()
-    .replace(/\s+/g, "-")
-    .replace(/[<>'"[\]{}|\\^`]/g, "")
-    .replace(/--+/g, "-")
-    .replace(/^-|-$/g, "");
-}
+import type { ComponentPropsWithoutRef } from "react";
+import { extractText, toSlug } from "@/lib/heading";
 
 export default function Heading2({
   children,
@@ -31,7 +11,8 @@ export default function Heading2({
 }: ComponentPropsWithoutRef<"h2">) {
   const [copied, setCopied] = useState(false);
 
-  const id = toSlug(extractText(children));
+  const text = extractText(children);
+  const id = toSlug(text);
 
   const handleCopy = useCallback(() => {
     const base = window.location.href.split("#")[0];
@@ -42,7 +23,13 @@ export default function Heading2({
   }, [id]);
 
   return (
-    <h2 id={id} className="group relative" {...props}>
+    <h2
+      id={id}
+      data-toc-heading="2"
+      data-toc-text={text}
+      className="group relative scroll-mt-20"
+      {...props}
+    >
       <button
         type="button"
         onClick={handleCopy}
