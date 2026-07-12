@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState, ReactNode } from "react";
+import { toSlug } from "@/lib/heading";
 
 interface BuildStepProps {
   number: number;
@@ -28,6 +29,7 @@ export default function BuildStep({
   const isSub = number % 1 !== 0;
   const hasImages = images && images.length > 0;
   const cols = images && images.length >= 2 ? 2 : 1;
+  const id = `step-${toSlug(String(number))}-${toSlug(title)}`;
 
   return (
     <>
@@ -50,11 +52,14 @@ export default function BuildStep({
           >
             {number}
           </span>
-          <span
-            className={`text-stone-800 ${isSub ? "text-sm font-medium" : "font-semibold"}`}
+          <h3
+            id={id}
+            data-toc-heading={isSub ? "4" : "3"}
+            data-toc-text={title}
+            className={`m-0 scroll-mt-20 text-stone-800 ${isSub ? "text-sm font-medium" : "font-semibold"}`}
           >
             {title}
-          </span>
+          </h3>
         </div>
 
         {(hasImages || children) && (
