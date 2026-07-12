@@ -32,6 +32,18 @@ Claude Codeで使用できるカスタムスラッシュコマンドの一覧で
 - リライト案を提示し、OKならファイルに反映
 - 1セクションずつ順番に確認・修正
 
+### `/place-buildstep-images` - BuildStepGroup画像配置
+
+R2にアップロード済みの画像（`scripts/convertImage/dataEdited/` 配下で編集したもの）を、記事の `<BuildStepGroup>` 内に配置します。
+
+```bash
+/place-buildstep-images content/posts/figure-rise-standard-tifa.mdx
+```
+
+- 未配置の画像をファイル名から工程・パーツごとにグルーピング
+- 配置方針（パーツ別に再構成 / 既存ステップの枠内 / 単純に並べる）をユーザーに確認
+- `<BuildStep>` の number・title・images を編集（alt・caption・本文は未記入のまま）
+
 ### `/gen-description` - description生成
 
 記事の内容を読み取り、SEO向けのメタディスクリプションを生成してフロントマターに書き込みます。

@@ -60,7 +60,7 @@ export default function BuildStep({
         {(hasImages || children) && (
           <div className="p-4">
             {children && (
-              <div className="prose prose-sm prose-stone mb-3 max-w-none text-stone-700">
+              <div className="prose prose-sm sm:prose-base prose-stone mb-3 max-w-none text-stone-700">
                 {children}
               </div>
             )}
