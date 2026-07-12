@@ -68,7 +68,8 @@ export default function ThreeSixtyView({
       pending.forEach((img) => {
         img.onload = null;
         img.onerror = null;
-        img.src = "";
+        // 空文字だとブラウザによっては現在ページへリクエストが飛ぶため、ネットワークアクセスしない値にする
+        img.src = "data:,";
       });
     };
   }, [images]);

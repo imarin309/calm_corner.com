@@ -3,10 +3,12 @@
 import { useCallback, useState } from "react";
 import { Link } from "lucide-react";
 import type { ComponentPropsWithoutRef } from "react";
+import clsx from "clsx";
 import { extractText, toSlug } from "@/lib/heading";
 
 export default function Heading2({
   children,
+  className,
   ...props
 }: ComponentPropsWithoutRef<"h2">) {
   const [copied, setCopied] = useState(false);
@@ -27,7 +29,7 @@ export default function Heading2({
       id={id}
       data-toc-heading="2"
       data-toc-text={text}
-      className="group relative scroll-mt-20"
+      className={clsx("group relative scroll-mt-20", className)}
       {...props}
     >
       <button
