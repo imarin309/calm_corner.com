@@ -9,6 +9,7 @@
     "start": "next start",
     "lint": "prettier --check . && eslint && tsc --noEmit && markdownlint-cli2 \"content/**/*.mdx\"",
     "format": "prettier --write . && eslint --fix && markdownlint-cli2 --fix \"content/**/*.mdx\"",
+    "test": "vitest run",
     "update": "pnpm dlx npm-check-updates -u --reject eslint-plugin-mdx,markdownlint-cli2,typescript && pnpm install && pnpm audit --fix"
   },
   "dependencies": {
@@ -41,17 +42,21 @@
     }
   },
   "devDependencies": {
+    "@mdx-js/rollup": "^3.1.1",
     "@tailwindcss/postcss": "^4.3.2",
+    "@testing-library/react": "^16.3.2",
     "@types/estree": "^1.0.9",
     "@types/mdast": "^4.0.4",
     "@types/mdx": "^2.0.14",
     "@types/node": "^24.13.3",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.5",
     "eslint": "^10.6.0",
     "eslint-config-next": "16.2.4",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-mdx": "^3.8.1",
+    "jsdom": "^30.0.1",
     "mdast-util-directive": "^3.1.0",
     "mdast-util-mdx-jsx": "^3.2.0",
     "prettier": "^3.9.4",
@@ -61,6 +66,7 @@
     "turndown": "^7.2.4",
     "typescript": "^6.0.3",
     "unified": "^11.0.5",
+    "vitest": "^4.1.10",
     "xml2js": "^0.6.2"
   }
 }
