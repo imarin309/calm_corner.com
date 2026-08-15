@@ -8,6 +8,7 @@
       "allowed_elements": [
         "span",
         "ImageGallery",
+        "LinkCard",
         "YouTubeCard",
         "DmmCard",
         "RakutenCard",

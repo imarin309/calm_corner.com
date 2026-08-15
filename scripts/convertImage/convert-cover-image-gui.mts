@@ -3,7 +3,7 @@
  * カバー画像を1200x675px WebP形式に変換するスクリプト（GUI版）
  *
  * 使用方法:
- *   npx tsx scripts/convertImage/convert-cover-image-gui.mts
+ *    npx tsx scripts/convertImage/convert-cover-image-gui.mts
  *
  * scripts/convertImage/data/ 配下の画像ファイルを順番に処理します。
  * ブラウザが開き、ドラッグで切り取り領域を選択できます。

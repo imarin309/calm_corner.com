@@ -6,6 +6,7 @@ interface LinkCardProps {
   description?: string;
   image?: string;
   favicon?: string;
+  label?: string;
 }
 
 export default function LinkCard({
@@ -14,6 +15,7 @@ export default function LinkCard({
   description,
   image,
   favicon,
+  label,
 }: LinkCardProps) {
   const domain = (() => {
     try {
@@ -32,6 +34,11 @@ export default function LinkCard({
         className="flex rounded-xl border border-stone-200 bg-white hover:bg-stone-50 transition-colors overflow-hidden shadow-sm"
       >
         <div className="flex flex-col justify-between p-4 flex-1 min-w-0">
+          {label && (
+            <span className="text-xs font-semibold text-amber-700 mb-1">
+              {label}
+            </span>
+          )}
           <p className="text-sm font-semibold text-stone-800 line-clamp-2 leading-snug">
             {title}
           </p>
