@@ -4,3 +4,7 @@ build/
 .velite/
 node_modules/
 content/
+
+# pnpmが生成するlockfileはpnpm自身のフォーマット（シングルクォート）に従うため、
+# prettierの整形対象から除外する
+pnpm-lock.yaml
