@@ -12,3 +12,13 @@ vi.stubGlobal(
       ),
   ),
 );
+
+// jsdom は ResizeObserver を実装していない。BuildStep のスライダーが使う
+vi.stubGlobal(
+  "ResizeObserver",
+  class {
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+  },
+);
