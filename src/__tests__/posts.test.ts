@@ -40,6 +40,7 @@ describe("getAllPosts", () => {
         tags: [],
         description: undefined,
         coverImage: undefined,
+        coverImagePositionY: undefined,
         noindex: false,
         excerpt: "本文です。",
       },
@@ -66,6 +67,28 @@ describe("getAllPosts", () => {
     expect(post.description).toBe("desc");
     expect(post.coverImage).toBe("https://r2.calm-corner.com/x.jpg");
     expect(post.noindex).toBe(true);
+  });
+
+  describe("coverImagePositionY", () => {
+    function positionYFor(value: string): number | undefined {
+      mockFs.readdirSync.mockReturnValue(["hello-world.mdx"] as never);
+      mockFs.readFileSync.mockReturnValue(
+        `---\ntitle: Hello\ndate: 2024-01-01\ncategory: gunpla\ncoverImagePositionY: ${value}\n---\n本文`,
+      );
+      return getAllPosts()[0].coverImagePositionY;
+    }
+
+    it("parses a percentage between 0 and 100", () => {
+      expect(positionYFor("0")).toBe(0);
+      expect(positionYFor("20")).toBe(20);
+      expect(positionYFor("100")).toBe(100);
+    });
+
+    it("ignores out-of-range or non-numeric values", () => {
+      expect(positionYFor("-1")).toBeUndefined();
+      expect(positionYFor("101")).toBeUndefined();
+      expect(positionYFor("top")).toBeUndefined();
+    });
   });
 
   it("throws when title is missing", () => {

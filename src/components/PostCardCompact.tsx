@@ -7,6 +7,7 @@ interface PostCardCompactProps {
   date: string;
   slug: string;
   coverImage?: string;
+  coverImagePositionY?: number;
   category: string;
 }
 
@@ -16,6 +17,7 @@ export default function PostCardCompact({
   date,
   slug,
   coverImage,
+  coverImagePositionY = 50,
   category,
 }: PostCardCompactProps) {
   const formattedDate = new Date(date).toLocaleDateString("ja-JP", {
@@ -34,6 +36,7 @@ export default function PostCardCompact({
             fill
             sizes="(min-width: 640px) 33vw, 100vw"
             className="object-cover transition-transform group-hover:scale-105"
+            style={{ objectPosition: `center ${coverImagePositionY}%` }}
           />
           <div className="absolute left-0 top-3">
             <span className="bg-stone-800 px-3 py-1 text-xs font-medium text-white">
