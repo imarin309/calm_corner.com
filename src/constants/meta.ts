@@ -3,7 +3,7 @@ export const siteCatchCopy = "模型筆塗りの楽しさを広めたい";
 export const siteDescription =
   "ガンプラや美プラを筆塗りで塗装するホビーブログです。制作過程や塗装テクニックを写真付きで紹介します。";
 export const siteUrl = "https://calm-corner.com";
-export const siteAuthor = "imarin";
+export const siteAuthor = "あんぱん";
 export const siteXUrl = "https://x.com/imarin309";
 export const siteXId = "@imarin309";
 export const siteInstagramUrl = "https://www.instagram.com/imarin309";
