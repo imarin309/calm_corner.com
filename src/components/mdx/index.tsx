@@ -1,8 +1,6 @@
 import ImageGallery from "./ImageGallery";
-import { DmmCard } from "./DmmCard";
 import YouTubeCard from "./YouTubeCard";
 import LinkCard from "./LinkCard";
-import { RakutenCard } from "./RakutenCard";
 import RelatedLinks from "./RelatedLinks";
 import ThreeSixtyView from "./ThreeSixtyView";
 import BuildStep, { BuildStepGroup } from "./BuildStep";
@@ -20,10 +18,8 @@ export const mdxComponents = {
   th: Th,
   td: Td,
   ImageGallery,
-  DmmCard,
   YouTubeCard,
   LinkCard,
-  RakutenCard,
   RelatedLinks,
   ThreeSixtyView,
   BuildStep,
@@ -32,10 +28,8 @@ export const mdxComponents = {
 
 export {
   ImageGallery,
-  DmmCard,
   YouTubeCard,
   LinkCard,
-  RakutenCard,
   RelatedLinks,
   ThreeSixtyView,
   BuildStep,

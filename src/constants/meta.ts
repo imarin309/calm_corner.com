@@ -9,4 +9,3 @@ export const siteXId = "@imarin309";
 export const siteInstagramUrl = "https://www.instagram.com/imarin309";
 export const siteYouTubeUrl = "https://www.youtube.com/@anpan-ch";
 export const siteEmail = "contact@calm-corner.com";
-export const dmmAfId = "imarin-003";

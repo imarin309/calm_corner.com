@@ -10,8 +10,6 @@
         "ImageGallery",
         "LinkCard",
         "YouTubeCard",
-        "DmmCard",
-        "RakutenCard",
         "RelatedLinks",
         "BuildStep",
         "BuildStepGroup",
