@@ -49,6 +49,10 @@ MDXファイルで使用可能なカスタムコンポーネントは`src/compon
 - `<ImageGallery>` - モーダル表示付きの複数画像ギャラリー
 - `<BeforeAfter>` - ドラッグ可能なビフォーアフター比較スライダー
 
+## 記事を書くとき
+
+制作記事を書く・直す・構成を相談されたときは、先に `content/docs/article-structure.md` を読むこと。
+
 ## 規約
 
 - サイト言語は日本語（`lang="ja"`）

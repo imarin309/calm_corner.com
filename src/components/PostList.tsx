@@ -8,6 +8,7 @@ interface Post {
   date: string;
   slug: string;
   coverImage?: string;
+  coverImagePositionY?: number;
   category: string;
   tags?: string[];
 }
@@ -47,6 +48,7 @@ export default function PostList({
                 date={post.date}
                 slug={post.slug}
                 coverImage={post.coverImage}
+                coverImagePositionY={post.coverImagePositionY}
                 category={post.category}
                 tags={post.tags}
               />

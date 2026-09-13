@@ -9,6 +9,7 @@ export type PostSummary = {
   slug: string;
   date: string;
   coverImage?: string;
+  coverImagePositionY?: number;
   category: string;
 };
 
@@ -84,6 +85,7 @@ export default function RecommendedPostsClient({
                 date={post.date}
                 slug={post.slug}
                 coverImage={post.coverImage}
+                coverImagePositionY={post.coverImagePositionY}
                 category={post.category}
               />
             ))}

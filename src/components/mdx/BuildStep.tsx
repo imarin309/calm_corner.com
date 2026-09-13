@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState, ReactNode } from "react";
+import { useCallback, useEffect, useRef, useState, ReactNode } from "react";
 import { toSlug } from "@/lib/heading";
 
 interface BuildStepProps {
@@ -19,6 +19,41 @@ export function BuildStepGroup({ children }: { children: ReactNode }) {
   );
 }
 
+// スマホはスワイプで送れるので、矢印はPCだけに出す
+function SliderArrow({
+  direction,
+  onClick,
+}: {
+  direction: "prev" | "next";
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={direction === "prev" ? "前の画像" : "次の画像"}
+      className={`absolute top-1/2 hidden h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-stone-700 shadow-md hover:bg-white sm:flex ${
+        direction === "prev" ? "left-2" : "right-2"
+      }`}
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-5 w-5"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d={direction === "prev" ? "M15 19l-7-7 7-7" : "M9 5l7 7-7 7"}
+        />
+      </svg>
+    </button>
+  );
+}
+
 export default function BuildStep({
   number,
   title,
@@ -26,10 +61,49 @@ export default function BuildStep({
   children,
 }: BuildStepProps) {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [canScrollPrev, setCanScrollPrev] = useState(false);
+  const [canScrollNext, setCanScrollNext] = useState(false);
+  const sliderRef = useRef<HTMLDivElement>(null);
   const isSub = number % 1 !== 0;
   const hasImages = images && images.length > 0;
-  const cols = images && images.length >= 2 ? 2 : 1;
+  const isSlider = images !== undefined && images.length >= 2;
   const id = `step-${toSlug(String(number))}-${toSlug(title)}`;
+
+  const getSlideStep = useCallback((slider: HTMLDivElement) => {
+    const slide = slider.firstElementChild as HTMLElement | null;
+    const gap = parseFloat(getComputedStyle(slider).columnGap) || 0;
+    return (slide?.offsetWidth ?? slider.clientWidth) + gap;
+  }, []);
+
+  const updateSliderState = useCallback(() => {
+    const slider = sliderRef.current;
+    if (!slider) return;
+    setActiveSlide(Math.round(slider.scrollLeft / getSlideStep(slider)));
+    setCanScrollPrev(slider.scrollLeft > 0);
+    // 小数ピクセルの丸めで末尾まで届かないことがあるため1px余裕を持たせる
+    setCanScrollNext(
+      slider.scrollLeft + slider.clientWidth < slider.scrollWidth - 1,
+    );
+  }, [getSlideStep]);
+
+  useEffect(() => {
+    const slider = sliderRef.current;
+    if (!slider) return;
+    // observe直後にも1回呼ばれるので、初期状態の計算もこれで済む
+    const observer = new ResizeObserver(updateSliderState);
+    observer.observe(slider);
+    return () => observer.disconnect();
+  }, [updateSliderState]);
+
+  const scrollSlider = (direction: 1 | -1) => {
+    const slider = sliderRef.current;
+    if (!slider) return;
+    slider.scrollBy({
+      left: direction * getSlideStep(slider),
+      behavior: "smooth",
+    });
+  };
 
   return (
     <>
@@ -65,37 +139,78 @@ export default function BuildStep({
         {(hasImages || children) && (
           <div className="p-4">
             {children && (
-              <div className="prose prose-sm sm:prose-base prose-stone mb-3 max-w-none text-stone-700">
+              <div
+                className={`prose prose-sm sm:prose-base prose-stone max-w-none text-stone-700 ${hasImages ? "mb-3" : ""}`}
+              >
                 {children}
               </div>
             )}
 
             {hasImages && (
-              <div
-                className={`grid gap-3 ${cols === 1 ? "mx-auto max-w-lg grid-cols-1" : "grid-cols-2"}`}
-              >
-                {images!.map((img, i) => (
-                  <figure key={i} className="m-0">
-                    <button
-                      type="button"
-                      onClick={() => setSelectedIndex(i)}
-                      className="relative block aspect-[4/3] w-full overflow-hidden rounded-lg focus:outline-none"
+              <div className="relative">
+                <div
+                  ref={isSlider ? sliderRef : undefined}
+                  onScroll={isSlider ? updateSliderState : undefined}
+                  className={
+                    isSlider
+                      ? "flex snap-x snap-mandatory gap-3 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                      : "flex justify-center"
+                  }
+                >
+                  {images!.map((img, i) => (
+                    <figure
+                      key={i}
+                      className={`m-0 w-[85%] shrink-0 sm:w-[calc(50%-0.375rem)] ${isSlider ? "snap-center sm:snap-start" : ""}`}
                     >
-                      <Image
-                        src={img.src}
-                        alt={img.alt}
-                        fill
-                        sizes="(min-width: 640px) 400px, 100vw"
-                        className="object-cover transition-transform hover:scale-105"
+                      <button
+                        type="button"
+                        onClick={() => setSelectedIndex(i)}
+                        className="relative block aspect-[4/3] w-full overflow-hidden rounded-lg focus:outline-none"
+                      >
+                        <Image
+                          src={img.src}
+                          alt={img.alt}
+                          fill
+                          sizes="(min-width: 640px) 400px, 85vw"
+                          className="object-cover transition-transform hover:scale-105"
+                        />
+                      </button>
+                      {img.caption && (
+                        <figcaption className="mt-1 text-center text-xs italic text-stone-500">
+                          {img.caption}
+                        </figcaption>
+                      )}
+                    </figure>
+                  ))}
+                </div>
+
+                {isSlider && canScrollPrev && (
+                  <SliderArrow
+                    direction="prev"
+                    onClick={() => scrollSlider(-1)}
+                  />
+                )}
+                {isSlider && canScrollNext && (
+                  <SliderArrow
+                    direction="next"
+                    onClick={() => scrollSlider(1)}
+                  />
+                )}
+
+                {/* PCは2枚ずつ見えて位置と枚数が対応しないため、ドットはスマホだけに出す */}
+                {isSlider && (
+                  <div
+                    aria-hidden
+                    className="mt-2 flex justify-center gap-1.5 sm:hidden"
+                  >
+                    {images!.map((_, i) => (
+                      <span
+                        key={i}
+                        className={`h-1.5 w-1.5 rounded-full ${i === activeSlide ? "bg-stone-600" : "bg-stone-300"}`}
                       />
-                    </button>
-                    {img.caption && (
-                      <figcaption className="mt-1 text-center text-xs italic text-stone-500">
-                        {img.caption}
-                      </figcaption>
-                    )}
-                  </figure>
-                ))}
+                    ))}
+                  </div>
+                )}
               </div>
             )}
           </div>

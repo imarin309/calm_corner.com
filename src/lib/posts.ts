@@ -11,6 +11,7 @@ export type Post = {
   tags: string[];
   description?: string;
   coverImage?: string;
+  coverImagePositionY?: number;
   noindex: boolean;
   excerpt: string;
 };
@@ -28,6 +29,12 @@ const pagesDir = path.join(process.cwd(), "content/pages");
 function normalizeDate(value: unknown): string {
   if (value instanceof Date) return value.toISOString().slice(0, 10);
   return String(value ?? "");
+}
+
+function parsePercent(value: unknown): number | undefined {
+  return typeof value === "number" && value >= 0 && value <= 100
+    ? value
+    : undefined;
 }
 
 function parsePost(filename: string): Post {
@@ -48,6 +55,7 @@ function parsePost(filename: string): Post {
     tags: Array.isArray(data.tags) ? data.tags.map(String) : [],
     description: data.description ? String(data.description) : undefined,
     coverImage: data.coverImage ? String(data.coverImage) : undefined,
+    coverImagePositionY: parsePercent(data.coverImagePositionY),
     noindex: Boolean(data.noindex ?? false),
     excerpt: extractExcerpt(content),
   };
