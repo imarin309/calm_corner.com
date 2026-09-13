@@ -40,7 +40,7 @@ export const metadata: Metadata = {
       template: `%s | ${siteName}`,
     },
     description: siteDescription,
-    images: [{ url: "/header.jpeg", width: 1200, height: 630 }],
+    images: [{ url: "/header.webp", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
