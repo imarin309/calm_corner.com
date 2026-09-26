@@ -2,10 +2,15 @@
  * カテゴリー別記事一覧 - ページネーション（2ページ目以降）
  */
 import { redirect, notFound } from "next/navigation";
+import type { Metadata } from "next";
 import PostList from "@/components/PostList";
 import { getAllPosts } from "@/lib/posts";
 import { getAllCategories, getCategoryBySlug } from "@/constants/category";
 import { POSTS_PER_PAGE } from "@/constants/config";
+
+export const metadata: Metadata = {
+  robots: { index: false, follow: true },
+};
 
 export function generateStaticParams() {
   const allParams: { category_name: string; num: string }[] = [];
