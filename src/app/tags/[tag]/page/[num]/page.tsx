@@ -43,10 +43,11 @@ export async function generateMetadata({
   const totalPages = Math.ceil(filteredCount / POSTS_PER_PAGE);
 
   if (!Number.isInteger(pageNum) || pageNum <= 1 || pageNum > totalPages) {
-    return {};
+    return { robots: { index: false, follow: true } };
   }
   return {
     title: `#${getTagName(tag)} の記事一覧 ページ${pageNum}`,
+    robots: { index: false, follow: true },
     alternates: {
       canonical: `/tags/${tag}/page/${pageNum}`,
     },

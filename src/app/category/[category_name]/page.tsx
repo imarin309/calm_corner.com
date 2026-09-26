@@ -24,6 +24,8 @@ export async function generateMetadata({
   if (!category) return {};
   return {
     title: `${category.name}の記事一覧`,
+    // 一覧は記事カードを並べただけで独自の内容がないため検索結果に出さない
+    robots: { index: false, follow: true },
   };
 }
 
