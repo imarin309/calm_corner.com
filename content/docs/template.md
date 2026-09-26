@@ -90,9 +90,9 @@ coverImage:
 | --- | --- |
 | 筆 | 平筆、ドライブラシ |
 | 塗料 | ファレホ（水性塗料） |
-| 下地塗料 |  |
-| 〇〇色 | 色名 + 色名（割合） |
+| 下地 |  |
 | トップコート |  |
+| その他 |  |
 
 作業時間は約x時間ほどでした。
 
@@ -134,11 +134,13 @@ coverImage:
 
 ## 完成
 
-// ガンプラは全体写真の ImageGallery、美プラは ThreeSixtyView
-<ThreeSixtyView
-    baseUrl=""
-    count={36}
-  />
+<ImageGallery
+  images={[
+    { src: "", alt: "", caption: "" },
+    { src: "", alt: "", caption: "" },
+    { src: "", alt: "", caption: "" },
+  ]}
+/>
 
 1. テーマが実現できたか
 
