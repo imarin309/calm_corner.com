@@ -35,16 +35,19 @@ export default function Home() {
 
   return (
     <div className="flex flex-col gap-(--space-xl)">
-      <div className="pt-2">
-        <Header />
-      </div>
+      {/* モバイルでは Featured Work の「制作記録を読む」まで1画面に収めたいため、ここだけ詰める */}
+      <div className="flex flex-col gap-(--space-md) sm:gap-(--space-xl)">
+        <div className="pt-2">
+          <Header />
+        </div>
 
-      {featured && (
-        <section aria-labelledby="featured-heading">
-          <SectionHeading id="featured-heading" label="Featured Work" />
-          <FeaturedWork post={featured} />
-        </section>
-      )}
+        {featured && (
+          <section aria-labelledby="featured-heading">
+            <SectionHeading id="featured-heading" label="Featured Work" />
+            <FeaturedWork post={featured} />
+          </section>
+        )}
+      </div>
 
       {recentWorks.length > 0 && (
         <section aria-labelledby="works-heading">

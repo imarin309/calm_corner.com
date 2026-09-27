@@ -14,11 +14,11 @@ export default function FeaturedWork({ post }: { post: Post }) {
         href={href}
         tabIndex={-1}
         aria-hidden="true"
-        className="relative -mx-4 block sm:mx-0 sm:-rotate-1"
+        className="relative block -rotate-1"
       >
         {/* 手作業感はこの1枚だけに留め、作品棚の写真には付けない */}
-        <span className="absolute -top-2 left-1/2 z-10 hidden h-5 w-20 -translate-x-1/2 rotate-[-4deg] bg-line/80 sm:block" />
-        <div className="relative aspect-[4/5] overflow-hidden sm:aspect-[4/3] sm:rounded-sm">
+        <span className="absolute -top-2 left-1/2 z-10 h-5 w-20 -translate-x-1/2 rotate-[-4deg] bg-line/80" />
+        <div className="relative aspect-[5/4] overflow-hidden rounded-sm sm:aspect-[4/3]">
           <Image
             src={post.coverImage ?? "/icon.png"}
             alt=""
@@ -46,7 +46,7 @@ export default function FeaturedWork({ post }: { post: Post }) {
         )}
         <Link
           href={href}
-          className="mt-(--space-md) inline-flex min-h-11 items-center gap-1 text-sm font-medium text-accent underline-offset-4 hover:underline"
+          className="mt-(--space-xs) inline-flex min-h-11 items-center gap-1 text-sm font-medium text-accent underline-offset-4 hover:underline sm:mt-(--space-md)"
         >
           制作記録を読む <span aria-hidden="true">→</span>
         </Link>
