@@ -31,39 +31,39 @@ export default function PostCard({
   });
 
   return (
-    <article className="group overflow-hidden border border-stone-200 bg-white transition-all hover:border-stone-300 hover:shadow-lg sm:flex">
+    <article className="group flex flex-col gap-(--space-sm) py-(--space-md) sm:flex-row sm:gap-(--space-md)">
       <Link
         href={`/posts/${slug}`}
-        className="block relative aspect-[1200/675] overflow-hidden sm:w-72 sm:shrink-0 sm:self-stretch"
+        tabIndex={-1}
+        aria-hidden="true"
+        className="relative block aspect-[4/3] overflow-hidden rounded-sm bg-line sm:w-60 sm:shrink-0"
       >
         <Image
           src={coverImage ?? "/icon.png"}
-          alt={title}
+          alt=""
           fill
-          sizes="(min-width: 640px) 288px, 100vw"
-          className="object-cover transition-transform group-hover:scale-105"
+          sizes="(min-width: 640px) 240px, 100vw"
+          className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
           style={{ objectPosition: `center ${coverImagePositionY}%` }}
         />
-        <div className="absolute left-0 top-3">
-          <span className="bg-stone-800 px-3 py-1 text-xs font-medium text-white">
-            {getCategoryName(category)}
-          </span>
-        </div>
       </Link>
-      <div className="flex flex-1 flex-col justify-center">
-        <Link href={`/posts/${slug}`} className="p-4 pb-2">
-          <time className="text-xs text-stone-400">{formattedDate}</time>
-          <h2 className="mt-2 text-lg font-semibold leading-snug text-stone-700 group-hover:text-stone-900">
+      <div className="flex flex-1 flex-col">
+        <p className="text-xs text-ink-muted">
+          {getCategoryName(category)}・
+          <time dateTime={date}>{formattedDate}</time>
+        </p>
+        <h2 className="mt-1 text-lg font-bold leading-snug text-ink">
+          <Link href={`/posts/${slug}`} className="group-hover:text-accent">
             {title}
-          </h2>
-          {excerpt && (
-            <p className="mt-2 line-clamp-2 text-sm text-stone-500">
-              {excerpt}
-            </p>
-          )}
-        </Link>
+          </Link>
+        </h2>
+        {excerpt && (
+          <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-ink-muted">
+            {excerpt}
+          </p>
+        )}
         {tags && tags.length > 0 && (
-          <div className="flex flex-wrap gap-2 px-4 pb-4">
+          <div className="mt-2 flex flex-wrap gap-x-3">
             {tags.map((tag) => (
               <TagBadge key={tag} tag={tag} />
             ))}

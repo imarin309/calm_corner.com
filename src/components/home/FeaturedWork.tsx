@@ -1,0 +1,56 @@
+import Image from "next/image";
+import Link from "next/link";
+import type { Post } from "@/lib/posts";
+import { getCategoryName } from "@/constants/category";
+import { splitWorkTitle } from "@/lib/work-title";
+
+export default function FeaturedWork({ post }: { post: Post }) {
+  const { name, catchCopy } = splitWorkTitle(post.title);
+  const href = `/posts/${post.slug}`;
+
+  return (
+    <article className="group grid gap-(--space-md) sm:grid-cols-[3fr_2fr] sm:items-end sm:gap-(--space-lg)">
+      <Link
+        href={href}
+        tabIndex={-1}
+        aria-hidden="true"
+        className="relative -mx-4 block sm:mx-0 sm:-rotate-1"
+      >
+        {/* 手作業感はこの1枚だけに留め、作品棚の写真には付けない */}
+        <span className="absolute -top-2 left-1/2 z-10 hidden h-5 w-20 -translate-x-1/2 rotate-[-4deg] bg-line/80 sm:block" />
+        <div className="relative aspect-[4/5] overflow-hidden sm:aspect-[4/3] sm:rounded-sm">
+          <Image
+            src={post.coverImage ?? "/icon.png"}
+            alt=""
+            fill
+            priority
+            sizes="(min-width: 640px) 60vw, 100vw"
+            className="object-cover transition-opacity group-hover:opacity-90"
+            style={{
+              objectPosition: `center ${post.coverImagePositionY ?? 50}%`,
+            }}
+          />
+        </div>
+      </Link>
+      <div className="sm:pb-(--space-md)">
+        <p className="text-xs text-ink-muted">
+          {getCategoryName(post.category)}
+        </p>
+        <h3 className="mt-2 text-2xl font-bold leading-snug text-ink">
+          <Link href={href} className="hover:text-accent">
+            {name}
+          </Link>
+        </h3>
+        {catchCopy && (
+          <p className="mt-2 text-base text-ink-muted">{catchCopy}</p>
+        )}
+        <Link
+          href={href}
+          className="mt-(--space-md) inline-flex min-h-11 items-center gap-1 text-sm font-medium text-accent underline-offset-4 hover:underline"
+        >
+          制作記録を読む <span aria-hidden="true">→</span>
+        </Link>
+      </div>
+    </article>
+  );
+}

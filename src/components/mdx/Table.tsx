@@ -7,7 +7,7 @@ export default function Table({
   ...props
 }: ComponentPropsWithoutRef<"table">) {
   return (
-    <div className="not-prose my-6 overflow-hidden rounded-xl border border-stone-200">
+    <div className="not-prose my-6 overflow-hidden rounded-xl border border-stone-200 bg-surface">
       <div className="overflow-x-auto">
         <table
           className={clsx(
@@ -45,10 +45,7 @@ export function TBody({
 export function Tr({ className, ...props }: ComponentPropsWithoutRef<"tr">) {
   return (
     <tr
-      className={clsx(
-        "even:bg-stone-50 hover:bg-stone-100/70 transition-colors",
-        className,
-      )}
+      className={clsx("hover:bg-stone-100/70 transition-colors", className)}
       {...props}
     />
   );

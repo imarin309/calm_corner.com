@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import { Noto_Sans_JP } from "next/font/google";
+import { Klee_One, Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/Header";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 import RecommendedPosts from "@/components/RecommendedPosts";
@@ -18,6 +17,12 @@ const notoSansJP = Noto_Sans_JP({
   variable: "--font-noto-sans-jp",
   subsets: ["latin"],
   weight: ["400", "500", "700"],
+});
+
+const kleeOne = Klee_One({
+  variable: "--font-klee-one",
+  subsets: ["latin"],
+  weight: ["400", "600"],
 });
 
 export const metadata: Metadata = {
@@ -73,15 +78,14 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body
-        className={`${notoSansJP.variable} flex min-h-screen flex-col font-sans antialiased`}
+        className={`${notoSansJP.variable} ${kleeOne.variable} flex min-h-screen flex-col font-sans antialiased`}
       >
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
         <NavBar />
-        <Header />
-        <main className="mx-auto w-full max-w-4xl flex-1 px-4 py-8">
+        <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8">
           {children}
         </main>
         <RecommendedPosts />

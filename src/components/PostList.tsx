@@ -1,5 +1,6 @@
 import PostCard from "@/components/PostCard";
 import Pagination from "@/components/Pagination";
+import SectionHeading from "@/components/SectionHeading";
 
 interface Post {
   title: string;
@@ -29,22 +30,16 @@ export default function PostList({
   basePath,
 }: PostListProps) {
   return (
-    <div>
-      {title && (
-        <div className="mb-6">
-          <h2 className="inline text-lg font-semibold text-stone-700 bg-gradient-to-r from-primary to-secondary bg-[length:100%_2px] bg-no-repeat bg-bottom pb-1">
-            {title}
-          </h2>
-        </div>
-      )}
+    <div className="mx-auto max-w-3xl">
+      {title && <SectionHeading title={title} />}
       <section>
         {posts.length > 0 ? (
-          <div className="grid gap-6">
+          <div className="divide-y divide-line border-t border-line">
             {posts.map((post) => (
               <PostCard
                 key={post.slug}
                 title={post.title}
-                excerpt={post.excerpt ?? post.description}
+                excerpt={post.description ?? post.excerpt}
                 date={post.date}
                 slug={post.slug}
                 coverImage={post.coverImage}
@@ -55,7 +50,7 @@ export default function PostList({
             ))}
           </div>
         ) : (
-          <p className="text-stone-400">記事がありません。</p>
+          <p className="text-ink-muted">記事がありません。</p>
         )}
       </section>
 
