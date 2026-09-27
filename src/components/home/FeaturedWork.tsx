@@ -25,7 +25,7 @@ export default function FeaturedWork({ post }: { post: Post }) {
             fill
             priority
             sizes="(min-width: 640px) 60vw, 100vw"
-            className="object-cover transition-transform duration-300 group-hover:scale-[1.02] motion-reduce:transition-none"
+            className="object-cover transition-transform duration-300 motion-safe:group-hover:scale-[1.02]"
             style={{
               objectPosition: `center ${post.coverImagePositionY ?? 50}%`,
             }}
