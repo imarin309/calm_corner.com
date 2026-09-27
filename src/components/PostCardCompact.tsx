@@ -23,33 +23,27 @@ export default function PostCardCompact({
   const formattedDate = new Date(date).toLocaleDateString("ja-JP", {
     year: "numeric",
     month: "long",
-    day: "numeric",
   });
 
   return (
-    <article className="group overflow-hidden border border-stone-200 bg-white transition-all hover:border-stone-300 hover:shadow-lg">
-      <Link href={`/posts/${slug}`}>
-        <div className="relative aspect-[1200/675] overflow-hidden">
+    <article className="group">
+      <Link href={`/posts/${slug}`} className="block">
+        <div className="relative aspect-[4/3] overflow-hidden rounded-sm bg-line">
           <Image
             src={coverImage ?? "/icon.png"}
-            alt={title}
+            alt=""
             fill
             sizes="(min-width: 640px) 33vw, 100vw"
-            className="object-cover transition-transform group-hover:scale-105"
+            className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
             style={{ objectPosition: `center ${coverImagePositionY}%` }}
           />
-          <div className="absolute left-0 top-3">
-            <span className="bg-stone-800 px-3 py-1 text-xs font-medium text-white">
-              {getCategoryName(category)}
-            </span>
-          </div>
         </div>
-        <div className="p-4">
-          <time className="text-xs text-stone-400">{formattedDate}</time>
-          <h2 className="mt-2 text-lg font-semibold leading-snug text-stone-700 group-hover:text-stone-900">
-            {title}
-          </h2>
-        </div>
+        <h3 className="mt-3 line-clamp-2 text-sm font-bold leading-snug text-ink group-hover:text-accent">
+          {title}
+        </h3>
+        <p className="mt-1 text-xs text-ink-muted">
+          {getCategoryName(category)}・{formattedDate}
+        </p>
       </Link>
     </article>
   );

@@ -39,15 +39,13 @@ export default function Pagination({
   const showEndEllipsis = pages[pages.length - 1] < totalPages;
 
   const pageButtonBase =
-    "flex h-9 w-9 items-center justify-center rounded-full text-sm transition-all duration-200";
-  const pageButtonActive =
-    "bg-gradient-to-br from-stone-500 to-stone-400 text-white shadow-md shadow-stone-200 font-medium scale-110";
-  const pageButtonInactive =
-    "text-stone-600 hover:bg-accent hover:text-stone-800 hover:scale-105";
+    "flex h-11 w-11 items-center justify-center rounded-sm text-sm transition-colors";
+  const pageButtonActive = "bg-ink font-medium text-paper";
+  const pageButtonInactive = "text-ink-muted hover:bg-line hover:text-ink";
   const arrowButtonActive =
-    "flex h-9 w-9 items-center justify-center rounded-full text-stone-500 transition-all duration-200 hover:bg-accent hover:text-stone-800 hover:scale-105";
+    "flex h-11 w-11 items-center justify-center rounded-sm text-ink-muted transition-colors hover:bg-line hover:text-ink";
   const arrowButtonDisabled =
-    "flex h-9 w-9 items-center justify-center rounded-full text-stone-300 cursor-not-allowed";
+    "flex h-11 w-11 cursor-not-allowed items-center justify-center text-line";
 
   return (
     <nav
@@ -74,7 +72,7 @@ export default function Pagination({
           >
             1
           </Link>
-          <span className="flex h-9 w-5 items-end justify-center pb-1 text-xs tracking-widest text-stone-300">
+          <span className="flex h-11 w-5 items-end justify-center pb-2 text-xs tracking-widest text-ink-muted">
             ···
           </span>
         </>
@@ -102,7 +100,7 @@ export default function Pagination({
 
       {showEndEllipsis && (
         <>
-          <span className="flex h-9 w-5 items-end justify-center pb-1 text-xs tracking-widest text-stone-300">
+          <span className="flex h-11 w-5 items-end justify-center pb-2 text-xs tracking-widest text-ink-muted">
             ···
           </span>
           <Link

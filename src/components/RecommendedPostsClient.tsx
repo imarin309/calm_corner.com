@@ -3,6 +3,7 @@
 import { useMemo, useSyncExternalStore } from "react";
 import { usePathname } from "next/navigation";
 import PostCardCompact from "./PostCardCompact";
+import SectionHeading from "./SectionHeading";
 
 export type PostSummary = {
   title: string;
@@ -31,17 +32,12 @@ interface RecommendedPostsClientProps {
 
 function Skeleton({ count }: { count: number }) {
   return (
-    <div className="grid gap-4 sm:grid-cols-3">
+    <div className="grid gap-(--space-md) sm:grid-cols-3">
       {Array.from({ length: count }, (_, i) => (
-        <div
-          key={i}
-          className="animate-pulse overflow-hidden border border-stone-200 bg-white"
-        >
-          <div className="aspect-[1200/675] bg-stone-200" />
-          <div className="p-4">
-            <div className="h-3 w-20 rounded bg-stone-200" />
-            <div className="mt-3 h-5 w-3/4 rounded bg-stone-200" />
-          </div>
+        <div key={i} className="animate-pulse">
+          <div className="aspect-[4/3] rounded-sm bg-line" />
+          <div className="mt-3 h-4 w-3/4 rounded-sm bg-line" />
+          <div className="mt-2 h-3 w-20 rounded-sm bg-line" />
         </div>
       ))}
     </div>
@@ -68,16 +64,17 @@ export default function RecommendedPostsClient({
     [mounted, posts, count, selectPosts, pathname],
   );
 
+  // トップページは作品棚そのものなので、おすすめを重ねて出さない
+  if (pathname === "/") return null;
+
   return (
-    <section className="py-10">
-      <div className="mx-auto max-w-4xl px-4">
-        <h2 className="mb-6 text-lg font-semibold text-stone-700">
-          こちらもおすすめ
-        </h2>
+    <section className="py-(--space-lg)">
+      <div className="mx-auto max-w-5xl px-4">
+        <SectionHeading label="More Works" title="こちらもおすすめ" />
         {!mounted ? (
           <Skeleton count={count} /> // SSR/静的HTMLではランダム選択ができないため、マウントまでの間にスケルトンを表示してハイドレーションミスマッチを防ぐ
         ) : selected.length > 0 ? (
-          <div className="grid gap-4 sm:grid-cols-3">
+          <div className="grid gap-(--space-lg) sm:grid-cols-3 sm:gap-(--space-md)">
             {selected.map((post) => (
               <PostCardCompact
                 key={post.slug}

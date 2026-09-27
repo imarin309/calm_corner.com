@@ -10,22 +10,25 @@ const footerLinks = [
 
 export default function Footer() {
   return (
-    <footer className="mt-auto border-t border-stone-200 bg-stone-800 py-6 text-center">
-      <nav aria-label="フッター">
-        <ul className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 px-4">
-          {footerLinks.map(({ label, href }) => (
-            <li key={href}>
-              <Link
-                href={href}
-                className="text-xs text-stone-400 underline transition-colors hover:text-stone-200"
-              >
-                {label}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
-      <p className="mt-2 text-sm text-stone-400">
+    <footer className="mt-auto border-t border-line">
+      <div className="mx-auto flex max-w-5xl flex-col gap-4 px-4 py-(--space-lg) sm:flex-row sm:items-center sm:justify-between">
+        <p className="font-hand text-lg text-ink">{siteName}</p>
+        <nav aria-label="フッター">
+          <ul className="flex flex-wrap gap-x-5 text-xs">
+            {footerLinks.map(({ label, href }) => (
+              <li key={href}>
+                <Link
+                  href={href}
+                  className="inline-block py-2 text-ink-muted underline-offset-4 transition-colors hover:text-ink hover:underline"
+                >
+                  {label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
+      <p className="pb-6 text-center text-xs text-ink-muted">
         &copy; {new Date().getFullYear()} {siteName}
       </p>
     </footer>

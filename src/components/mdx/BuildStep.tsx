@@ -111,8 +111,8 @@ export default function BuildStep({
   return (
     <>
       <div
-        className={`not-prose overflow-hidden rounded-xl border border-stone-200 ${
-          isSub ? "my-3 bg-white" : "my-5 bg-stone-50"
+        className={`not-prose overflow-hidden rounded-xl border border-stone-200 bg-surface ${
+          isSub ? "my-3" : "my-5"
         }`}
       >
         <div

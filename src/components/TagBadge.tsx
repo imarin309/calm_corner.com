@@ -9,7 +9,7 @@ export default function TagBadge({ tag }: TagBadgeProps) {
   return (
     <Link
       href={`/tags/${tag}`}
-      className="border border-stone-400 px-2 py-1 text-xs text-stone-500 transition-colors hover:border-stone-600 hover:text-stone-700"
+      className="inline-block py-1 text-xs text-ink-muted underline-offset-4 transition-colors hover:text-accent hover:underline"
     >
       #{getTagName(tag)}
     </Link>
