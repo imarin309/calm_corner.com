@@ -45,7 +45,7 @@ export const metadata: Metadata = {
       template: `%s | ${siteName}`,
     },
     description: siteDescription,
-    images: [{ url: "/header.webp", width: 1200, height: 630 }],
+    images: [{ url: "/header.webp", width: 4448, height: 720 }],
   },
   twitter: {
     card: "summary_large_image",
