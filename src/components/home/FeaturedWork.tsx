@@ -25,11 +25,18 @@ export default function FeaturedWork({ post }: { post: Post }) {
             fill
             priority
             sizes="(min-width: 640px) 60vw, 100vw"
-            className="object-cover transition-opacity group-hover:opacity-90"
+            className="object-cover transition-transform duration-300 group-hover:scale-[1.02] motion-reduce:transition-none"
             style={{
               objectPosition: `center ${post.coverImagePositionY ?? 50}%`,
             }}
           />
+          {/* スマホには hover がないため、写真がリンクだと分かる目印を常に出しておく */}
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute right-3 bottom-2 text-sm text-white/90 drop-shadow-[0_1px_3px_rgb(0_0_0/0.8)] transition-colors group-hover:text-white motion-reduce:transition-none"
+          >
+            記録を読む →
+          </span>
         </div>
       </Link>
       <div className="sm:pb-(--space-md)">
