@@ -13,6 +13,7 @@ export const tags: Tag[] = [
   { slug: "arcanadia", name: "アルカナディア" },
   { slug: "sousai-syoujo", name: "創彩少女庭園" },
   { slug: "megaromaria", name: "メガロマリア" },
+  { slug: "technique", name: "技法・やり方" },
 ];
 
 export function getAllTags(): Tag[] {
