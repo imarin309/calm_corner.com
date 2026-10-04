@@ -1,21 +1,32 @@
 import { redirect } from "next/navigation";
-import PostList from "@/components/PostList";
-import { getAllPosts } from "@/lib/posts";
-import { POSTS_PER_PAGE } from "@/constants/config";
+import type { Metadata } from "next";
+import SectionHeading from "@/components/SectionHeading";
+import RecentGrid from "@/components/home/RecentGrid";
+import { getHomeFeed } from "@/lib/home-feed";
 
-const sortedPosts = getAllPosts().sort(
-  (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-);
-
-const totalPages = Math.ceil(sortedPosts.length / POSTS_PER_PAGE);
+const { totalPages } = getHomeFeed(1);
 
 export function generateStaticParams() {
+  // output: "export" は空の配列だとビルドに失敗するため、1ページしかなくても /page/2 を作ってリダイレクトさせる
   if (totalPages <= 1) {
     return [{ num: "2" }];
   }
   return Array.from({ length: totalPages - 1 }, (_, i) => ({
     num: String(i + 2),
   }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ num: string }>;
+}): Promise<Metadata> {
+  const { num } = await params;
+  return {
+    title: `記事一覧 ページ${num}`,
+    // 一覧は記事カードを並べただけで独自の内容がないため検索結果に出さない
+    robots: { index: false, follow: true },
+  };
 }
 
 export default async function PaginatedPage({
@@ -26,21 +37,16 @@ export default async function PaginatedPage({
   const { num } = await params;
   const pageNum = Number(num);
 
-  if (pageNum === 1 || pageNum > totalPages) {
+  if (!Number.isInteger(pageNum) || pageNum <= 1 || pageNum > totalPages) {
     redirect("/");
   }
 
-  const start = (pageNum - 1) * POSTS_PER_PAGE;
-  const pagePosts = sortedPosts.slice(start, start + POSTS_PER_PAGE);
+  const { posts } = getHomeFeed(pageNum);
 
   return (
-    <>
-      <PostList
-        posts={pagePosts}
-        title={`ページ ${pageNum}`}
-        currentPage={pageNum}
-        totalPages={totalPages}
-      />
-    </>
+    <section aria-labelledby="page-heading">
+      <SectionHeading id="page-heading" label={`Page ${pageNum}`} />
+      <RecentGrid posts={posts} currentPage={pageNum} totalPages={totalPages} />
+    </section>
   );
 }
