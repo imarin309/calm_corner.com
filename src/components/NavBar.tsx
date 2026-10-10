@@ -9,6 +9,7 @@ import {
   siteXUrl,
   siteYouTubeUrl,
   siteName,
+  siteSubtitle,
 } from "@/constants/meta";
 import { useDropdownMenu } from "@/hooks/useDropdownMenu";
 
@@ -62,6 +63,7 @@ export default function NavBar() {
             <span className="font-hand text-base font-semibold tracking-wider text-ink">
               {siteName}
             </span>
+            <span className="text-xs text-ink-muted">{siteSubtitle}</span>
           </Link>
 
           {/* ハンバーガーボタン（スマホのみ） */}
