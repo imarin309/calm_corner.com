@@ -3,7 +3,7 @@ import Link from "next/link";
 interface PaginationProps {
   currentPage: number;
   totalPages: number;
-  basePath?: string;
+  basePath: string;
 }
 
 const WINDOW_SIZE = 6;
@@ -28,10 +28,7 @@ export default function Pagination({
   if (totalPages <= 1) return null;
 
   const pageHref = (page: number) => {
-    if (basePath) {
-      return page === 1 ? basePath : `${basePath}/page/${page}`;
-    }
-    return page === 1 ? "/" : `/page/${page}`;
+    return page === 1 ? basePath : `${basePath}/page/${page}`;
   };
 
   const pages = getPageWindow(currentPage, totalPages);
