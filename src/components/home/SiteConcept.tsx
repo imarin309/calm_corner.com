@@ -11,9 +11,7 @@ export default function SiteConcept() {
   return (
     <section aria-labelledby="concept-heading">
       <div className="mb-(--space-md)">
-        <p className="font-hand text-xs tracking-wider text-accent">
-          このサイトのコンセプト
-        </p>
+        <p className="font-hand text-xs tracking-wider text-accent">Concept</p>
         <div className="mt-1 flex items-center gap-3">
           {/* アイコンは白背景のため、multiply で紙色の背景になじませる */}
           <Image

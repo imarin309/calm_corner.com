@@ -35,8 +35,6 @@ export default function Home() {
         )}
       </div>
 
-      <SiteConcept />
-
       {howTos.length > 0 && (
         <HomePostSection
           id="how-tos-heading"
@@ -56,6 +54,8 @@ export default function Home() {
           moreHref="/works"
         />
       )}
+
+      <SiteConcept />
 
       <section aria-labelledby="categories-heading">
         <SectionHeading
