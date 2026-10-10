@@ -1,14 +1,15 @@
 import Header from "@/components/Header";
 import SectionHeading from "@/components/SectionHeading";
 import FeaturedWork from "@/components/home/FeaturedWork";
-import RecentGrid from "@/components/home/RecentGrid";
+import HomePostSection from "@/components/home/HomePostSection";
 import CategoryShelf from "@/components/home/CategoryShelf";
+import SiteConcept from "@/components/home/SiteConcept";
 import { getAllPosts } from "@/lib/posts";
 import { getHomeFeed } from "@/lib/home-feed";
 import { getAllCategories } from "@/constants/category";
 
 export default function Home() {
-  const { featured, posts, totalPages } = getHomeFeed(1);
+  const { featured, works, howTos } = getHomeFeed();
 
   const allPosts = getAllPosts();
   const categories = getAllCategories()
@@ -34,11 +35,27 @@ export default function Home() {
         )}
       </div>
 
-      {posts.length > 0 && (
-        <section aria-label="最近の記録">
-          <RecentGrid posts={posts} currentPage={1} totalPages={totalPages} />
-        </section>
+      {howTos.length > 0 && (
+        <HomePostSection
+          id="how-tos-heading"
+          label="How to"
+          title="制作howto"
+          posts={howTos}
+          moreHref="/category/note"
+        />
       )}
+
+      {works.length > 0 && (
+        <HomePostSection
+          id="works-heading"
+          label="Works"
+          title="制作記録"
+          posts={works}
+          moreHref="/works"
+        />
+      )}
+
+      <SiteConcept />
 
       <section aria-labelledby="categories-heading">
         <SectionHeading

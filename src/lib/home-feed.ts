@@ -1,31 +1,29 @@
 import { getAllPosts, type Post } from "@/lib/posts";
 
-/** Featured Work には完成作品だけを選ぶ */
-const WORK_CATEGORIES = ["gunpla", "girls-plamo"];
-/** トップのグリッドが3列なので、段が欠けない件数にする */
-const HOME_POSTS_PER_PAGE = 9;
+export const WORK_CATEGORIES = ["gunpla", "girls-plamo"];
+const HOW_TO_CATEGORY = "note";
+const HOME_SECTION_COUNT = 3;
 
-/**
- * Featured はトップ1ページ目にしか出さないため、一覧からは外して
- * 全記事がどこかのページにちょうど1回ずつ載るようにしている
- */
-export function getHomeFeed(pageNum: number): {
+export function getWorksByNewest(): Post[] {
+  return getAllPosts()
+    .filter((post) => WORK_CATEGORIES.includes(post.category))
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+}
+
+/** Featured と同じ作品が並ばないよう、制作記録は Featured の次から取る */
+export function getHomeFeed(): {
   featured?: Post;
-  posts: Post[];
-  totalPages: number;
+  works: Post[];
+  howTos: Post[];
 } {
-  const sortedPosts = getAllPosts().sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-  );
-  const featured = sortedPosts.find((post) =>
-    WORK_CATEGORIES.includes(post.category),
-  );
-  const feedPosts = sortedPosts.filter((post) => post !== featured);
-  const start = (pageNum - 1) * HOME_POSTS_PER_PAGE;
+  const [featured, ...restWorks] = getWorksByNewest();
+  const howTos = getAllPosts()
+    .filter((post) => post.category === HOW_TO_CATEGORY)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   return {
     featured,
-    posts: feedPosts.slice(start, start + HOME_POSTS_PER_PAGE),
-    totalPages: Math.max(1, Math.ceil(feedPosts.length / HOME_POSTS_PER_PAGE)),
+    works: restWorks.slice(0, HOME_SECTION_COUNT),
+    howTos: howTos.slice(0, HOME_SECTION_COUNT),
   };
 }

@@ -19,7 +19,7 @@ interface PostListProps {
   title?: string;
   currentPage: number;
   totalPages: number;
-  basePath?: string;
+  basePath: string;
 }
 
 export default function PostList({
