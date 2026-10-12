@@ -2,20 +2,20 @@ import Header from "@/components/Header";
 import SectionHeading from "@/components/SectionHeading";
 import FeaturedWork from "@/components/home/FeaturedWork";
 import HomePostSection from "@/components/home/HomePostSection";
-import CategoryShelf from "@/components/home/CategoryShelf";
+import TagShelf from "@/components/home/TagShelf";
 import SiteConcept from "@/components/home/SiteConcept";
 import { getAllPosts } from "@/lib/posts";
 import { getHomeFeed } from "@/lib/home-feed";
-import { getAllCategories } from "@/constants/category";
+import { getAllTags } from "@/constants/tag";
 
 export default function Home() {
   const { featured, works, howTos } = getHomeFeed();
 
   const allPosts = getAllPosts();
-  const categories = getAllCategories()
-    .map((category) => ({
-      ...category,
-      count: allPosts.filter((post) => post.category === category.slug).length,
+  const tags = getAllTags()
+    .map((tag) => ({
+      ...tag,
+      count: allPosts.filter((post) => post.tags.includes(tag.slug)).length,
     }))
     .filter(({ count }) => count > 0);
 
@@ -37,9 +37,9 @@ export default function Home() {
 
       {howTos.length > 0 && (
         <HomePostSection
-          id="how-tos-heading"
-          label="How to"
-          title="制作howto"
+          id="notes-heading"
+          label="Note"
+          title="制作ノート"
           posts={howTos}
           moreHref="/category/note"
         />
@@ -57,13 +57,9 @@ export default function Home() {
 
       <SiteConcept />
 
-      <section aria-labelledby="categories-heading">
-        <SectionHeading
-          id="categories-heading"
-          label="Categories"
-          title="カテゴリーから探す"
-        />
-        <CategoryShelf categories={categories} />
+      <section aria-labelledby="tags-heading">
+        <SectionHeading id="tags-heading" label="Tags" title="タグから探す" />
+        <TagShelf tags={tags} />
       </section>
     </div>
   );

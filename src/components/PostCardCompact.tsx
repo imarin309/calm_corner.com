@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { getCategoryName } from "@/constants/category";
+import TagBadge from "@/components/TagBadge";
 
 interface PostCardCompactProps {
   title: string;
@@ -9,6 +10,7 @@ interface PostCardCompactProps {
   coverImage?: string;
   coverImagePositionY?: number;
   category: string;
+  tags: string[];
 }
 
 // PostCardCompact はdescriptionを持たないPostCard
@@ -19,6 +21,7 @@ export default function PostCardCompact({
   coverImage,
   coverImagePositionY = 50,
   category,
+  tags,
 }: PostCardCompactProps) {
   const formattedDate = new Date(date).toLocaleDateString("ja-JP", {
     year: "numeric",
@@ -26,9 +29,9 @@ export default function PostCardCompact({
   });
 
   return (
-    <article className="group">
-      <Link href={`/posts/${slug}`} className="block">
-        <div className="relative aspect-[4/3] overflow-hidden rounded-sm bg-line">
+    <article>
+      <Link href={`/posts/${slug}`} className="group block">
+        <div className="relative aspect-[16/9] overflow-hidden rounded-sm bg-line">
           <Image
             src={coverImage ?? "/icon.png"}
             alt=""
@@ -45,6 +48,13 @@ export default function PostCardCompact({
           {getCategoryName(category)}・{formattedDate}
         </p>
       </Link>
+      {tags.length > 0 && (
+        <div className="mt-1 flex flex-wrap gap-x-3">
+          {tags.map((tag) => (
+            <TagBadge key={tag} tag={tag} />
+          ))}
+        </div>
+      )}
     </article>
   );
 }

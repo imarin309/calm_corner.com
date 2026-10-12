@@ -37,7 +37,8 @@ hg-alex での線:
 - `title`: `【筆塗り塗装】キット名 制作 | キャッチコピー`。美プラは `【美プラ筆塗り塗装】`
   - キャッチコピーは、今回のテーマか一番の見どころを一言で。「22年前のキットを紺色でνガンダム風に」
 - `description`: 100〜120文字。キット名・塗装方法・テーマ・試したことを入れる（`/blog-generate-description`）
-- `category`: `gunpla` / `girls-plamo` / `other`
+- `category`: 制作記事は `works`、技法や考えをまとめた記事は `note`
+- `tags`: 制作記事は `gunpla` か `girls-plamo` を先頭に付け、続けてシリーズのタグ（`hg` など）を付ける
 - `coverImage`: 完成写真から選ぶ。カードで顔や頭が切れる場合は `coverImagePositionY`（0で上端、50で中央、100で下端）で調整する
 
 ### 冒頭

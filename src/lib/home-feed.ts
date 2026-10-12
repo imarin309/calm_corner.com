@@ -1,12 +1,12 @@
 import { getAllPosts, type Post } from "@/lib/posts";
 
-export const WORK_CATEGORIES = ["gunpla", "girls-plamo"];
+const WORK_CATEGORY = "works";
 const HOW_TO_CATEGORY = "note";
 const HOME_SECTION_COUNT = 3;
 
 export function getWorksByNewest(): Post[] {
   return getAllPosts()
-    .filter((post) => WORK_CATEGORIES.includes(post.category))
+    .filter((post) => post.category === WORK_CATEGORY)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 

@@ -4,6 +4,8 @@ export type Tag = {
 };
 
 export const tags: Tag[] = [
+  { slug: "gunpla", name: "ガンプラ" },
+  { slug: "girls-plamo", name: "美プラ" },
   { slug: "hg", name: "HG" },
   { slug: "sd-ex", name: "SD-EX" },
   { slug: "fag", name: "フレームアームズガール" },
@@ -13,7 +15,8 @@ export const tags: Tag[] = [
   { slug: "arcanadia", name: "アルカナディア" },
   { slug: "sousai-syoujo", name: "創彩少女庭園" },
   { slug: "megaromaria", name: "メガロマリア" },
-  { slug: "technique", name: "技法・やり方" },
+  { slug: "howto", name: "HowTo" },
+  { slug: "poem", name: "ポエム" },
 ];
 
 export function getAllTags(): Tag[] {

@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Post } from "@/lib/posts";
-import { getCategoryName } from "@/constants/category";
 import { splitWorkTitle } from "@/lib/work-title";
+import TagBadge from "@/components/TagBadge";
 
 export default function FeaturedWork({ post }: { post: Post }) {
   const { name, catchCopy } = splitWorkTitle(post.title);
@@ -40,9 +40,13 @@ export default function FeaturedWork({ post }: { post: Post }) {
         </div>
       </Link>
       <div className="sm:pb-(--space-md)">
-        <p className="text-xs text-ink-muted">
-          {getCategoryName(post.category)}
-        </p>
+        {post.tags.length > 0 && (
+          <div className="flex flex-wrap gap-x-3">
+            {post.tags.map((tag) => (
+              <TagBadge key={tag} tag={tag} />
+            ))}
+          </div>
+        )}
         <h3 className="mt-2 text-2xl font-bold leading-snug text-ink">
           <Link href={href} className="hover:text-accent">
             {name}

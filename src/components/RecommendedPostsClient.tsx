@@ -12,6 +12,7 @@ export type PostSummary = {
   coverImage?: string;
   coverImagePositionY?: number;
   category: string;
+  tags: string[];
 };
 
 export type PostSelector = (
@@ -35,7 +36,7 @@ function Skeleton({ count }: { count: number }) {
     <div className="grid gap-(--space-md) sm:grid-cols-3">
       {Array.from({ length: count }, (_, i) => (
         <div key={i} className="animate-pulse">
-          <div className="aspect-[4/3] rounded-sm bg-line" />
+          <div className="aspect-[16/9] rounded-sm bg-line" />
           <div className="mt-3 h-4 w-3/4 rounded-sm bg-line" />
           <div className="mt-2 h-3 w-20 rounded-sm bg-line" />
         </div>
@@ -84,6 +85,7 @@ export default function RecommendedPostsClient({
                 coverImage={post.coverImage}
                 coverImagePositionY={post.coverImagePositionY}
                 category={post.category}
+                tags={post.tags}
               />
             ))}
           </div>

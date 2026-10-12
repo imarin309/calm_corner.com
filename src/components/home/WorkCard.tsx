@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Post } from "@/lib/posts";
 import { getCategoryName } from "@/constants/category";
 import { splitWorkTitle } from "@/lib/work-title";
+import TagBadge from "@/components/TagBadge";
 
 export default function WorkCard({ post }: { post: Post }) {
   const { name, catchCopy } = splitWorkTitle(post.title);
@@ -12,8 +13,8 @@ export default function WorkCard({ post }: { post: Post }) {
   });
 
   return (
-    <article className="group">
-      <Link href={`/posts/${post.slug}`} className="block">
+    <article>
+      <Link href={`/posts/${post.slug}`} className="group block">
         <div className="relative aspect-[16/9] overflow-hidden rounded-sm bg-line">
           <Image
             src={post.coverImage ?? "/icon.png"}
@@ -36,6 +37,13 @@ export default function WorkCard({ post }: { post: Post }) {
           {getCategoryName(post.category)}・{month}
         </p>
       </Link>
+      {post.tags.length > 0 && (
+        <div className="mt-1 flex flex-wrap gap-x-3">
+          {post.tags.map((tag) => (
+            <TagBadge key={tag} tag={tag} />
+          ))}
+        </div>
+      )}
     </article>
   );
 }
