@@ -14,7 +14,7 @@ export default function WorkCard({ post }: { post: Post }) {
   return (
     <article className="group">
       <Link href={`/posts/${post.slug}`} className="block">
-        <div className="relative aspect-[4/5] overflow-hidden rounded-sm bg-line">
+        <div className="relative aspect-[16/9] overflow-hidden rounded-sm bg-line">
           <Image
             src={post.coverImage ?? "/icon.png"}
             alt=""

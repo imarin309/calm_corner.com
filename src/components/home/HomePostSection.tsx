@@ -25,7 +25,7 @@ export default function HomePostSection({
     >
       <SectionHeading id={id} label={label} title={title} />
       {/* モバイルは次のカードが少し覗くようにして、横にスライドできることを伝える */}
-      <div className="-mx-(--space-md) flex snap-x snap-mandatory scroll-px-(--space-md) gap-(--space-md) overflow-x-auto px-(--space-md) pb-2 [&>*]:w-3/4 [&>*]:shrink-0 [&>*]:snap-start sm:mx-0 sm:grid sm:grid-cols-3 sm:overflow-visible sm:px-0 sm:pb-0 sm:[&>*]:w-auto sm:[&>*:nth-child(2)]:mt-(--space-lg)">
+      <div className="-mx-(--space-md) flex snap-x snap-mandatory scroll-px-(--space-md) gap-(--space-md) overflow-x-auto px-(--space-md) pb-2 [&>*]:w-3/4 [&>*]:shrink-0 [&>*]:snap-start sm:mx-0 sm:grid sm:grid-cols-3 sm:overflow-visible sm:px-0 sm:pb-0 sm:[&>*]:w-auto">
         {posts.map((post) => (
           <WorkCard key={post.slug} post={post} />
         ))}

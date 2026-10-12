@@ -12,6 +12,8 @@
   --color-ink-muted: #6b665c;
   --color-line: #ddd5c6;
   --color-accent: #3f6b69;
+  /* surface 上で文字のコントラスト比 4.5 を保てる範囲で彩度を落としている */
+  --color-caution: #9a5541;
 
   --radius-sm: 2px;
   --radius-md: 4px;
@@ -107,6 +109,18 @@
   color: #78716c;
 }
 
+/* マーカー線ディレクティブ (:marker[])。行をまたいでも各行に線が付くよう box-decoration-break を指定 */
+.prose .directive-marker,
+.directive-marker {
+  background: linear-gradient(
+    transparent 60%,
+    color-mix(in srgb, var(--color-accent) 30%, transparent) 60%
+  );
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  padding: 0 0.1em;
+}
+
 /* 全体の基本スタイル */
 body {
   background: var(--background);
@@ -126,4 +140,82 @@ body {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
   }
+}
+
+/* <Box> のリスト。箇条書きは塗料の色見本チップ、番号付きは線の丸数字にする */
+.mdx-box-body > :is(ul, ol) {
+  list-style: none;
+  padding-left: 0;
+}
+
+.mdx-box-body > ol {
+  counter-reset: box-item;
+}
+
+.mdx-box-body > :is(ul, ol) > li {
+  position: relative;
+  margin: 0;
+  padding: 0.6em 0 0.6em 2.25em;
+}
+
+.mdx-box-body > :is(ul, ol) > li + li {
+  border-top: 1px dotted var(--color-line);
+}
+
+.mdx-box-body > :is(ul, ol) > li > p {
+  margin: 0;
+}
+
+.mdx-box-body > ul > li::before {
+  content: "";
+  position: absolute;
+  left: 0.6em;
+  top: 1.35em;
+  width: 0.6em;
+  height: 0.6em;
+  border-radius: var(--radius-sm);
+  background: var(--color-accent);
+  opacity: 0.75;
+  transform: rotate(-6deg);
+}
+
+/* 入れ子のリストは補足として、左の細い線と小さく薄い文字で添える */
+.mdx-box-body > :is(ul, ol) > li :is(ul, ol) {
+  list-style: none;
+  margin: 0.3em 0 0;
+  padding-left: 0.75em;
+  border-left: 2px solid var(--color-line);
+  font-size: 0.875em;
+  color: var(--color-ink-muted);
+}
+
+.mdx-box-body > :is(ul, ol) > li :is(ul, ol) > li {
+  margin: 0;
+  padding: 0;
+}
+
+.mdx-box-body > :is(ul, ol) > li :is(ul, ol) > li::marker {
+  content: none;
+}
+
+.mdx-box-body > ol > li {
+  counter-increment: box-item;
+}
+
+.mdx-box-body > ol > li::before {
+  content: counter(box-item);
+  position: absolute;
+  left: 0;
+  top: 0.95em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.6em;
+  height: 1.6em;
+  border: 1px solid var(--color-accent);
+  border-radius: 9999px;
+  color: var(--color-accent);
+  font-family: var(--font-hand);
+  font-size: 0.85em;
+  line-height: 1;
 }
