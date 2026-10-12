@@ -58,11 +58,7 @@ export default function Home() {
       <SiteConcept />
 
       <section aria-labelledby="tags-heading">
-        <SectionHeading
-          id="tags-heading"
-          label="Tags"
-          title="タグから探す"
-        />
+        <SectionHeading id="tags-heading" label="Tags" title="タグから探す" />
         <TagShelf tags={tags} />
       </section>
     </div>
