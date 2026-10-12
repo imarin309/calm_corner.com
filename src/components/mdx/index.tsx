@@ -4,6 +4,9 @@ import LinkCard from "./LinkCard";
 import RelatedLinks from "./RelatedLinks";
 import ThreeSixtyView from "./ThreeSixtyView";
 import BuildStep, { BuildStepGroup } from "./BuildStep";
+import Speech from "./Speech";
+import Box from "./Box";
+import Caution from "./Caution";
 import Heading2 from "./Heading2";
 import Heading3 from "./Heading3";
 import Table, { THead, TBody, Tr, Th, Td } from "./Table";
@@ -24,6 +27,9 @@ export const mdxComponents = {
   ThreeSixtyView,
   BuildStep,
   BuildStepGroup,
+  Speech,
+  Box,
+  Caution,
 };
 
 export {
@@ -34,4 +40,7 @@ export {
   ThreeSixtyView,
   BuildStep,
   BuildStepGroup,
+  Speech,
+  Box,
+  Caution,
 };

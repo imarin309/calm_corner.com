@@ -19,6 +19,9 @@ import type { TextDirective } from "mdast-util-directive";
  *   :pink[ピンクのテキスト]
  *   :purple[紫のテキスト]
  *   :gray[グレーのテキスト]
+ *
+ * 装飾:
+ *   :marker[マーカー線を引くテキスト]
  */
 const TEXT_SIZE_DIRECTIVES = ["large", "xl", "sm"] as const;
 const TEXT_COLOR_DIRECTIVES = [
@@ -32,9 +35,12 @@ const TEXT_COLOR_DIRECTIVES = [
   "gray",
 ] as const;
 
+const TEXT_DECORATION_DIRECTIVES = ["marker"] as const;
+
 const ALL_DIRECTIVES = [
   ...TEXT_SIZE_DIRECTIVES,
   ...TEXT_COLOR_DIRECTIVES,
+  ...TEXT_DECORATION_DIRECTIVES,
 ] as const;
 
 export function remarkTextSize() {

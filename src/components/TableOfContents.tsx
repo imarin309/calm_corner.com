@@ -7,7 +7,6 @@ import clsx from "clsx";
 interface HeadingItem {
   id: string;
   text: string;
-  level: number;
 }
 
 export default function TableOfContents() {
@@ -17,7 +16,7 @@ export default function TableOfContents() {
 
   useEffect(() => {
     const elements = Array.from(
-      document.querySelectorAll<HTMLElement>("article [data-toc-heading]"),
+      document.querySelectorAll<HTMLElement>('article [data-toc-heading="2"]'),
     ).filter((el) => el.id && el.dataset.tocText);
 
     // eslint-disable-next-line react-hooks/set-state-in-effect -- headings come from MDX-rendered DOM, not from this component's own render
@@ -25,7 +24,6 @@ export default function TableOfContents() {
       elements.map((el) => ({
         id: el.id,
         text: el.dataset.tocText ?? "",
-        level: Number(el.dataset.tocHeading),
       })),
     );
 
@@ -56,10 +54,7 @@ export default function TableOfContents() {
   const list = (onLinkClick?: () => void) => (
     <ul className="space-y-1.5">
       {headings.map((h) => (
-        <li
-          key={h.id}
-          className={clsx(h.level === 3 && "pl-3", h.level === 4 && "pl-6")}
-        >
+        <li key={h.id}>
           <a
             href={`#${h.id}`}
             onClick={onLinkClick}
