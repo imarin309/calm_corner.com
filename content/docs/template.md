@@ -2,8 +2,8 @@
 title: "【筆塗り塗装】キット名 制作 | catch copy"
 description: ""
 date: 2026-03-03
-category: gunpla / girls-plamo / other
-tags: []
+category: works / note
+tags: [gunpla / girls-plamo]
 coverImage: 
 # coverImagePositionY: 50
 ---

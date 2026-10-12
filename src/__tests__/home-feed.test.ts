@@ -8,7 +8,7 @@ vi.mock("@/lib/posts", () => ({
 
 const mockGetAllPosts = vi.mocked(getAllPosts);
 
-function makePost(slug: string, date: string, category = "gunpla"): Post {
+function makePost(slug: string, date: string, category = "works"): Post {
   return {
     slug,
     title: slug,
@@ -36,7 +36,7 @@ describe("getHomeFeed", () => {
     mockGetAllPosts.mockReturnValue(
       makePosts([
         { slug: "note-1", category: "note" },
-        { slug: "work-1", category: "girls-plamo" },
+        { slug: "work-1", category: "works" },
         { slug: "work-2" },
       ]),
     );
@@ -104,7 +104,7 @@ describe("getWorksByNewest", () => {
       makePosts([
         { slug: "work-1" },
         { slug: "note-1", category: "note" },
-        { slug: "work-2", category: "girls-plamo" },
+        { slug: "work-2", category: "works" },
       ]),
     );
 
