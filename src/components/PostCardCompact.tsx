@@ -31,7 +31,7 @@ export default function PostCardCompact({
   return (
     <article>
       <Link href={`/posts/${slug}`} className="group block">
-        <div className="relative aspect-[4/3] overflow-hidden rounded-sm bg-line">
+        <div className="relative aspect-[16/9] overflow-hidden rounded-sm bg-line">
           <Image
             src={coverImage ?? "/icon.png"}
             alt=""
