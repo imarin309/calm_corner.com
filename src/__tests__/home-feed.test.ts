@@ -15,8 +15,10 @@ function makePost(slug: string, date: string, category = "works"): Post {
     date,
     category,
     tags: [],
+    showCoverImage: true,
     noindex: false,
     excerpt: "",
+    headings: [],
   };
 }
 

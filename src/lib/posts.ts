@@ -1,7 +1,15 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
+import { toString } from "mdast-util-to-string";
+import remarkDirective from "remark-directive";
+import remarkGfm from "remark-gfm";
+import remarkMdx from "remark-mdx";
+import remarkParse from "remark-parse";
+import { unified } from "unified";
+import { visit } from "unist-util-visit";
 import { extractExcerpt } from "./extract-excerpt";
+import { toSlug } from "./heading";
 
 export type Post = {
   slug: string;
@@ -12,8 +20,15 @@ export type Post = {
   description?: string;
   coverImage?: string;
   coverImagePositionY?: number;
+  showCoverImage: boolean;
   noindex: boolean;
   excerpt: string;
+  headings: PostHeading[];
+};
+
+export type PostHeading = {
+  id: string;
+  text: string;
 };
 
 export type Page = {
@@ -37,6 +52,25 @@ function parsePercent(value: unknown): number | undefined {
     : undefined;
 }
 
+// 目次を静的HTMLに含めるため、描画後のDOMではなくMDXのソースから見出しを拾う。
+// 見出しに **太字** や :marker[] があっても本文の Heading2 と同じ文字・id になるよう、
+// 構文木からテキストだけを取り出して toSlug に渡す
+const headingParser = unified()
+  .use(remarkParse)
+  .use(remarkMdx)
+  .use(remarkGfm)
+  .use(remarkDirective);
+
+function extractHeadings(content: string): PostHeading[] {
+  const headings: PostHeading[] = [];
+  visit(headingParser.parse(content), "heading", (node) => {
+    if (node.depth !== 2) return;
+    const text = toString(node).trim();
+    headings.push({ id: toSlug(text), text });
+  });
+  return headings;
+}
+
 function parsePost(filename: string): Post {
   const slug = filename.replace(/\.mdx$/, "");
   const filePath = path.join(postsDir, filename);
@@ -56,8 +90,10 @@ function parsePost(filename: string): Post {
     description: data.description ? String(data.description) : undefined,
     coverImage: data.coverImage ? String(data.coverImage) : undefined,
     coverImagePositionY: parsePercent(data.coverImagePositionY),
+    showCoverImage: data.showCoverImage !== false,
     noindex: Boolean(data.noindex ?? false),
     excerpt: extractExcerpt(content),
+    headings: extractHeadings(content),
   };
 }
 

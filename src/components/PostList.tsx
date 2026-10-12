@@ -34,7 +34,7 @@ export default function PostList({
       {title && <SectionHeading title={title} />}
       <section>
         {posts.length > 0 ? (
-          <div className="divide-y divide-line border-t border-line">
+          <div>
             {posts.map((post) => (
               <PostCard
                 key={post.slug}

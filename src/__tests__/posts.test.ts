@@ -41,8 +41,10 @@ describe("getAllPosts", () => {
         description: undefined,
         coverImage: undefined,
         coverImagePositionY: undefined,
+        showCoverImage: true,
         noindex: false,
         excerpt: "本文です。",
+        headings: [],
       },
     ]);
   });
@@ -67,6 +69,40 @@ describe("getAllPosts", () => {
     expect(post.description).toBe("desc");
     expect(post.coverImage).toBe("https://r2.calm-corner.com/x.jpg");
     expect(post.noindex).toBe(true);
+  });
+
+  it("hides the cover image only when showCoverImage is false", () => {
+    mockFs.readdirSync.mockReturnValue(["hello-world.mdx"] as never);
+    mockFs.readFileSync.mockReturnValue(
+      "---\ntitle: Hello\ndate: 2024-01-01\ncategory: gunpla\nshowCoverImage: false\n---\n本文",
+    );
+
+    expect(getAllPosts()[0].showCoverImage).toBe(false);
+  });
+
+  it("extracts h2 headings outside code blocks with slug ids", () => {
+    mockFs.readdirSync.mockReturnValue(["hello-world.mdx"] as never);
+    mockFs.readFileSync.mockReturnValue(
+      "---\ntitle: Hello\ndate: 2024-01-01\ncategory: gunpla\n---\n## 1. 筆塗りとは\n本文\n### 小見出し\n```\n## コード内\n```\n## 完成\n",
+    );
+
+    expect(getAllPosts()[0].headings).toEqual([
+      { id: "1.-筆塗りとは", text: "1. 筆塗りとは" },
+      { id: "完成", text: "完成" },
+    ]);
+  });
+
+  it("uses only the rendered text of headings with inline markup", () => {
+    mockFs.readdirSync.mockReturnValue(["hello-world.mdx"] as never);
+    mockFs.readFileSync.mockReturnValue(
+      "---\ntitle: Hello\ndate: 2024-01-01\ncategory: gunpla\n---\n## **概要**\n## [道具](https://example.com)\n## :marker[完成] です\n",
+    );
+
+    expect(getAllPosts()[0].headings).toEqual([
+      { id: "概要", text: "概要" },
+      { id: "道具", text: "道具" },
+      { id: "完成-です", text: "完成 です" },
+    ]);
   });
 
   describe("coverImagePositionY", () => {
