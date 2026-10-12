@@ -12,6 +12,7 @@ export type PostSummary = {
   coverImage?: string;
   coverImagePositionY?: number;
   category: string;
+  tags: string[];
 };
 
 export type PostSelector = (
@@ -84,6 +85,7 @@ export default function RecommendedPostsClient({
                 coverImage={post.coverImage}
                 coverImagePositionY={post.coverImagePositionY}
                 category={post.category}
+                tags={post.tags}
               />
             ))}
           </div>

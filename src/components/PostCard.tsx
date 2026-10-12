@@ -36,7 +36,7 @@ export default function PostCard({
         href={`/posts/${slug}`}
         tabIndex={-1}
         aria-hidden="true"
-        className="relative block aspect-[4/3] overflow-hidden rounded-sm bg-line sm:w-60 sm:shrink-0"
+        className="relative block aspect-[16/9] overflow-hidden rounded-sm bg-line sm:w-60 sm:shrink-0"
       >
         <Image
           src={coverImage ?? "/icon.png"}
