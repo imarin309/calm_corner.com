@@ -27,8 +27,6 @@ export default function Heading2({
   return (
     <h2
       id={id}
-      data-toc-heading="2"
-      data-toc-text={text}
       className={clsx("group relative scroll-mt-20", className)}
       {...props}
     >

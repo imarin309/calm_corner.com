@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { extractExcerpt } from "./extract-excerpt";
+import { toSlug } from "./heading";
 
 export type Post = {
   slug: string;
@@ -12,8 +13,15 @@ export type Post = {
   description?: string;
   coverImage?: string;
   coverImagePositionY?: number;
+  showCoverImage: boolean;
   noindex: boolean;
   excerpt: string;
+  headings: PostHeading[];
+};
+
+export type PostHeading = {
+  id: string;
+  text: string;
 };
 
 export type Page = {
@@ -37,6 +45,22 @@ function parsePercent(value: unknown): number | undefined {
     : undefined;
 }
 
+// 目次を静的HTMLに含めるため、描画後のDOMではなくMDXのソースから見出しを拾う。
+// id は Heading2 と同じ toSlug で作り、本文の見出しとそろえる
+function extractHeadings(content: string): PostHeading[] {
+  const headings: PostHeading[] = [];
+  let inCodeBlock = false;
+  for (const line of content.split("\n")) {
+    if (line.startsWith("```")) inCodeBlock = !inCodeBlock;
+    if (inCodeBlock) continue;
+    const match = line.match(/^## (.+)$/);
+    if (!match) continue;
+    const text = match[1].trim();
+    headings.push({ id: toSlug(text), text });
+  }
+  return headings;
+}
+
 function parsePost(filename: string): Post {
   const slug = filename.replace(/\.mdx$/, "");
   const filePath = path.join(postsDir, filename);
@@ -56,8 +80,10 @@ function parsePost(filename: string): Post {
     description: data.description ? String(data.description) : undefined,
     coverImage: data.coverImage ? String(data.coverImage) : undefined,
     coverImagePositionY: parsePercent(data.coverImagePositionY),
+    showCoverImage: data.showCoverImage !== false,
     noindex: Boolean(data.noindex ?? false),
     excerpt: extractExcerpt(content),
+    headings: extractHeadings(content),
   };
 }
 

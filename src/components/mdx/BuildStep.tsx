@@ -131,8 +131,6 @@ export default function BuildStep({
           </span>
           <h3
             id={id}
-            data-toc-heading={isSub ? "4" : "3"}
-            data-toc-text={title}
             className={`m-0 scroll-mt-20 text-stone-800 ${isSub ? "text-sm font-medium" : "font-semibold"}`}
           >
             {title}

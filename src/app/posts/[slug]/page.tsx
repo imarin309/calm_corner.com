@@ -1,8 +1,9 @@
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getAllPosts, getPostBySlug } from "@/lib/posts";
 import { getCategoryName } from "@/constants/category";
 import TagBadge from "@/components/TagBadge";
-import TableOfContents from "@/components/TableOfContents";
+import ArticleToc from "@/components/ArticleToc";
 import { siteName, siteUrl, siteAuthor } from "@/constants/meta";
 import type { Metadata } from "next";
 
@@ -96,7 +97,6 @@ export default async function PostPage({ params }: PostPageProps) {
           __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
         }}
       />
-      <TableOfContents />
       <article className="mx-auto max-w-3xl">
         <header className="mb-8 border-b border-stone-200 pb-6">
           <time className="text-xs text-stone-400">{formattedDate}</time>
@@ -116,6 +116,24 @@ export default async function PostPage({ params }: PostPageProps) {
             )}
           </div>
         </header>
+
+        {post.showCoverImage && post.coverImage && (
+          <div className="relative mb-8 aspect-[16/9] overflow-hidden rounded-sm bg-line">
+            <Image
+              src={post.coverImage}
+              alt={post.title}
+              fill
+              priority
+              sizes="(min-width: 768px) 768px, 100vw"
+              className="object-cover"
+              style={{
+                objectPosition: `center ${post.coverImagePositionY ?? 50}%`,
+              }}
+            />
+          </div>
+        )}
+
+        <ArticleToc headings={post.headings} />
 
         <div className="prose prose-stone max-w-none prose-headings:font-semibold prose-a:text-stone-600 prose-a:underline-offset-2 hover:prose-a:text-stone-900">
           <MDXContent />
