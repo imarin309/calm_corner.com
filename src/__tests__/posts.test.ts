@@ -92,6 +92,19 @@ describe("getAllPosts", () => {
     ]);
   });
 
+  it("uses only the rendered text of headings with inline markup", () => {
+    mockFs.readdirSync.mockReturnValue(["hello-world.mdx"] as never);
+    mockFs.readFileSync.mockReturnValue(
+      "---\ntitle: Hello\ndate: 2024-01-01\ncategory: gunpla\n---\n## **概要**\n## [道具](https://example.com)\n## :marker[完成] です\n",
+    );
+
+    expect(getAllPosts()[0].headings).toEqual([
+      { id: "概要", text: "概要" },
+      { id: "道具", text: "道具" },
+      { id: "完成-です", text: "完成 です" },
+    ]);
+  });
+
   describe("coverImagePositionY", () => {
     function positionYFor(value: string): number | undefined {
       mockFs.readdirSync.mockReturnValue(["hello-world.mdx"] as never);
