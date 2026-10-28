@@ -71,8 +71,9 @@ const websiteJsonLd = {
 
 export default function RootLayout({
   children,
-  recommended,
-}: LayoutProps<"/">) {
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
     <html lang="ja">
       <body
@@ -86,7 +87,6 @@ export default function RootLayout({
         <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8">
           {children}
         </main>
-        {recommended}
         <Footer />
         {process.env.NODE_ENV === "production" &&
           process.env.CF_PAGES_BRANCH === "main" && <GoogleAnalytics />}

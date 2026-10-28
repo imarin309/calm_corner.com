@@ -4,6 +4,7 @@ import { getAllPosts, getPostBySlug } from "@/lib/posts";
 import { getCategoryName } from "@/constants/category";
 import TagBadge from "@/components/TagBadge";
 import ArticleToc from "@/components/ArticleToc";
+import RecommendedPosts from "@/components/RecommendedPosts";
 import { siteName, siteUrl, siteAuthor } from "@/constants/meta";
 import type { Metadata } from "next";
 
@@ -139,6 +140,7 @@ export default async function PostPage({ params }: PostPageProps) {
           <MDXContent />
         </div>
       </article>
+      <RecommendedPosts currentSlug={post.slug} />
     </>
   );
 }

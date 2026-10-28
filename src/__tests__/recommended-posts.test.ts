@@ -1,12 +1,12 @@
 import { describe, expect, it } from "vitest";
 import type { Post } from "@/lib/posts";
-import { selectRecommendedPosts } from "@/lib/recommended-posts";
+import { selectAdjacentPosts } from "@/lib/recommended-posts";
 
-function makePost(slug: string, noindex = false): Post {
+function makePost(slug: string, date: string, noindex = false): Post {
   return {
     slug,
     title: slug,
-    date: "2026-01-01",
+    date,
     category: "works",
     tags: [],
     showCoverImage: true,
@@ -16,60 +16,58 @@ function makePost(slug: string, noindex = false): Post {
   };
 }
 
-const posts = ["a", "b", "c", "d", "e", "f", "g", "h"].map((slug) =>
-  makePost(slug),
+/** a が最も新しく、1日ずつ古くなる */
+const posts = ["a", "b", "c", "d", "e", "f"].map((slug, i) =>
+  makePost(slug, `2026-01-${String(30 - i).padStart(2, "0")}`),
 );
 
 const slugsOf = (selected: Post[]) => selected.map((post) => post.slug);
 
-describe("selectRecommendedPosts", () => {
-  it("同じ入力なら同じ記事を返す", () => {
-    const first = selectRecommendedPosts(posts, { seed: "a" });
-    const second = selectRecommendedPosts([...posts].reverse(), { seed: "a" });
-    expect(slugsOf(first)).toEqual(slugsOf(second));
+describe("selectAdjacentPosts", () => {
+  it("1つ新しい記事と2つ古い記事を返す", () => {
+    expect(slugsOf(selectAdjacentPosts(posts, "c"))).toEqual(["b", "d", "e"]);
   });
 
-  it("指定した件数だけ返す", () => {
-    expect(selectRecommendedPosts(posts, { seed: "a" })).toHaveLength(3);
-    expect(selectRecommendedPosts(posts, { seed: "a", count: 5 })).toHaveLength(
-      5,
-    );
+  it("並び順に左右されない", () => {
+    expect(slugsOf(selectAdjacentPosts([...posts].reverse(), "c"))).toEqual([
+      "b",
+      "d",
+      "e",
+    ]);
   });
 
-  it("今の記事を含めない", () => {
-    for (const { slug } of posts) {
-      const selected = selectRecommendedPosts(posts, {
-        seed: slug,
-        excludeSlug: slug,
-      });
-      expect(slugsOf(selected)).not.toContain(slug);
-    }
+  it("最新の記事では古い記事で補う", () => {
+    expect(slugsOf(selectAdjacentPosts(posts, "a"))).toEqual(["b", "c", "d"]);
+  });
+
+  it("古い側が足りなければ新しい記事で補う", () => {
+    expect(slugsOf(selectAdjacentPosts(posts, "e"))).toEqual(["c", "d", "f"]);
+    expect(slugsOf(selectAdjacentPosts(posts, "f"))).toEqual(["c", "d", "e"]);
   });
 
   it("noindex の記事を含めない", () => {
-    const withHidden = [...posts, makePost("hidden", true)];
-    const selected = selectRecommendedPosts(withHidden, {
-      seed: "x",
-      count: withHidden.length,
-    });
-    expect(slugsOf(selected)).not.toContain("hidden");
-    expect(selected).toHaveLength(posts.length);
+    const withHidden = [...posts, makePost("hidden", "2026-01-28", true)];
+    expect(slugsOf(selectAdjacentPosts(withHidden, "c"))).toEqual([
+      "b",
+      "d",
+      "e",
+    ]);
   });
 
-  it("シードが変わると組み合わせも変わる", () => {
-    const combinations = new Set(
-      posts.map(({ slug }) =>
-        slugsOf(selectRecommendedPosts(posts, { seed: slug })).join(","),
-      ),
-    );
-    expect(combinations.size).toBeGreaterThan(1);
+  it("noindex の記事にも前後の記事を出す", () => {
+    const withHidden = [...posts, makePost("hidden", "2026-01-28", true)];
+    expect(slugsOf(selectAdjacentPosts(withHidden, "hidden"))).toEqual([
+      "c",
+      "d",
+      "e",
+    ]);
   });
 
   it("候補が件数より少なければ、あるだけ返す", () => {
-    const selected = selectRecommendedPosts([makePost("a"), makePost("b")], {
-      seed: "a",
-      excludeSlug: "a",
-    });
-    expect(slugsOf(selected)).toEqual(["b"]);
+    expect(slugsOf(selectAdjacentPosts(posts.slice(0, 2), "a"))).toEqual(["b"]);
+  });
+
+  it("存在しない記事には何も返さない", () => {
+    expect(selectAdjacentPosts(posts, "missing")).toEqual([]);
   });
 });

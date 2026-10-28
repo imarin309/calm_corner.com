@@ -1,35 +1,28 @@
 import type { Post } from "./posts";
 
-// 記事ページ以外では今のURLを受け取れないため、共通のシードで同じ組み合わせを出す
-export const DEFAULT_RECOMMEND_SEED = "calm-corner";
+const NEWER_COUNT = 1;
 
-function fnv1a(text: string): number {
-  let hash = 0x811c9dc5;
-  for (let i = 0; i < text.length; i++) {
-    hash ^= text.charCodeAt(i);
-    hash = Math.imul(hash, 0x01000193);
-  }
-  return hash >>> 0;
-}
-
-// 静的HTMLに出すためビルドのたびに同じ結果になるよう、乱数ではなくハッシュで並べる。
-// 候補ごとに独立したスコアなので、記事を追加しても既存記事のおすすめが総入れ替えにならない
-export function selectRecommendedPosts(
+// 日付順に隣り合う記事をつなぐと、どの記事も前後の記事からリンクされ、クローラーがすべてをたどれる。
+// 端の記事では反対側から補い、件数をそろえる
+export function selectAdjacentPosts(
   posts: Post[],
-  {
-    seed,
-    excludeSlug,
-    count = 3,
-  }: {
-    seed: string;
-    excludeSlug?: string;
-    count?: number;
-  },
+  currentSlug: string,
+  count = 3,
 ): Post[] {
-  return posts
-    .filter((post) => !post.noindex && post.slug !== excludeSlug)
-    .map((post) => ({ post, score: fnv1a(`${seed}:${post.slug}`) }))
-    .sort((a, b) => a.score - b.score || a.post.slug.localeCompare(b.post.slug))
-    .slice(0, count)
-    .map(({ post }) => post);
+  const sorted = posts
+    .filter((post) => !post.noindex || post.slug === currentSlug)
+    .sort(
+      (a, b) =>
+        new Date(b.date).getTime() - new Date(a.date).getTime() ||
+        a.slug.localeCompare(b.slug),
+    );
+  const index = sorted.findIndex((post) => post.slug === currentSlug);
+  if (index < 0) return [];
+
+  const others = sorted.filter((post) => post.slug !== currentSlug);
+  const start = Math.max(
+    0,
+    Math.min(index - NEWER_COUNT, others.length - count),
+  );
+  return others.slice(start, start + count);
 }
