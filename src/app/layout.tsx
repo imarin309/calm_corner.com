@@ -3,7 +3,6 @@ import { Klee_One, Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
-import RecommendedPosts from "@/components/RecommendedPosts";
 import GoogleAdSense from "@/components/google/GoogleAdSense";
 import GoogleAnalytics from "@/components/google/GoogleAnalytics";
 import {
@@ -72,9 +71,8 @@ const websiteJsonLd = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+  recommended,
+}: LayoutProps<"/">) {
   return (
     <html lang="ja">
       <body
@@ -88,7 +86,7 @@ export default function RootLayout({
         <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8">
           {children}
         </main>
-        <RecommendedPosts />
+        {recommended}
         <Footer />
         {process.env.NODE_ENV === "production" &&
           process.env.CF_PAGES_BRANCH === "main" && <GoogleAnalytics />}
