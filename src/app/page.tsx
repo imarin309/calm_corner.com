@@ -6,14 +6,10 @@ import TagShelf from "@/components/home/TagShelf";
 import SiteConcept from "@/components/home/SiteConcept";
 import { getAllPosts } from "@/lib/posts";
 import { getHomeFeed } from "@/lib/home-feed";
-import { fetchImageSize } from "@/lib/image-size";
 import { getAllTags } from "@/constants/tag";
 
-export default async function Home() {
+export default function Home() {
   const { featured, works, howTos } = getHomeFeed();
-  const featuredImageSize = featured?.coverImage
-    ? await fetchImageSize(featured.coverImage)
-    : undefined;
 
   const allPosts = getAllPosts();
   const tags = getAllTags()
@@ -34,7 +30,7 @@ export default async function Home() {
         {featured && (
           <section aria-labelledby="featured-heading">
             <SectionHeading id="featured-heading" label="Featured Work" />
-            <FeaturedWork post={featured} imageSize={featuredImageSize} />
+            <FeaturedWork post={featured} />
           </section>
         )}
       </div>

@@ -1,18 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { ImageSize } from "@/lib/image-size";
 import type { Post } from "@/lib/posts";
 import { splitWorkTitle } from "@/lib/work-title";
 import TagBadge from "@/components/TagBadge";
 
-export default function FeaturedWork({
-  post,
-  imageSize,
-}: {
-  post: Post;
-  /** 読み込み前から表示領域を確保し、下の要素がずれないようにするために使う */
-  imageSize?: ImageSize;
-}) {
+/** サムネイルはこの大きさで作る決まりなので、読み込み前から表示領域を確保して下の要素をずらさない */
+const COVER_IMAGE_WIDTH = 1200;
+const COVER_IMAGE_HEIGHT = 675;
+
+export default function FeaturedWork({ post }: { post: Post }) {
   const { name, catchCopy } = splitWorkTitle(post.title);
   const href = `/posts/${post.slug}`;
 
@@ -31,8 +27,8 @@ export default function FeaturedWork({
           <Image
             src={post.coverImage ?? "/icon.png"}
             alt=""
-            width={imageSize?.width ?? 0}
-            height={imageSize?.height ?? 0}
+            width={COVER_IMAGE_WIDTH}
+            height={COVER_IMAGE_HEIGHT}
             priority
             sizes="(min-width: 640px) 60vw, 100vw"
             className="h-auto w-full transition-transform duration-300 motion-safe:group-hover:scale-[1.02]"

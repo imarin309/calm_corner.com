@@ -4,7 +4,7 @@ description: ""
 date: 2026-03-03
 category: works / note
 tags: [gunpla / girls-plamo]
-coverImage: 
+coverImage: # 1200×675 で作る
 # coverImagePositionY: 50
 ---
 
