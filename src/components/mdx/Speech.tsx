@@ -21,7 +21,7 @@ export default function Speech({ children }: { children: ReactNode }) {
           aria-hidden
           className="absolute -left-[7px] top-[17px] h-3 w-3 sm:top-[21px] rotate-45 border-b border-l border-line bg-surface"
         />
-        <div className="prose prose-sm sm:prose-base prose-stone w-full max-w-none text-stone-700 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0">
+        <div className="prose prose-base sm:prose-lg prose-stone w-full max-w-none text-stone-700 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0">
           {children}
         </div>
       </div>

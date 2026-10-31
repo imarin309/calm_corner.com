@@ -11,7 +11,7 @@ export default function Table({
       <div className="overflow-x-auto">
         <table
           className={clsx(
-            "w-full min-w-max border-collapse text-sm",
+            "w-full min-w-max border-collapse text-sm sm:text-base",
             className,
           )}
           {...props}

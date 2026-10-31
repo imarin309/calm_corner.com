@@ -69,7 +69,7 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
               )}
             </button>
             {image.caption && (
-              <figcaption className="mt-1 text-center text-sm italic text-stone-500">
+              <figcaption className="mt-1 text-center text-base italic text-stone-500">
                 {image.caption}
               </figcaption>
             )}

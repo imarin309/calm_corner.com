@@ -136,7 +136,7 @@ export default async function PostPage({ params }: PostPageProps) {
 
         <ArticleToc headings={post.headings} />
 
-        <div className="prose prose-stone max-w-none prose-headings:font-semibold prose-a:text-stone-600 prose-a:underline-offset-2 hover:prose-a:text-stone-900">
+        <div className="prose prose-base sm:prose-lg prose-stone max-w-none prose-headings:font-semibold sm:prose-h2:text-[1.5rem] sm:prose-h3:text-[1.25rem] prose-a:text-stone-600 prose-a:underline-offset-2 hover:prose-a:text-stone-900">
           <MDXContent />
         </div>
       </article>

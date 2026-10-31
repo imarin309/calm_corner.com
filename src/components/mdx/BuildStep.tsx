@@ -131,7 +131,7 @@ export default function BuildStep({
           </span>
           <h3
             id={id}
-            className={`m-0 scroll-mt-20 text-stone-800 ${isSub ? "text-sm font-medium" : "font-semibold"}`}
+            className={`m-0 scroll-mt-20 text-stone-800 ${isSub ? "text-base font-medium" : "font-semibold"}`}
           >
             {title}
           </h3>
@@ -140,7 +140,7 @@ export default function BuildStep({
         {(hasMaterials || hasImages || children) && (
           <div className="space-y-3 p-4">
             {children && (
-              <div className="prose prose-sm sm:prose-base prose-stone max-w-none text-stone-700">
+              <div className="prose prose-base sm:prose-lg prose-stone max-w-none text-stone-700">
                 {children}
               </div>
             )}
@@ -177,7 +177,7 @@ export default function BuildStep({
                         />
                       </button>
                       {img.caption && (
-                        <figcaption className="mt-1 text-center text-xs italic text-stone-500">
+                        <figcaption className="mt-1 text-center text-sm italic text-stone-500">
                           {img.caption}
                         </figcaption>
                       )}
@@ -216,7 +216,7 @@ export default function BuildStep({
             )}
 
             {hasMaterials && (
-              <p className="flex items-start gap-1.5 text-xs text-stone-500">
+              <p className="flex items-start gap-1.5 text-sm text-stone-500">
                 <svg
                   aria-hidden
                   xmlns="http://www.w3.org/2000/svg"
