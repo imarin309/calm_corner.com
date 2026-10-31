@@ -8,3 +8,6 @@ content/
 # pnpmが生成するlockfileはpnpm自身のフォーマット（シングルクォート）に従うため、
 # prettierの整形対象から除外する
 pnpm-lock.yaml
+
+# 雛形はMDXの書き方をそのまま見せたいので、prettierの整形対象から外す
+docs/plamo_article_template.md
