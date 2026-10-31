@@ -11,6 +11,7 @@ export const tags: Tag[] = [
   { slug: "fag", name: "フレームアームズガール" },
   { slug: "megami-device", name: "メガミデバイス" },
   { slug: "30ms", name: "30MS" },
+  { slug: "30mm", name: "30MM" },
   { slug: "frs", name: "figure-rise-standard" },
   { slug: "arcanadia", name: "アルカナディア" },
   { slug: "sousai-syoujo", name: "創彩少女庭園" },
