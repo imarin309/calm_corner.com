@@ -35,15 +35,15 @@ export default function LinkCard({
       >
         <div className="flex flex-col justify-between p-4 flex-1 min-w-0">
           {label && (
-            <span className="text-xs font-semibold text-amber-700 mb-1">
+            <span className="text-sm font-semibold text-amber-700 mb-1">
               {label}
             </span>
           )}
-          <p className="text-sm font-semibold text-stone-800 line-clamp-2 leading-snug">
+          <p className="text-base font-semibold text-stone-800 line-clamp-2 leading-snug">
             {title}
           </p>
           {description && (
-            <p className="text-xs text-stone-500 mt-1 line-clamp-2 leading-relaxed">
+            <p className="text-sm text-stone-500 mt-1 line-clamp-2 leading-relaxed">
               {description}
             </p>
           )}
@@ -58,7 +58,7 @@ export default function LinkCard({
                 unoptimized
               />
             )}
-            <span className="text-xs text-stone-400 truncate">{domain}</span>
+            <span className="text-sm text-stone-400 truncate">{domain}</span>
           </div>
         </div>
         {image && (
