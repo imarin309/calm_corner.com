@@ -1,10 +1,18 @@
 import Image from "next/image";
 import Link from "next/link";
+import type { ImageSize } from "@/lib/image-size";
 import type { Post } from "@/lib/posts";
 import { splitWorkTitle } from "@/lib/work-title";
 import TagBadge from "@/components/TagBadge";
 
-export default function FeaturedWork({ post }: { post: Post }) {
+export default function FeaturedWork({
+  post,
+  imageSize,
+}: {
+  post: Post;
+  /** 読み込み前から表示領域を確保し、下の要素がずれないようにするために使う */
+  imageSize?: ImageSize;
+}) {
   const { name, catchCopy } = splitWorkTitle(post.title);
   const href = `/posts/${post.slug}`;
 
@@ -23,8 +31,8 @@ export default function FeaturedWork({ post }: { post: Post }) {
           <Image
             src={post.coverImage ?? "/icon.png"}
             alt=""
-            width={0}
-            height={0}
+            width={imageSize?.width ?? 0}
+            height={imageSize?.height ?? 0}
             priority
             sizes="(min-width: 640px) 60vw, 100vw"
             className="h-auto w-full transition-transform duration-300 motion-safe:group-hover:scale-[1.02]"
