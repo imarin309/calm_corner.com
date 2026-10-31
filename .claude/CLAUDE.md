@@ -54,7 +54,7 @@ MDXファイルで使用可能なカスタムコンポーネントは`src/compon
 
 ## 記事を書くとき
 
-制作記事を書く・直す・構成を相談されたときは、先に `content/docs/article-structure.md` を読むこと。
+制作記事を書く・直す・構成を相談されたときは、先に `docs/plamo_article_reader_needs.md` を読むこと。雛形は `docs/plamo_article_template.md`。
 
 ## 規約
 
