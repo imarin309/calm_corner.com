@@ -17,7 +17,7 @@ export default function FeaturedWork({
   const href = `/posts/${post.slug}`;
 
   return (
-    <article className="group grid gap-(--space-md) sm:grid-cols-[3fr_2fr] sm:items-end sm:gap-(--space-lg)">
+    <article className="group grid gap-(--space-sm) sm:grid-cols-[3fr_2fr] sm:items-end sm:gap-(--space-lg)">
       <Link
         href={href}
         tabIndex={-1}
