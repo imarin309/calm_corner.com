@@ -18,17 +18,16 @@ export default function FeaturedWork({ post }: { post: Post }) {
       >
         {/* 手作業感はこの1枚だけに留め、作品棚の写真には付けない */}
         <span className="absolute -top-2 left-1/2 z-10 h-5 w-20 -translate-x-1/2 rotate-[-4deg] bg-line/80" />
-        <div className="relative aspect-[5/4] overflow-hidden rounded-sm sm:aspect-[4/3]">
+        <div className="relative overflow-hidden rounded-sm">
+          {/* サムネイルの比率が記事ごとに違い、文字入りのものもあるため、枠で切り抜かず元の比率で見せる */}
           <Image
             src={post.coverImage ?? "/icon.png"}
             alt=""
-            fill
+            width={0}
+            height={0}
             priority
             sizes="(min-width: 640px) 60vw, 100vw"
-            className="object-cover transition-transform duration-300 motion-safe:group-hover:scale-[1.02]"
-            style={{
-              objectPosition: `center ${post.coverImagePositionY ?? 50}%`,
-            }}
+            className="h-auto w-full transition-transform duration-300 motion-safe:group-hover:scale-[1.02]"
           />
           {/* スマホには hover がないため、写真がリンクだと分かる目印を常に出しておく */}
           <span
