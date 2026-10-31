@@ -4,13 +4,16 @@ import type { Post } from "@/lib/posts";
 import { splitWorkTitle } from "@/lib/work-title";
 import TagBadge from "@/components/TagBadge";
 
-/** サムネイルはこの大きさで作る決まりなので、読み込み前から表示領域を確保して下の要素をずらさない */
-const COVER_IMAGE_WIDTH = 1200;
-const COVER_IMAGE_HEIGHT = 675;
+/** サムネイルは 1200×675 で作る決まりなので、読み込み前から表示領域を確保して下の要素をずらさない */
+const COVER_IMAGE = { width: 1200, height: 675 };
+const FALLBACK_IMAGE = { src: "/icon.png", width: 192, height: 192 };
 
 export default function FeaturedWork({ post }: { post: Post }) {
   const { name, catchCopy } = splitWorkTitle(post.title);
   const href = `/posts/${post.slug}`;
+  const image = post.coverImage
+    ? { src: post.coverImage, ...COVER_IMAGE }
+    : FALLBACK_IMAGE;
 
   return (
     <article className="group grid gap-(--space-sm) sm:grid-cols-[3fr_2fr] sm:items-end sm:gap-(--space-lg)">
@@ -23,12 +26,11 @@ export default function FeaturedWork({ post }: { post: Post }) {
         {/* 手作業感はこの1枚だけに留め、作品棚の写真には付けない */}
         <span className="absolute -top-2 left-1/2 z-10 h-5 w-20 -translate-x-1/2 rotate-[-4deg] bg-line/80" />
         <div className="relative overflow-hidden rounded-sm">
-          {/* サムネイルの比率が記事ごとに違い、文字入りのものもあるため、枠で切り抜かず元の比率で見せる */}
           <Image
-            src={post.coverImage ?? "/icon.png"}
+            src={image.src}
             alt=""
-            width={COVER_IMAGE_WIDTH}
-            height={COVER_IMAGE_HEIGHT}
+            width={image.width}
+            height={image.height}
             priority
             sizes="(min-width: 640px) 60vw, 100vw"
             className="h-auto w-full transition-transform duration-300 motion-safe:group-hover:scale-[1.02]"
