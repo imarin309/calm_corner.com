@@ -20,10 +20,10 @@ export default function Home() {
     .filter(({ count }) => count > 0);
 
   return (
-    <div className="flex flex-col gap-(--space-xl)">
-      {/* モバイルでは Featured Work の「制作記録を読む」まで1画面に収めたいため、ここだけ詰める */}
-      <div className="flex flex-col gap-(--space-md) sm:gap-(--space-xl)">
-        <div className="pt-2">
+    <div className="flex flex-col gap-(--space-lg) sm:gap-(--space-xl)">
+      {/* モバイルでは1画面目で制作ノートのカードまで覗かせ、下にも続きがあると分かるようにする */}
+      <div className="flex flex-col gap-(--space-sm) sm:gap-(--space-xl)">
+        <div>
           <Header />
         </div>
 
