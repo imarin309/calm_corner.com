@@ -8,6 +8,7 @@ import {
   siteInstagramUrl,
   siteXUrl,
   siteYouTubeUrl,
+  sitePaintClubUrl,
   siteName,
   siteSubtitle,
 } from "@/constants/meta";
@@ -210,6 +211,15 @@ export default function NavBar() {
                 </ul>
               </div>
             </div>
+            <a
+              href={sitePaintClubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Game（新しいタブで開く）"
+              className="py-2 text-ink-muted transition-colors hover:text-ink"
+            >
+              Game
+            </a>
             <Link
               href="/about"
               className="py-2 text-ink-muted transition-colors hover:text-ink"
@@ -264,6 +274,16 @@ export default function NavBar() {
                 {label}
               </a>
             ))}
+            <a
+              href={sitePaintClubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Game（新しいタブで開く）"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="px-2 py-3 text-ink transition-colors hover:text-accent"
+            >
+              Game
+            </a>
             <Link
               href="/about"
               onClick={() => setIsMobileMenuOpen(false)}
