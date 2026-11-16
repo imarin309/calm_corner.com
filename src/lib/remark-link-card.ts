@@ -1,12 +1,28 @@
 import { visit } from "unist-util-visit";
 import type { Root, Paragraph, Parent } from "mdast";
 import type { Plugin } from "unified";
+import { toString } from "mdast-util-to-string";
+import { extractYouTubeId } from "./youtube";
 
 interface OGPData {
   title: string;
   description: string;
   image: string;
   favicon: string;
+}
+
+const CHARSET_REGEX = /charset=["']?([\w-]+)/i;
+
+// res.text() は常にUTF-8として読むため、Shift_JISなどのページだと文字化けする
+function decodeHtml(buffer: ArrayBuffer, contentType: string | null): string {
+  const head = new TextDecoder("latin1").decode(buffer.slice(0, 2048));
+  const charset =
+    contentType?.match(CHARSET_REGEX)?.[1] ?? head.match(CHARSET_REGEX)?.[1];
+  try {
+    return new TextDecoder(charset ?? "utf-8").decode(buffer);
+  } catch {
+    return new TextDecoder("utf-8").decode(buffer);
+  }
 }
 
 async function fetchOGP(url: string): Promise<OGPData> {
@@ -17,7 +33,10 @@ async function fetchOGP(url: string): Promise<OGPData> {
       headers: { "User-Agent": "Mozilla/5.0 (compatible; LinkCardBot/1.0)" },
       signal: AbortSignal.timeout(5000),
     });
-    const html = await res.text();
+    const html = decodeHtml(
+      await res.arrayBuffer(),
+      res.headers.get("content-type"),
+    );
 
     const getMetaContent = (property: string) => {
       const m =
@@ -62,19 +81,19 @@ async function fetchOGP(url: string): Promise<OGPData> {
 }
 
 const URL_REGEX = /^https?:\/\/\S+$/;
-const YOUTUBE_HOSTS = ["www.youtube.com", "youtube.com", "youtu.be"];
-
-function isYouTubeUrl(url: string): boolean {
-  try {
-    return YOUTUBE_HOSTS.includes(new URL(url).hostname);
-  } catch {
-    return false;
-  }
+// チャンネルや再生リストのURLは埋め込めないので、通常のLinkCardにする
+function isYouTubeVideoUrl(url: string): boolean {
+  return extractYouTubeId(url) !== null;
 }
 
 export const remarkLinkCard: Plugin<[], Root> = () => {
   return async (tree) => {
-    const tasks: Array<{ parent: Parent; index: number; url: string }> = [];
+    const tasks: Array<{
+      parent: Parent;
+      index: number;
+      url: string;
+      label?: string;
+    }> = [];
 
     visit(tree, "paragraph", (node: Paragraph, index, parent) => {
       if (index == null || !parent) return;
@@ -82,23 +101,23 @@ export const remarkLinkCard: Plugin<[], Root> = () => {
 
       const child = node.children[0];
       let url: string | null = null;
+      let label: string | undefined;
 
       if (child.type === "link") {
-        const linkText = child.children
-          .map((c) => ("value" in c ? c.value : ""))
-          .join("");
-        if (linkText === child.url && URL_REGEX.test(child.url))
-          url = child.url;
+        if (!URL_REGEX.test(child.url)) return;
+        url = child.url;
+        const linkText = toString(child).trim();
+        if (linkText !== child.url && linkText !== "") label = linkText;
       } else if (child.type === "text" && URL_REGEX.test(child.value.trim())) {
         url = child.value.trim();
       }
 
       if (url) {
-        tasks.push({ parent, index, url });
+        tasks.push({ parent, index, url, label });
       }
     });
 
-    const nonYouTubeTasks = tasks.filter((t) => !isYouTubeUrl(t.url));
+    const nonYouTubeTasks = tasks.filter((t) => !isYouTubeVideoUrl(t.url));
     const uniqueUrls = [...new Set(nonYouTubeTasks.map((t) => t.url))];
     const CONCURRENCY = 5;
     const ogpCache = new Map<string, OGPData>();
@@ -109,8 +128,8 @@ export const remarkLinkCard: Plugin<[], Root> = () => {
     }
 
     await Promise.all(
-      tasks.map(async ({ parent, index, url }) => {
-        if (isYouTubeUrl(url)) {
+      tasks.map(async ({ parent, index, url, label }) => {
+        if (isYouTubeVideoUrl(url)) {
           parent.children[index] = {
             type: "mdxJsxFlowElement",
             name: "YouTubeCard",
@@ -134,6 +153,15 @@ export const remarkLinkCard: Plugin<[], Root> = () => {
             },
             { type: "mdxJsxAttribute", name: "image", value: ogp.image },
             { type: "mdxJsxAttribute", name: "favicon", value: ogp.favicon },
+            ...(label
+              ? [
+                  {
+                    type: "mdxJsxAttribute" as const,
+                    name: "label",
+                    value: label,
+                  },
+                ]
+              : []),
           ],
           children: [],
         };
