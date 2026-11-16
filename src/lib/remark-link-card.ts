@@ -1,6 +1,8 @@
 import { visit } from "unist-util-visit";
 import type { Root, Paragraph, Parent } from "mdast";
 import type { Plugin } from "unified";
+import { toString } from "mdast-util-to-string";
+import { extractYouTubeId } from "./youtube";
 
 interface OGPData {
   title: string;
@@ -62,14 +64,9 @@ async function fetchOGP(url: string): Promise<OGPData> {
 }
 
 const URL_REGEX = /^https?:\/\/\S+$/;
-const YOUTUBE_HOSTS = ["www.youtube.com", "youtube.com", "youtu.be"];
-
-function isYouTubeUrl(url: string): boolean {
-  try {
-    return YOUTUBE_HOSTS.includes(new URL(url).hostname);
-  } catch {
-    return false;
-  }
+// チャンネルや再生リストのURLは埋め込めないので、通常のLinkCardにする
+function isYouTubeVideoUrl(url: string): boolean {
+  return extractYouTubeId(url) !== null;
 }
 
 export const remarkLinkCard: Plugin<[], Root> = () => {
@@ -92,10 +89,7 @@ export const remarkLinkCard: Plugin<[], Root> = () => {
       if (child.type === "link") {
         if (!URL_REGEX.test(child.url)) return;
         url = child.url;
-        const linkText = child.children
-          .map((c) => ("value" in c ? c.value : ""))
-          .join("")
-          .trim();
+        const linkText = toString(child).trim();
         if (linkText !== child.url && linkText !== "") label = linkText;
       } else if (child.type === "text" && URL_REGEX.test(child.value.trim())) {
         url = child.value.trim();
@@ -106,7 +100,7 @@ export const remarkLinkCard: Plugin<[], Root> = () => {
       }
     });
 
-    const nonYouTubeTasks = tasks.filter((t) => !isYouTubeUrl(t.url));
+    const nonYouTubeTasks = tasks.filter((t) => !isYouTubeVideoUrl(t.url));
     const uniqueUrls = [...new Set(nonYouTubeTasks.map((t) => t.url))];
     const CONCURRENCY = 5;
     const ogpCache = new Map<string, OGPData>();
@@ -118,7 +112,7 @@ export const remarkLinkCard: Plugin<[], Root> = () => {
 
     await Promise.all(
       tasks.map(async ({ parent, index, url, label }) => {
-        if (isYouTubeUrl(url)) {
+        if (isYouTubeVideoUrl(url)) {
           parent.children[index] = {
             type: "mdxJsxFlowElement",
             name: "YouTubeCard",
