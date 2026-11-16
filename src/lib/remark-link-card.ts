@@ -11,6 +11,20 @@ interface OGPData {
   favicon: string;
 }
 
+const CHARSET_REGEX = /charset=["']?([\w-]+)/i;
+
+// res.text() は常にUTF-8として読むため、Shift_JISなどのページだと文字化けする
+function decodeHtml(buffer: ArrayBuffer, contentType: string | null): string {
+  const head = new TextDecoder("latin1").decode(buffer.slice(0, 2048));
+  const charset =
+    contentType?.match(CHARSET_REGEX)?.[1] ?? head.match(CHARSET_REGEX)?.[1];
+  try {
+    return new TextDecoder(charset ?? "utf-8").decode(buffer);
+  } catch {
+    return new TextDecoder("utf-8").decode(buffer);
+  }
+}
+
 async function fetchOGP(url: string): Promise<OGPData> {
   try {
     const domain = new URL(url).hostname;
@@ -19,7 +33,10 @@ async function fetchOGP(url: string): Promise<OGPData> {
       headers: { "User-Agent": "Mozilla/5.0 (compatible; LinkCardBot/1.0)" },
       signal: AbortSignal.timeout(5000),
     });
-    const html = await res.text();
+    const html = decodeHtml(
+      await res.arrayBuffer(),
+      res.headers.get("content-type"),
+    );
 
     const getMetaContent = (property: string) => {
       const m =
