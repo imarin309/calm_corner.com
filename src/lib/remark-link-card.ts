@@ -74,7 +74,12 @@ function isYouTubeUrl(url: string): boolean {
 
 export const remarkLinkCard: Plugin<[], Root> = () => {
   return async (tree) => {
-    const tasks: Array<{ parent: Parent; index: number; url: string }> = [];
+    const tasks: Array<{
+      parent: Parent;
+      index: number;
+      url: string;
+      label?: string;
+    }> = [];
 
     visit(tree, "paragraph", (node: Paragraph, index, parent) => {
       if (index == null || !parent) return;
@@ -82,19 +87,22 @@ export const remarkLinkCard: Plugin<[], Root> = () => {
 
       const child = node.children[0];
       let url: string | null = null;
+      let label: string | undefined;
 
       if (child.type === "link") {
+        if (!URL_REGEX.test(child.url)) return;
+        url = child.url;
         const linkText = child.children
           .map((c) => ("value" in c ? c.value : ""))
-          .join("");
-        if (linkText === child.url && URL_REGEX.test(child.url))
-          url = child.url;
+          .join("")
+          .trim();
+        if (linkText !== child.url && linkText !== "") label = linkText;
       } else if (child.type === "text" && URL_REGEX.test(child.value.trim())) {
         url = child.value.trim();
       }
 
       if (url) {
-        tasks.push({ parent, index, url });
+        tasks.push({ parent, index, url, label });
       }
     });
 
@@ -109,7 +117,7 @@ export const remarkLinkCard: Plugin<[], Root> = () => {
     }
 
     await Promise.all(
-      tasks.map(async ({ parent, index, url }) => {
+      tasks.map(async ({ parent, index, url, label }) => {
         if (isYouTubeUrl(url)) {
           parent.children[index] = {
             type: "mdxJsxFlowElement",
@@ -134,6 +142,15 @@ export const remarkLinkCard: Plugin<[], Root> = () => {
             },
             { type: "mdxJsxAttribute", name: "image", value: ogp.image },
             { type: "mdxJsxAttribute", name: "favicon", value: ogp.favicon },
+            ...(label
+              ? [
+                  {
+                    type: "mdxJsxAttribute" as const,
+                    name: "label",
+                    value: label,
+                  },
+                ]
+              : []),
           ],
           children: [],
         };
