@@ -1,4 +1,4 @@
-export const siteName = "Calm Corner";
+export const siteName = "あんぱん模型ノート";
 export const siteSubtitle = "プラモ制作・筆塗りブログ";
 export const siteCatchCopy = "模型筆塗りの楽しさを広めたい";
 export const siteDescription =

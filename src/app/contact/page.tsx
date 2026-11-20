@@ -3,10 +3,10 @@ import { siteXUrl, siteXId, siteEmail } from "@/constants/meta";
 
 export const metadata: Metadata = {
   title: "お問い合わせ",
-  description: "Calm Cornerへのお問い合わせはこちらから。",
+  description: "あんぱん模型ノートへのお問い合わせはこちらから。",
   openGraph: {
     title: "お問い合わせ",
-    description: "Calm Cornerへのお問い合わせはこちらから。",
+    description: "あんぱん模型ノートへのお問い合わせはこちらから。",
   },
 };
 
