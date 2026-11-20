@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Klee_One, Noto_Sans_JP } from "next/font/google";
+import { Klee_One, Noto_Sans_JP, Zen_Maru_Gothic } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
@@ -22,6 +22,12 @@ const kleeOne = Klee_One({
   variable: "--font-klee-one",
   subsets: ["latin"],
   weight: ["400", "600"],
+});
+
+const zenMaruGothic = Zen_Maru_Gothic({
+  variable: "--font-zen-maru-gothic",
+  subsets: ["latin"],
+  weight: ["400", "700"],
 });
 
 export const metadata: Metadata = {
@@ -77,7 +83,7 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body
-        className={`${notoSansJP.variable} ${kleeOne.variable} flex min-h-screen flex-col font-sans antialiased`}
+        className={`${notoSansJP.variable} ${kleeOne.variable} ${zenMaruGothic.variable} flex min-h-screen flex-col font-sans antialiased`}
       >
         <script
           type="application/ld+json"

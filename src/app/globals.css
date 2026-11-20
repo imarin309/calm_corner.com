@@ -40,6 +40,8 @@
   --color-secondary: var(--secondary);
   --font-sans: var(--font-noto-sans-jp), system-ui, sans-serif;
   --font-hand: var(--font-klee-one), var(--font-noto-sans-jp), sans-serif;
+  --font-logo:
+    var(--font-zen-maru-gothic), var(--font-noto-sans-jp), sans-serif;
 }
 
 /* 記事見出しのグラデーション下線 */
