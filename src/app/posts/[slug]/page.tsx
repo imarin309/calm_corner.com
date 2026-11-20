@@ -6,6 +6,7 @@ import TagBadge from "@/components/TagBadge";
 import ArticleToc from "@/components/ArticleToc";
 import RecommendedPosts from "@/components/RecommendedPosts";
 import AuthorProfile from "@/components/AuthorProfile";
+import Breadcrumb from "@/components/Breadcrumb";
 import Link from "next/link";
 import {
   siteName,
@@ -160,6 +161,7 @@ export default async function PostPage({ params }: PostPageProps) {
         <AuthorProfile />
       </article>
       <RecommendedPosts currentSlug={post.slug} />
+      <Breadcrumb category={post.category} title={post.title} />
     </>
   );
 }
