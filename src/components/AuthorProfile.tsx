@@ -26,7 +26,13 @@ export default function AuthorProfile() {
             {siteAuthor}
           </p>
           <p className="mt-2 text-sm leading-relaxed text-ink">
-            ガンプラや美少女プラモデルを、エアブラシを使わず水性塗料のファレホで筆塗りしています。完璧な塗装より、自分のイメージに近づけることを大事にしながら作っています。
+            あんぱんです！
+            <br />
+            「実際に戦ってたらこんな汚れ方かも」
+            <br />
+            「夕焼けの中にいたらこんな表情かも」
+            <br />
+            と考えながら、ファレホで筆塗りしています。
           </p>
           <Link
             href={siteAuthorProfilePath}
