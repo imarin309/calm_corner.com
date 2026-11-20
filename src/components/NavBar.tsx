@@ -10,7 +10,6 @@ import {
   siteYouTubeUrl,
   sitePaintClubUrl,
   siteName,
-  siteSubtitle,
 } from "@/constants/meta";
 import { useDropdownMenu } from "@/hooks/useDropdownMenu";
 
@@ -61,10 +60,9 @@ export default function NavBar() {
               height={32}
               className="rounded-sm"
             />
-            <span className="font-hand text-base font-semibold tracking-wider text-ink">
+            <span className="font-logo text-base font-bold tracking-wider text-ink">
               {siteName}
             </span>
-            <span className="text-xs text-ink-muted">{siteSubtitle}</span>
           </Link>
 
           {/* ハンバーガーボタン（スマホのみ） */}

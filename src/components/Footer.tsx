@@ -12,7 +12,7 @@ export default function Footer() {
   return (
     <footer className="mt-auto border-t border-line">
       <div className="mx-auto flex max-w-5xl flex-col gap-4 px-4 py-(--space-lg) sm:flex-row sm:items-center sm:justify-between">
-        <p className="font-hand text-lg text-ink">{siteName}</p>
+        <p className="font-logo text-lg text-ink">{siteName}</p>
         <nav aria-label="フッター">
           <ul className="flex flex-wrap gap-x-5 text-xs">
             {footerLinks.map(({ label, href }) => (
