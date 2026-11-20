@@ -10,3 +10,6 @@ export const siteInstagramUrl = "https://www.instagram.com/imarin309";
 export const siteYouTubeUrl = "https://www.youtube.com/@anpan-ch";
 export const siteEmail = "contact@calm-corner.com";
 export const sitePaintClubUrl = "https://paint-club.calm-corner.com/";
+export const siteAuthorProfilePath = "/about";
+/** ファビコンを差し替えても著者アイコンが変わらないよう、別ファイルにしている */
+export const siteAuthorIcon = "/speech-anpan.png";

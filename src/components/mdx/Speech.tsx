@@ -1,15 +1,12 @@
 import Image from "next/image";
 import { ReactNode } from "react";
-import { siteAuthor } from "@/constants/meta";
-
-/** ファビコンを差し替えても吹き出しのアイコンが変わらないよう、別ファイルにしている */
-const SPEECH_ICON = "/speech-anpan.png";
+import { siteAuthor, siteAuthorIcon } from "@/constants/meta";
 
 export default function Speech({ children }: { children: ReactNode }) {
   return (
     <div className="not-prose my-5 flex items-start gap-3">
       <Image
-        src={SPEECH_ICON}
+        src={siteAuthorIcon}
         alt={siteAuthor}
         width={56}
         height={56}
