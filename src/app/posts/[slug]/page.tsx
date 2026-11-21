@@ -111,18 +111,7 @@ export default async function PostPage({ params }: PostPageProps) {
       <article className="mx-auto max-w-3xl">
         <Breadcrumb category={post.category} title={post.title} />
         <header className="mb-8 border-b border-stone-200 pb-6">
-          <div className="flex items-center gap-2 text-xs text-stone-400">
-            <time dateTime={post.date}>{formattedDate}</time>
-            <span aria-hidden>・</span>
-            <Link
-              href={siteAuthorProfilePath}
-              rel="author"
-              className="text-ink-muted underline-offset-4 transition-colors hover:text-ink hover:underline"
-            >
-              {siteAuthor}
-            </Link>
-          </div>
-          <h1 className="mt-2 text-2xl font-bold tracking-tight text-stone-800 sm:text-3xl">
+          <h1 className="text-2xl font-bold tracking-tight text-stone-800 sm:text-3xl">
             {post.title}
           </h1>
           <div className="mt-4 flex flex-wrap items-center gap-3">
@@ -145,6 +134,9 @@ export default async function PostPage({ params }: PostPageProps) {
                 ))}
               </div>
             )}
+            <time dateTime={post.date} className="text-xs text-stone-400">
+              {formattedDate}
+            </time>
           </div>
         </header>
 
