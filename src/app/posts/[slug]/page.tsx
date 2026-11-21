@@ -115,9 +115,6 @@ export default async function PostPage({ params }: PostPageProps) {
             {post.title}
           </h1>
           <div className="mt-4 flex flex-wrap items-center gap-3">
-            <time dateTime={post.date} className="text-xs text-stone-400">
-              {formattedDate}
-            </time>
             {getCategoryBySlug(post.category) ? (
               <Link
                 href={`/category/${post.category}`}
@@ -137,6 +134,9 @@ export default async function PostPage({ params }: PostPageProps) {
                 ))}
               </div>
             )}
+            <time dateTime={post.date} className="text-xs text-stone-400">
+              {formattedDate}
+            </time>
           </div>
         </header>
 
