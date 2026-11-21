@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getCategoryName } from "@/constants/category";
+import { getCategoryBySlug, getCategoryName } from "@/constants/category";
 
 interface BreadcrumbProps {
   category: string;
@@ -10,6 +10,8 @@ const linkClassName =
   "underline-offset-4 transition-colors hover:text-ink hover:underline";
 
 export default function Breadcrumb({ category, title }: BreadcrumbProps) {
+  const isKnownCategory = getCategoryBySlug(category) !== undefined;
+
   return (
     <nav
       aria-label="パンくずリスト"
@@ -23,9 +25,13 @@ export default function Breadcrumb({ category, title }: BreadcrumbProps) {
         </li>
         <li aria-hidden>›</li>
         <li>
-          <Link href={`/category/${category}`} className={linkClassName}>
-            {getCategoryName(category)}
-          </Link>
+          {isKnownCategory ? (
+            <Link href={`/category/${category}`} className={linkClassName}>
+              {getCategoryName(category)}
+            </Link>
+          ) : (
+            getCategoryName(category)
+          )}
         </li>
         <li aria-hidden>›</li>
         <li aria-current="page" className="min-w-0 break-words text-ink">
