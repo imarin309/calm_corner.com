@@ -51,7 +51,7 @@ export default function Home() {
           label="Works"
           title="制作記録"
           posts={works}
-          moreHref="/works"
+          moreHref="/category/works"
         />
       )}
 
