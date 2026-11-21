@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { getAllCategories } from "@/constants/category";
+import { getAllCategories, getCategoryBySlug } from "@/constants/category";
 import {
   siteInstagramUrl,
   siteXUrl,
@@ -15,6 +16,16 @@ import { useDropdownMenu } from "@/hooks/useDropdownMenu";
 
 const categories = getAllCategories();
 
+/** 読み物の入口として、制作ノートを先に置く */
+const headerCategories = ["note", "works"]
+  .map((slug) => getCategoryBySlug(slug))
+  .filter((category) => category !== undefined);
+
+function isCurrentCategory(pathname: string, slug: string): boolean {
+  const basePath = `/category/${slug}`;
+  return pathname === basePath || pathname.startsWith(`${basePath}/`);
+}
+
 const externalLinks = [
   { label: "X", href: siteXUrl },
   { label: "Instagram", href: siteInstagramUrl },
@@ -23,16 +34,7 @@ const externalLinks = [
 
 export default function NavBar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  const {
-    isOpen: isCategoryOpen,
-    setIsOpen: setCategoryOpen,
-    menuRef: categoryMenuRef,
-    buttonRef: categoryButtonRef,
-    itemRefs: categoryItemRefs,
-    handleButtonKeyDown: handleCategoryButtonKeyDown,
-    handleMenuKeyDown: handleCategoryMenuKeyDown,
-  } = useDropdownMenu(categories.length);
+  const pathname = usePathname();
 
   const {
     isOpen: isLinksOpen,
@@ -49,21 +51,42 @@ export default function NavBar() {
       <div className="mx-auto max-w-5xl px-4 py-2">
         {/* PC: 横並び / スマホ: タイトル + ハンバーガー */}
         <div className="flex items-center justify-between">
-          <Link
-            href="/"
-            className="flex min-h-11 items-center gap-2 transition-opacity hover:opacity-75"
-          >
-            <Image
-              src="/icon.png"
-              alt={siteName}
-              width={32}
-              height={32}
-              className="rounded-sm"
-            />
-            <span className="font-logo text-base font-bold tracking-wider text-ink">
-              {siteName}
-            </span>
-          </Link>
+          <div className="flex items-center gap-6">
+            <Link
+              href="/"
+              className="flex min-h-11 items-center gap-2 transition-opacity hover:opacity-75"
+            >
+              <Image
+                src="/icon.png"
+                alt={siteName}
+                width={32}
+                height={32}
+                className="rounded-sm"
+              />
+              <span className="font-logo text-base font-bold tracking-wider text-ink">
+                {siteName}
+              </span>
+            </Link>
+            <div className="hidden items-center gap-4 text-sm font-medium sm:flex">
+              {headerCategories.map((category) => {
+                const isCurrent = isCurrentCategory(pathname, category.slug);
+                return (
+                  <Link
+                    key={category.slug}
+                    href={`/category/${category.slug}`}
+                    aria-current={isCurrent ? "page" : undefined}
+                    className={`border-b-2 py-2 transition-colors hover:text-ink ${
+                      isCurrent
+                        ? "border-accent text-ink"
+                        : "border-transparent text-ink-muted"
+                    }`}
+                  >
+                    {category.name}
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
 
           {/* ハンバーガーボタン（スマホのみ） */}
           <button
@@ -106,57 +129,6 @@ export default function NavBar() {
             >
               Home
             </Link>
-            <div
-              ref={categoryMenuRef}
-              className="relative"
-              onMouseEnter={() => setCategoryOpen(true)}
-              onMouseLeave={() => {
-                if (
-                  !categoryMenuRef.current?.contains(document.activeElement)
-                ) {
-                  setCategoryOpen(false);
-                }
-              }}
-            >
-              <button
-                ref={categoryButtonRef}
-                aria-expanded={isCategoryOpen}
-                aria-haspopup="menu"
-                onClick={() => setCategoryOpen((prev) => !prev)}
-                onKeyDown={handleCategoryButtonKeyDown}
-                className="py-2 text-ink-muted transition-colors hover:text-ink"
-              >
-                Category
-              </button>
-              <div
-                className={`absolute left-0 top-full z-50 pt-2 transition-all ${
-                  isCategoryOpen ? "visible opacity-100" : "invisible opacity-0"
-                }`}
-              >
-                <ul
-                  role="menu"
-                  onKeyDown={handleCategoryMenuKeyDown}
-                  className="min-w-40 rounded-sm border border-line bg-surface py-1 shadow-sm"
-                >
-                  {categories.map((category, index) => (
-                    <li key={category.slug} role="none">
-                      <Link
-                        ref={(el) => {
-                          categoryItemRefs.current[index] = el;
-                        }}
-                        role="menuitem"
-                        tabIndex={-1}
-                        href={`/category/${category.slug}`}
-                        onClick={() => setCategoryOpen(false)}
-                        className="block px-4 py-2 text-ink-muted transition-colors hover:bg-paper hover:text-ink"
-                      >
-                        {category.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
             <div
               ref={linksMenuRef}
               className="relative"
@@ -231,6 +203,27 @@ export default function NavBar() {
               contact
             </Link>
           </div>
+        </div>
+
+        <div className="-mx-4 grid grid-cols-2 border-t border-line text-sm font-medium sm:hidden">
+          {headerCategories.map((category) => {
+            const isCurrent = isCurrentCategory(pathname, category.slug);
+            return (
+              <Link
+                key={category.slug}
+                href={`/category/${category.slug}`}
+                aria-current={isCurrent ? "page" : undefined}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={`flex min-h-11 items-center justify-center border-b-2 transition-colors hover:text-ink ${
+                  isCurrent
+                    ? "border-accent text-ink"
+                    : "border-transparent text-ink-muted"
+                }`}
+              >
+                {category.name}
+              </Link>
+            );
+          })}
         </div>
 
         {/* モバイルメニュー */}
