@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { getAllCategories } from "@/constants/category";
 import {
@@ -15,6 +16,14 @@ import { useDropdownMenu } from "@/hooks/useDropdownMenu";
 
 const categories = getAllCategories();
 
+/** 読み物の入口として、制作ノートを先に置く */
+const headerCategorySlugs = ["note", "works"];
+
+function isCurrentCategory(pathname: string, slug: string): boolean {
+  const basePath = `/category/${slug}`;
+  return pathname === basePath || pathname.startsWith(`${basePath}/`);
+}
+
 const externalLinks = [
   { label: "X", href: siteXUrl },
   { label: "Instagram", href: siteInstagramUrl },
@@ -23,16 +32,7 @@ const externalLinks = [
 
 export default function NavBar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  const {
-    isOpen: isCategoryOpen,
-    setIsOpen: setCategoryOpen,
-    menuRef: categoryMenuRef,
-    buttonRef: categoryButtonRef,
-    itemRefs: categoryItemRefs,
-    handleButtonKeyDown: handleCategoryButtonKeyDown,
-    handleMenuKeyDown: handleCategoryMenuKeyDown,
-  } = useDropdownMenu(categories.length);
+  const pathname = usePathname();
 
   const {
     isOpen: isLinksOpen,
@@ -106,57 +106,23 @@ export default function NavBar() {
             >
               Home
             </Link>
-            <div
-              ref={categoryMenuRef}
-              className="relative"
-              onMouseEnter={() => setCategoryOpen(true)}
-              onMouseLeave={() => {
-                if (
-                  !categoryMenuRef.current?.contains(document.activeElement)
-                ) {
-                  setCategoryOpen(false);
-                }
-              }}
-            >
-              <button
-                ref={categoryButtonRef}
-                aria-expanded={isCategoryOpen}
-                aria-haspopup="menu"
-                onClick={() => setCategoryOpen((prev) => !prev)}
-                onKeyDown={handleCategoryButtonKeyDown}
-                className="py-2 text-ink-muted transition-colors hover:text-ink"
-              >
-                Category
-              </button>
-              <div
-                className={`absolute left-0 top-full z-50 pt-2 transition-all ${
-                  isCategoryOpen ? "visible opacity-100" : "invisible opacity-0"
-                }`}
-              >
-                <ul
-                  role="menu"
-                  onKeyDown={handleCategoryMenuKeyDown}
-                  className="min-w-40 rounded-sm border border-line bg-surface py-1 shadow-sm"
+            {headerCategorySlugs.map((slug) => {
+              const isCurrent = isCurrentCategory(pathname, slug);
+              return (
+                <Link
+                  key={slug}
+                  href={`/category/${slug}`}
+                  aria-current={isCurrent ? "page" : undefined}
+                  className={`border-b-2 py-2 transition-colors hover:text-ink ${
+                    isCurrent
+                      ? "border-accent text-ink"
+                      : "border-transparent text-ink-muted"
+                  }`}
                 >
-                  {categories.map((category, index) => (
-                    <li key={category.slug} role="none">
-                      <Link
-                        ref={(el) => {
-                          categoryItemRefs.current[index] = el;
-                        }}
-                        role="menuitem"
-                        tabIndex={-1}
-                        href={`/category/${category.slug}`}
-                        onClick={() => setCategoryOpen(false)}
-                        className="block px-4 py-2 text-ink-muted transition-colors hover:bg-paper hover:text-ink"
-                      >
-                        {category.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
+                  {slug}
+                </Link>
+              );
+            })}
             <div
               ref={linksMenuRef}
               className="relative"
