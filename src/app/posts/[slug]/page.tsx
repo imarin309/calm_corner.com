@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getAllPosts, getPostBySlug } from "@/lib/posts";
-import { getCategoryName } from "@/constants/category";
+import { getCategoryBySlug, getCategoryName } from "@/constants/category";
 import TagBadge from "@/components/TagBadge";
 import ArticleToc from "@/components/ArticleToc";
 import RecommendedPosts from "@/components/RecommendedPosts";
@@ -15,6 +15,8 @@ import {
   siteAuthorProfilePath,
 } from "@/constants/meta";
 import type { Metadata } from "next";
+
+const categoryBadgeClassName = "bg-stone-800 px-3 py-1 text-xs text-white";
 
 interface PostPageProps {
   params: Promise<{ slug: string }>;
@@ -124,9 +126,18 @@ export default async function PostPage({ params }: PostPageProps) {
             {post.title}
           </h1>
           <div className="mt-4 flex flex-wrap items-center gap-3">
-            <span className="bg-stone-800 px-3 py-1 text-xs text-white">
-              {getCategoryName(post.category)}
-            </span>
+            {getCategoryBySlug(post.category) ? (
+              <Link
+                href={`/category/${post.category}`}
+                className={`${categoryBadgeClassName} transition-colors hover:bg-stone-600`}
+              >
+                {getCategoryName(post.category)}
+              </Link>
+            ) : (
+              <span className={categoryBadgeClassName}>
+                {getCategoryName(post.category)}
+              </span>
+            )}
             {post.tags.length > 0 && (
               <div className="flex flex-wrap gap-2">
                 {post.tags.map((tag) => (
