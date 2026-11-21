@@ -199,27 +199,6 @@ export default function NavBar() {
           </div>
         </div>
 
-        <div className="-mx-4 grid grid-cols-2 border-t border-line text-sm font-medium sm:hidden">
-          {headerCategorySlugs.map((slug) => {
-            const isCurrent = isCurrentCategory(pathname, slug);
-            return (
-              <Link
-                key={slug}
-                href={`/category/${slug}`}
-                aria-current={isCurrent ? "page" : undefined}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`flex min-h-11 items-center justify-center border-b-2 transition-colors hover:text-ink ${
-                  isCurrent
-                    ? "border-accent text-ink"
-                    : "border-transparent text-ink-muted"
-                }`}
-              >
-                {slug}
-              </Link>
-            );
-          })}
-        </div>
-
         {/* モバイルメニュー */}
         {isMobileMenuOpen && (
           <div className="mt-2 flex flex-col border-t border-line py-2 text-sm font-medium sm:hidden">
