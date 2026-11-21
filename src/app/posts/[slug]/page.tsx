@@ -6,6 +6,7 @@ import TagBadge from "@/components/TagBadge";
 import ArticleToc from "@/components/ArticleToc";
 import RecommendedPosts from "@/components/RecommendedPosts";
 import AuthorProfile from "@/components/AuthorProfile";
+import Breadcrumb from "@/components/Breadcrumb";
 import Link from "next/link";
 import {
   siteName,
@@ -106,6 +107,7 @@ export default async function PostPage({ params }: PostPageProps) {
         }}
       />
       <article className="mx-auto max-w-3xl">
+        <Breadcrumb category={post.category} title={post.title} />
         <header className="mb-8 border-b border-stone-200 pb-6">
           <div className="flex items-center gap-2 text-xs text-stone-400">
             <time dateTime={post.date}>{formattedDate}</time>
