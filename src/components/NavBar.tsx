@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { getAllCategories, getCategoryBySlug } from "@/constants/category";
+import { getAllCategories } from "@/constants/category";
 import {
   siteInstagramUrl,
   siteXUrl,
@@ -17,9 +17,7 @@ import { useDropdownMenu } from "@/hooks/useDropdownMenu";
 const categories = getAllCategories();
 
 /** 読み物の入口として、制作ノートを先に置く */
-const headerCategories = ["note", "works"]
-  .map((slug) => getCategoryBySlug(slug))
-  .filter((category) => category !== undefined);
+const headerCategorySlugs = ["note", "works"];
 
 function isCurrentCategory(pathname: string, slug: string): boolean {
   const basePath = `/category/${slug}`;
@@ -51,42 +49,21 @@ export default function NavBar() {
       <div className="mx-auto max-w-5xl px-4 py-2">
         {/* PC: 横並び / スマホ: タイトル + ハンバーガー */}
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-6">
-            <Link
-              href="/"
-              className="flex min-h-11 items-center gap-2 transition-opacity hover:opacity-75"
-            >
-              <Image
-                src="/icon.png"
-                alt={siteName}
-                width={32}
-                height={32}
-                className="rounded-sm"
-              />
-              <span className="font-logo text-base font-bold tracking-wider text-ink">
-                {siteName}
-              </span>
-            </Link>
-            <div className="hidden items-center gap-4 text-sm font-medium sm:flex">
-              {headerCategories.map((category) => {
-                const isCurrent = isCurrentCategory(pathname, category.slug);
-                return (
-                  <Link
-                    key={category.slug}
-                    href={`/category/${category.slug}`}
-                    aria-current={isCurrent ? "page" : undefined}
-                    className={`border-b-2 py-2 transition-colors hover:text-ink ${
-                      isCurrent
-                        ? "border-accent text-ink"
-                        : "border-transparent text-ink-muted"
-                    }`}
-                  >
-                    {category.name}
-                  </Link>
-                );
-              })}
-            </div>
-          </div>
+          <Link
+            href="/"
+            className="flex min-h-11 items-center gap-2 transition-opacity hover:opacity-75"
+          >
+            <Image
+              src="/icon.png"
+              alt={siteName}
+              width={32}
+              height={32}
+              className="rounded-sm"
+            />
+            <span className="font-logo text-base font-bold tracking-wider text-ink">
+              {siteName}
+            </span>
+          </Link>
 
           {/* ハンバーガーボタン（スマホのみ） */}
           <button
@@ -129,6 +106,23 @@ export default function NavBar() {
             >
               Home
             </Link>
+            {headerCategorySlugs.map((slug) => {
+              const isCurrent = isCurrentCategory(pathname, slug);
+              return (
+                <Link
+                  key={slug}
+                  href={`/category/${slug}`}
+                  aria-current={isCurrent ? "page" : undefined}
+                  className={`border-b-2 py-2 transition-colors hover:text-ink ${
+                    isCurrent
+                      ? "border-accent text-ink"
+                      : "border-transparent text-ink-muted"
+                  }`}
+                >
+                  {slug}
+                </Link>
+              );
+            })}
             <div
               ref={linksMenuRef}
               className="relative"
@@ -206,12 +200,12 @@ export default function NavBar() {
         </div>
 
         <div className="-mx-4 grid grid-cols-2 border-t border-line text-sm font-medium sm:hidden">
-          {headerCategories.map((category) => {
-            const isCurrent = isCurrentCategory(pathname, category.slug);
+          {headerCategorySlugs.map((slug) => {
+            const isCurrent = isCurrentCategory(pathname, slug);
             return (
               <Link
-                key={category.slug}
-                href={`/category/${category.slug}`}
+                key={slug}
+                href={`/category/${slug}`}
                 aria-current={isCurrent ? "page" : undefined}
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={`flex min-h-11 items-center justify-center border-b-2 transition-colors hover:text-ink ${
@@ -220,7 +214,7 @@ export default function NavBar() {
                     : "border-transparent text-ink-muted"
                 }`}
               >
-                {category.name}
+                {slug}
               </Link>
             );
           })}
