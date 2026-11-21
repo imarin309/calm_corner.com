@@ -13,10 +13,7 @@ export default function Breadcrumb({ category, title }: BreadcrumbProps) {
   const isKnownCategory = getCategoryBySlug(category) !== undefined;
 
   return (
-    <nav
-      aria-label="パンくずリスト"
-      className="mx-auto max-w-3xl border-t border-line pt-(--space-md) pb-(--space-lg)"
-    >
+    <nav aria-label="パンくずリスト" className="mb-4">
       <ol className="flex flex-wrap items-baseline gap-x-2 gap-y-1 text-xs text-ink-muted">
         <li>
           <Link href="/" className={linkClassName}>

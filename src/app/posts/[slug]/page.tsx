@@ -107,6 +107,7 @@ export default async function PostPage({ params }: PostPageProps) {
         }}
       />
       <article className="mx-auto max-w-3xl">
+        <Breadcrumb category={post.category} title={post.title} />
         <header className="mb-8 border-b border-stone-200 pb-6">
           <div className="flex items-center gap-2 text-xs text-stone-400">
             <time dateTime={post.date}>{formattedDate}</time>
@@ -161,7 +162,6 @@ export default async function PostPage({ params }: PostPageProps) {
         <AuthorProfile />
       </article>
       <RecommendedPosts currentSlug={post.slug} />
-      <Breadcrumb category={post.category} title={post.title} />
     </>
   );
 }
