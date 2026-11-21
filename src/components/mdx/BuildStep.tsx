@@ -131,7 +131,7 @@ export default function BuildStep({
           </span>
           <h3
             id={id}
-            className={`m-0 scroll-mt-20 text-stone-800 ${isSub ? "text-base font-medium" : "font-semibold"}`}
+            className={`m-0 scroll-mt-32 sm:scroll-mt-20 text-stone-800 ${isSub ? "text-base font-medium" : "font-semibold"}`}
           >
             {title}
           </h3>

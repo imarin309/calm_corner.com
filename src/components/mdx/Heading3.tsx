@@ -11,7 +11,11 @@ export default function Heading3({
   const id = toSlug(text);
 
   return (
-    <h3 id={id} className={clsx("scroll-mt-20", className)} {...props}>
+    <h3
+      id={id}
+      className={clsx("scroll-mt-32 sm:scroll-mt-20", className)}
+      {...props}
+    >
       {children}
     </h3>
   );
