@@ -19,13 +19,10 @@ export default function HomePostSection({
   moreHref,
 }: HomePostSectionProps) {
   return (
-    <section
-      aria-labelledby={id}
-      className="rounded-sm border border-line p-(--space-md) sm:p-(--space-lg)"
-    >
+    <section aria-labelledby={id}>
       <SectionHeading id={id} label={label} title={title} />
       {/* モバイルは次のカードが少し覗くようにして、横にスライドできることを伝える */}
-      <div className="-mx-(--space-md) flex snap-x snap-mandatory scroll-px-(--space-md) gap-(--space-md) overflow-x-auto px-(--space-md) pb-2 [&>*]:w-3/4 [&>*]:shrink-0 [&>*]:snap-start sm:mx-0 sm:grid sm:grid-cols-3 sm:overflow-visible sm:px-0 sm:pb-0 sm:[&>*]:w-auto">
+      <div className="-mx-4 flex snap-x snap-mandatory scroll-px-4 gap-(--space-md) overflow-x-auto px-4 pb-2 [&>*]:w-4/5 [&>*]:shrink-0 [&>*]:snap-start sm:mx-0 sm:grid sm:grid-cols-3 sm:overflow-visible sm:px-0 sm:pb-0 sm:[&>*]:w-auto">
         {posts.map((post) => (
           <WorkCard key={post.slug} post={post} />
         ))}
